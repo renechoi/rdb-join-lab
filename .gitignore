@@ -1,0 +1,20 @@
+# Measurement results (large, machine-specific)
+results/*.json
+results/*.jsonl
+
+# Gradle build artifacts
+app/build/
+.gradle/
+app/.gradle/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+# Docker volumes / local MySQL data dumps
+*.ibd
+ib_buffer_pool

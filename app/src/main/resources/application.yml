@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://lab-mysql:3306/lab?rewriteBatchedStatements=true
+    username: root
+    password: labpass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      pool-name: lab-pool
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        generate_statistics: true
+        # default_batch_fetch_size is disabled by default (-1).
+        # Set env HIBERNATE_DEFAULT_BATCH_FETCH_SIZE to a positive integer
+        # (e.g. 100) to enable automatic IN-batch fetching for LAZY associations.
+        # Hibernate treats absent/null as disabled; we wire -1 which acts as
+        # "unset" for Hibernate 6.x (effectively disabling it).
+        # If -1 causes issues, set the env to 0 or leave the env unset entirely.
+        default_batch_fetch_size: ${HIBERNATE_DEFAULT_BATCH_FETCH_SIZE:-1}
+        # Note: Spring Boot property syntax: ${VAR:default} for empty-string-sensitive default
+        # The :-1 above works when HIBERNATE_DEFAULT_BATCH_FETCH_SIZE is "-1" (set by compose)
+
+lab:
+  c:
+    candidate-cap: ${LAB_C_CANDIDATE_CAP:50000}

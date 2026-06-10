@@ -1,0 +1,81 @@
+version: "3.9"
+
+networks:
+  labnet:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lab-mysql
+    networks:
+      - labnet
+    command: --defaults-extra-file=/etc/mysql/conf.d/my.cnf
+    volumes:
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: labpass
+      MYSQL_DATABASE: lab
+    ports:
+      - "13306:3306"
+    cpuset: "0,1"
+    mem_limit: 4g
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-plabpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # netem sidecar: shares mysql's network namespace so tc applies to its eth0.
+  # Apply latency by exec-ing: docker compose exec netem tc qdisc replace dev eth0 root netem delay <Xus>
+  netem:
+    image: alpine
+    container_name: lab-netem
+    network_mode: "service:mysql"
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "apk add -q iproute2 && sleep infinity"
+    depends_on:
+      - mysql
+
+  app:
+    build:
+      context: ./app
+    container_name: lab-app
+    networks:
+      - labnet
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "18080:8080"
+    cpuset: "2,3"
+    mem_limit: 2g
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://lab-mysql:3306/lab?rewriteBatchedStatements=true"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: labpass
+      # Pass through HIBERNATE_DEFAULT_BATCH_FETCH_SIZE if set in the calling shell.
+      # If not set, defaults to -1 (disabled). See application.yml.
+      # NOTE: must be a valid integer string; empty string would fail Spring integer binding.
+      HIBERNATE_DEFAULT_BATCH_FETCH_SIZE: "${HIBERNATE_DEFAULT_BATCH_FETCH_SIZE:--1}"
+
+  k6:
+    image: grafana/k6:latest
+    container_name: lab-k6
+    networks:
+      - labnet
+    profiles:
+      - tools
+    volumes:
+      - ./k6:/scripts
+      - ./results:/results
+    environment:
+      BASE_URL: "http://lab-app:8080"
+
+volumes:
+  mysql-data:
