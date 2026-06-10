@@ -55,7 +55,9 @@ echo "=== Step 2: Triggering InnoDB buffer pool dump ==="
 echo "Polling dump status (timeout ${TIMEOUT_S}s)..."
 ELAPSED=0
 while true; do
-  DUMP_STATUS=$("${MYSQL_CMD[@]}" -sN -e "SHOW STATUS LIKE 'Innodb_buffer_pool_dump_status';" 2>/dev/null | awk '{print $2}')
+  # NOTE: status value contains spaces ("Buffer pool(s) dump completed at ...");
+  # the row is tab-separated, so take field 2 onward by tab, not by whitespace.
+  DUMP_STATUS=$("${MYSQL_CMD[@]}" -sN -e "SHOW STATUS LIKE 'Innodb_buffer_pool_dump_status';" 2>/dev/null | cut -f2-)
   echo "  [${ELAPSED}s] Dump status: ${DUMP_STATUS}"
   if echo "$DUMP_STATUS" | grep -qi "completed"; then
     echo "Buffer pool dump completed."
@@ -76,7 +78,7 @@ echo "=== Step 3: Triggering InnoDB buffer pool load ==="
 echo "Polling load status (timeout ${TIMEOUT_S}s)..."
 ELAPSED=0
 while true; do
-  STATUS=$("${MYSQL_CMD[@]}" -sN -e "SHOW STATUS LIKE 'Innodb_buffer_pool_load_status';" 2>/dev/null | awk '{print $2}')
+  STATUS=$("${MYSQL_CMD[@]}" -sN -e "SHOW STATUS LIKE 'Innodb_buffer_pool_load_status';" 2>/dev/null | cut -f2-)
   echo "  [${ELAPSED}s] Load status: ${STATUS}"
   if echo "$STATUS" | grep -qi "completed"; then
     echo "Buffer pool load completed."
