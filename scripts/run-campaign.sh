@@ -42,6 +42,8 @@ restore_app_env() {
     HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=-1 docker-compose up -d app >/dev/null 2>&1 || true
     wait_app_health || true
     APP_ENV_DIRTY=0
+    CURRENT_BATCH_ENV=""
+    WARM_REQS=500 SCALE="${SCALE:-smoke}" APP_URL="http://localhost:18080" ./scripts/prime-jvm.sh < /dev/null || true
   fi
 }
 trap restore_app_env EXIT
@@ -61,6 +63,8 @@ wait_app_health() {
 apply_env_overrides() {
   local overrides="$1"
   if [[ "$overrides" == "-" || -z "$overrides" ]]; then
+    # Clear any per-cell exports leaked from a previous cell's env_overrides.
+    unset N MAX_MEMBER_ID LAB_C_CANDIDATE_CAP 2>/dev/null || true
     restore_app_env
     return 0
   fi
@@ -70,10 +74,17 @@ apply_env_overrides() {
     local kv val
     kv=$(echo "$overrides" | tr ',' '\n' | grep '^HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=')
     val="${kv#*=}"
-    echo "[campaign] recreating app with HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=${val}..."
-    HIBERNATE_DEFAULT_BATCH_FETCH_SIZE="$val" docker-compose up -d app >/dev/null
-    wait_app_health
-    APP_ENV_DIRTY=1
+    if [[ "${CURRENT_BATCH_ENV:-}" == "$val" ]]; then
+      : # app already running with this env (consecutive batchfetch cells): no recreate
+    else
+      echo "[campaign] recreating app with HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=${val}..."
+      HIBERNATE_DEFAULT_BATCH_FETCH_SIZE="$val" docker-compose up -d app >/dev/null
+      wait_app_health
+      APP_ENV_DIRTY=1
+      CURRENT_BATCH_ENV="$val"
+      # Recreate resets JIT state: short re-prime so following cells measure warm JVM.
+      WARM_REQS=500 SCALE="${SCALE:-smoke}" APP_URL="http://localhost:18080" ./scripts/prime-jvm.sh < /dev/null || true
+    fi
   fi
   # Generic fallback: export all KEY=VAL pairs from the env_overrides column so that
   # run-cell.sh can read them (e.g. LAB_C_CANDIDATE_CAP, MAX_MEMBER_ID).
@@ -90,13 +101,19 @@ TOTAL=0; DONE=0; SKIPPED=0; FAILED=0; STOPPED_BY_CAP=0
 
 # JVM priming: fire WARM_REQS requests per style before first measurement cell
 # so HotSpot C2 reaches tier-2 compilation. See scripts/prime-jvm.sh.
+if grep -q "DONE" "$PROGRESS" 2>/dev/null; then
+  echo "[campaign] Resume detected (ledger has DONE entries) and app container kept running: skipping full JVM priming."
+else
 echo "[campaign] Running JVM primer (prime-jvm.sh)..."
 SCALE="${SCALE:-smoke}" APP_URL="http://localhost:18080" ./scripts/prime-jvm.sh || {
   echo "[campaign] WARNING: JVM priming failed — continuing without priming (first cells may show cold-JIT overhead)" >&2
 }
 echo "[campaign] JVM priming complete."
+fi
 
-while IFS=$'\t' read -r scenario style rtt rate duration extra envov || [[ -n "${scenario:-}" ]]; do
+# Read cells on FD 3: loop-body commands (docker-compose exec -T consumes stdin)
+# would otherwise drain the cells file after the first iteration.
+while IFS=$'\t' read -r -u 3 scenario style rtt rate duration extra envov || [[ -n "${scenario:-}" ]]; do
   [[ -z "${scenario:-}" || "$scenario" == \#* ]] && continue
   TOTAL=$((TOTAL + 1))
   KEY="${scenario}|${style}|${rtt}|${rate}|${extra:--}|${envov:--}"
@@ -142,7 +159,7 @@ while IFS=$'\t' read -r scenario style rtt rate duration extra envov || [[ -n "$
     echo -e "${KEY}\tFAIL\t$(date '+%F %T')" >> "$PROGRESS"
     FAILED=$((FAILED + 1))
   fi
-done < "$CELLS_FILE"
+done 3< "$CELLS_FILE"
 
 restore_app_env
 
