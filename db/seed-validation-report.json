@@ -1,15 +1,15 @@
 {
-  "scale": "smoke",
-  "timestamp": "2026-06-10T16:01:49Z",
+  "scale": "pilot",
+  "timestamp": "2026-06-10T16:06:48Z",
   "expected": {
-    "policy": 100,
-    "member": 10000,
-    "issue": 100000
+    "policy": 1000,
+    "member": 100000,
+    "issue": 1000000
   },
   "actual": {
-    "policy": 100,
-    "member": 10000,
-    "issue": 100000
+    "policy": 1000,
+    "member": 100000,
+    "issue": 1000000
   },
   "top20pct_policy_coverage_pct": 58.6,
   "validation_pass": true

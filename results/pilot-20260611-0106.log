@@ -1,0 +1,152 @@
+=== PILOT: seeding SCALE=pilot (1M issues) ===
+=== seed.sh: SCALE=pilot ===
+  coupon_policy : 1000
+  member        : 100000
+  coupon_issue  : 1000000
+
+[1/6] Truncating tables...
+time="2026-06-11T01:06:34+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[2/6] Setting session optimizations for bulk load...
+[3/6] Seeding coupon_policy (1000 rows)...
+time="2026-06-11T01:06:34+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[4/6] Seeding member (100000 rows, chunked)...
+  member chunk 1: offset=0 batch=100000
+time="2026-06-11T01:06:34+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[5/6] Seeding coupon_issue (1000000 rows, chunked)...
+  issue chunk 1: offset=0 batch=500000
+time="2026-06-11T01:06:34+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 2: offset=500000 batch=500000
+time="2026-06-11T01:06:39+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[5b/6] Seeding member_buckets (high-volume member concentration table)...
+time="2026-06-11T01:06:46+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+time="2026-06-11T01:06:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+time="2026-06-11T01:06:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  member_buckets populated: 4103 rows (filter: > 10 issues (smoke/pilot scale))
+  member_buckets assertion PASSED (>= 10 rows).
+time="2026-06-11T01:06:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+threshold	members
+10	4103
+[6/6] Running ANALYZE TABLE and printing final counts...
+time="2026-06-11T01:06:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Table	Op	Msg_type	Msg_text
+lab.coupon_policy	analyze	status	OK
+lab.member	analyze	status	OK
+lab.coupon_issue	analyze	status	OK
+lab.member_buckets	analyze	status	OK
+time="2026-06-11T01:06:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+tbl	row_count
+coupon_policy	1000
+member	100000
+coupon_issue	1000000
+member_buckets	4103
+time="2026-06-11T01:06:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+status	cnt	pct
+ISSUED	699273	69.9
+USED	285573	28.6
+EXPIRED	15154	1.5
+
+=== Seed validation ===
+  Expected: policy=1000 member=100000 issue=1000000
+  Actual:   policy=1000 member=100000 issue=1000000
+  Top 20% policies cover: 58.6% of issues
+  Skew validation: PASS (Zipf-like distribution confirmed)
+  Validation report: db/seed-validation-report.json
+
+=== seed.sh done (SCALE=pilot) ===
+=== PILOT: scenario A cells ===
+=== Cell: scenario=a style=join rtt=300us rate=50rps duration=1m scale=pilot repeats=1 ===
+[1/4] Setting netem delay 300us...
+Setting netem delay 300us on lab-mysql eth0...
+time="2026-06-11T01:06:49+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Current qdisc:
+time="2026-06-11T01:06:49+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+qdisc netem 8012: root refcnt 7 limit 1000 delay 300us seed 4238349563749712169
+[2/4] Warming InnoDB buffer pool...
+=== Step 1: Warm-up queries (priming buffer pool, ~10% of full scale) ===
+COUNT(*)
+1000000
+COUNT(*)
+975720
+COUNT(*)
+699273
+COUNT(*)
+1000
+Warm-up queries complete.
+=== Step 2: Triggering InnoDB buffer pool dump ===
+time="2026-06-11T01:06:49+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Polling dump status (timeout 300s)...
+  [0s] Dump status: Buffer
+  [5s] Dump status: Buffer
+  [10s] Dump status: Buffer
+  [15s] Dump status: Buffer
+  [20s] Dump status: Buffer
+  [25s] Dump status: Buffer
+  [30s] Dump status: Buffer
+  [35s] Dump status: Buffer
+  [40s] Dump status: Buffer
+  [45s] Dump status: Buffer
+  [50s] Dump status: Buffer
+  [55s] Dump status: Buffer
+  [60s] Dump status: Buffer
+  [65s] Dump status: Buffer
+  [70s] Dump status: Buffer
+  [75s] Dump status: Buffer
+  [80s] Dump status: Buffer
+  [85s] Dump status: Buffer
+  [90s] Dump status: Buffer
+  [95s] Dump status: Buffer
+  [100s] Dump status: Buffer
+  [105s] Dump status: Buffer
+  [110s] Dump status: Buffer
+  [115s] Dump status: Buffer
+  [120s] Dump status: Buffer
+  [125s] Dump status: Buffer
+  [130s] Dump status: Buffer
+  [135s] Dump status: Buffer
+  [140s] Dump status: Buffer
+  [145s] Dump status: Buffer
+  [150s] Dump status: Buffer
+  [155s] Dump status: Buffer
+  [160s] Dump status: Buffer
+  [165s] Dump status: Buffer
+  [170s] Dump status: Buffer
+  [175s] Dump status: Buffer
+  [180s] Dump status: Buffer
+  [185s] Dump status: Buffer
+  [190s] Dump status: Buffer
+  [195s] Dump status: Buffer
+  [200s] Dump status: Buffer
+  [205s] Dump status: Buffer
+  [210s] Dump status: Buffer
+  [215s] Dump status: Buffer
+  [220s] Dump status: Buffer
+  [225s] Dump status: Buffer
+  [230s] Dump status: Buffer
+  [235s] Dump status: Buffer
+  [240s] Dump status: Buffer
+  [245s] Dump status: Buffer
+  [250s] Dump status: Buffer
+  [255s] Dump status: Buffer
+  [260s] Dump status: Buffer
+  [265s] Dump status: Buffer
+  [270s] Dump status: Buffer
+  [275s] Dump status: Buffer
+  [280s] Dump status: Buffer
+  [285s] Dump status: Buffer
+  [290s] Dump status: Buffer
+  [295s] Dump status: Buffer
+  [300s] Dump status: Buffer
+ERROR: Buffer pool dump did not complete within 300s. Last status: Buffer

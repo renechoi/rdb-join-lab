@@ -1,0 +1,100 @@
+=== PILOT(resume): scenario A cells ===
+=== Cell: scenario=a style=join rtt=300us rate=50rps duration=1m scale=pilot repeats=1 ===
+[1/4] Setting netem delay 300us...
+Setting netem delay 300us on lab-mysql eth0...
+time="2026-06-11T01:13:26+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Current qdisc:
+time="2026-06-11T01:13:26+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+qdisc netem 8012: root refcnt 7 limit 1000 delay 300us seed 7914407370450523013
+[2/4] Warming InnoDB buffer pool...
+=== Step 1: Warm-up queries (priming buffer pool, ~10% of full scale) ===
+COUNT(*)
+1000000
+COUNT(*)
+975720
+COUNT(*)
+699273
+COUNT(*)
+1000
+Warm-up queries complete.
+=== Step 2: Triggering InnoDB buffer pool dump ===
+time="2026-06-11T01:13:27+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Polling dump status (timeout 300s)...
+  [0s] Dump status: Buffer pool(s) dump completed at 260610 16:13:27
+Buffer pool dump completed.
+=== Step 3: Triggering InnoDB buffer pool load ===
+time="2026-06-11T01:13:27+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Polling load status (timeout 300s)...
+  [0s] Load status: Buffer pool(s) load completed at 260610 16:13:28
+Buffer pool load completed.
+=== Step 3b: Capturing post-load snapshot for warm-state gate ===
+COUNT(*)
+9835
+COUNT(*)
+699273
+COUNT(*)
+1000
+Re-verification queries complete.
+=== Step 4: Warm-state gate (physical reads < 0.01, post-load window) ===
+  Post-load reverify window: physical reads delta: 0 / 3274 = 0.0
+  (Pre-warmup baseline: 1025 / 12374981, for reference)
+  Warm-state gate PASSED.
+=== Step 5: ANALYZE TABLE ===
+Table	Op	Msg_type	Msg_text
+lab.coupon_policy	analyze	status	OK
+lab.member	analyze	status	OK
+lab.coupon_issue	analyze	status	OK
+ANALYZE TABLE complete.
+=== Step 5b: Capturing InnoDB engine status (AHI verification) ===
+  InnoDB status captured: results/innodb-status-1781108008.txt
+  AHI indicator: INSERT BUFFER AND ADAPTIVE HASH INDEX
+0.00 hash searches/s, 48.98 non-hash searches/s
+=== Step 5c: EXPLAIN Scenario B ORDER BY id ASC (filesort check) ===
+  WARNING: EXPLAIN shows 'Using filesort' for Scenario B ORDER BY id ASC query.
+  Expected idx_issue_member_id to cover ORDER BY — check index creation in schema.sql.
+  EXPLAIN output:
+1	SIMPLE	coupon_issue	NULL	ref	idx_issue_member_status	idx_issue_member_status	8	const	12	100.00	Using filesort
+[3/4] Dual calibration (nominal=300us)...
+  [held conn] calibrate n=10000...
+{
+    "n": 10000,
+    "min": 348,
+    "p50": 521,
+    "p95": 594,
+    "p99": 691,
+    "max": 11677
+}
+  [per checkout] calibrate/loaded n=10000...
+{
+    "n": 10000,
+    "min": 337,
+    "p50": 522,
+    "p95": 581,
+    "p99": 665,
+    "max": 4085
+}
+Running dual calibration probe (n=10000 held + n=10000 loaded)...
+=== held (pure wire RTT) ===
+{
+    "n": 10000,
+    "min": 355,
+    "p50": 519,
+    "p95": 579,
+    "p99": 642,
+    "max": 893
+}
+=== loaded (wire RTT + pool checkout) ===
+{
+    "n": 10000,
+    "min": 352,
+    "p50": 515,
+    "p95": 572,
+    "p99": 605,
+    "max": 4882
+}
+
+Appended dual record to results/calibration.jsonl: {"held": {"n": 10000, "min": 355, "p50": 519, "p95": 579, "p99": 642, "max": 893}, "loaded": {"n": 10000, "min": 352, "p50": 515, "p95": 572, "p99": 605, "max": 4882}, "timestamp": "2026-06-10T16:13:49Z", "nominal_delay_us": 300}
+[4/1] Running k6 repeat 1/1 (output -> results/a-join-rtt300-r50-rep1-1781108029.json)...
+unknown flag: --cpuset-cpus
