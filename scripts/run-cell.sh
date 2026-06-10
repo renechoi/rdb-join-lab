@@ -138,8 +138,9 @@ for REP in $(seq 1 "$COARSE_REPEATS"); do
 
   echo "[4/${COARSE_REPEATS}] Running k6 repeat ${REP}/${COARSE_REPEATS} (output -> ${OUTPUT_FILE})..."
 
+  # cpuset for k6 is defined on the service in docker-compose.yml ("4,5");
+  # docker-compose run has no --cpuset-cpus flag.
   docker-compose run --rm \
-    --cpuset-cpus "4,5" \
     "${K6_ENV[@]}" \
     k6 run \
       --summary-export "/results/$(basename "$OUTPUT_FILE")" \
