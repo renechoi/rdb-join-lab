@@ -40,6 +40,18 @@ case "$SCALE" in
     ;;
 esac
 
+# Hot-member tier: members 1..HOT_MEMBER_COUNT receive HOT_ISSUES_PER extra issues
+# each, on top of the uniform background (avg ISSUE_COUNT/MEMBER_COUNT per member).
+# Why: scenario B needs members that actually HAVE >= N issues (N up to 1000).
+# A purely uniform assignment (avg 10/member at full scale) yields zero such members,
+# which breaks member_buckets and silently turns N=1000 cells into N=10 cells.
+# Two-tier activity (heavy users + long tail) is also more realistic.
+case "$SCALE" in
+  smoke)  HOT_MEMBER_COUNT=100;  HOT_ISSUES_PER=60   ;;
+  pilot)  HOT_MEMBER_COUNT=500;  HOT_ISSUES_PER=400  ;;
+  full)   HOT_MEMBER_COUNT=2000; HOT_ISSUES_PER=1200 ;;
+esac
+
 CHUNK=500000   # max rows per INSERT; keeps transaction size manageable
 MYSQL_SERVICE="mysql"   # service name in docker-compose.yml
 
@@ -191,6 +203,62 @@ SQL
     REMAINING=$((REMAINING - BATCH))
     CHUNK_IDX=$((CHUNK_IDX + 1))
 done
+
+echo "[5a-hot] Seeding hot-member tier ($HOT_MEMBER_COUNT members x $HOT_ISSUES_PER extra issues)..."
+HOT_TOTAL=$((HOT_MEMBER_COUNT * HOT_ISSUES_PER))
+REMAINING=$HOT_TOTAL
+OFFSET=0
+CHUNK_IDX=1
+while [ "$REMAINING" -gt 0 ]; do
+    if [ "$REMAINING" -lt "$CHUNK" ]; then
+        BATCH=$REMAINING
+    else
+        BATCH=$CHUNK
+    fi
+    echo "  hot chunk $CHUNK_IDX: offset=$OFFSET batch=$BATCH"
+    run_sql_pipe <<SQL
+SET SESSION unique_checks=0;
+SET SESSION foreign_key_checks=0;
+SET SESSION cte_max_recursion_depth = $BATCH;
+SET @policy_count = $POLICY_COUNT;
+SET @hot_members = $HOT_MEMBER_COUNT;
+SET @offset = $OFFSET;
+INSERT INTO coupon_issue (policy_id, member_id, status, issued_at, used_at)
+WITH RECURSIVE seq(n) AS (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM seq WHERE n < $BATCH
+),
+base AS (
+    SELECT
+        n,
+        RAND() AS rnd,
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY) AS issued
+    FROM seq
+)
+SELECT
+    GREATEST(1, FLOOR(POW(RAND(), 3) * @policy_count) + 1),
+    1 + MOD(@offset + n - 1, @hot_members),
+    ELT(
+        CASE
+            WHEN rnd < 0.70 THEN 1
+            WHEN rnd < 0.95 THEN 2
+            ELSE 3
+        END,
+        'ISSUED', 'USED', 'EXPIRED'
+    ),
+    issued,
+    CASE WHEN rnd >= 0.70 AND rnd < 0.95
+         THEN DATE_ADD(issued, INTERVAL FLOOR(1 + RAND() * 6) DAY)
+         ELSE NULL
+    END
+FROM base;
+SQL
+    OFFSET=$((OFFSET + BATCH))
+    REMAINING=$((REMAINING - BATCH))
+    CHUNK_IDX=$((CHUNK_IDX + 1))
+done
+echo "  hot tier complete: $HOT_TOTAL extra issues over members 1..$HOT_MEMBER_COUNT"
 
 echo "[5b/6] Seeding member_buckets (high-volume member concentration table)..."
 # R4 fix: member_buckets extended to cover N>=100/300/500 thresholds (not just N=1000).
