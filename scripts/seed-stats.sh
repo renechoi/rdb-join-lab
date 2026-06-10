@@ -20,12 +20,13 @@ STATS=$("${MYSQL[@]}" -e "
     MAX(cnt_distinct_policies),
     ROUND(AVG(cnt_distinct_policies / GREATEST(cnt_issues, 1)), 4)
   FROM (
-    SELECT member_id,
+    SELECT ci.member_id,
            COUNT(*) AS cnt_issues,
-           COUNT(DISTINCT policy_id) AS cnt_distinct_policies
-    FROM coupon_issue
-    WHERE member_id IN (SELECT id FROM member ORDER BY RAND() LIMIT 10000)
-    GROUP BY member_id
+           COUNT(DISTINCT ci.policy_id) AS cnt_distinct_policies
+    FROM coupon_issue ci
+    JOIN (SELECT id FROM member ORDER BY RAND() LIMIT 10000) sample
+      ON sample.id = ci.member_id
+    GROUP BY ci.member_id
   ) t;
 " 2>/dev/null)
 
