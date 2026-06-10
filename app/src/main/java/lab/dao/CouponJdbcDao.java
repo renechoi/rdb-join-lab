@@ -166,12 +166,48 @@ public class CouponJdbcDao {
     }
 
     // -------------------------------------------------------------------------
+    // Policy fetch with duplicates preserved (for inbatch-nodup style)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Fetch coupon_policy rows for the given ids WITHOUT deduplication.
+     *
+     * Spring Data's CouponPolicyRepository.findAllById() deduplicates the id list at the
+     * JPA level before emitting SQL, so it cannot be used to test the IN-list-with-duplicates
+     * behaviour that inBatchNodup is measuring.
+     *
+     * This method builds the SQL directly from the caller-supplied list (which may contain
+     * repeated ids), preserving the exact IN-list size that hits MySQL. The caller receives
+     * one PolicyDto per occurrence in the input list (or fewer if MySQL deduplicates rows).
+     * The result ordering matches MySQL's internal execution order, not the input order.
+     *
+     * Used by ScenarioBService.inBatchNodup().
+     */
+    public List<PolicyDto> findAllByIdWithDuplicates(List<Long> ids) {
+        if (ids.isEmpty()) return List.of();
+        String inSql = "SELECT id, name, type, discount_amount, expire_at FROM coupon_policy WHERE id IN (" +
+                String.join(",", Collections.nCopies(ids.size(), "?")) + ")";
+        return jdbc.query(inSql, (rs, rn) -> new PolicyDto(
+                rs.getLong("id"), rs.getString("name"), rs.getString("type"),
+                rs.getInt("discount_amount"), toLocalDateTime(rs, "expire_at")
+        ), ids.toArray());
+    }
+
+    // -------------------------------------------------------------------------
     // Calibration
     // -------------------------------------------------------------------------
 
     /**
-     * Runs n round-trips of SELECT 1 on a single pooled connection,
+     * Runs n round-trips of SELECT 1 on a single reused pooled connection,
      * and returns latency statistics in microseconds.
+     *
+     * This measures pure wire RTT + query execution on a warm, held connection.
+     * It does NOT include HikariCP checkout latency.
+     * Default n=10000 for stable p99 (p99 requires at least ~300 samples to be
+     * meaningful; 10000 gives p99 a 100-sample window, robust to occasional JVM GC spikes).
+     *
+     * Robustness thresholds: p99/p50 ratio > 3 suggests noisy environment;
+     * max > 10*p99 suggests OS scheduling interference. Caller should log these.
      */
     public CalibrateResult calibrate(int n) throws SQLException {
         long[] samples = new long[n];
@@ -185,6 +221,40 @@ public class CouponJdbcDao {
                 }
                 samples[i] = (System.nanoTime() - start) / 1000L; // ns -> us
             }
+        }
+
+        Arrays.sort(samples);
+        long min = samples[0];
+        long max = samples[n - 1];
+        // Use exact index (truncation) for percentiles — standard for small-sample empirical CDFs.
+        long p50 = samples[(int) (n * 0.50)];
+        long p95 = samples[(int) (n * 0.95)];
+        long p99 = samples[(int) (n * 0.99)];
+
+        return new CalibrateResult(n, min, p50, p95, p99, max);
+    }
+
+    /**
+     * Dual-calibration: measures RTT including HikariCP pool checkout per iteration.
+     * Acquires a fresh connection for each SELECT 1, then releases it.
+     * The delta between calibrate() and calibrateLoaded() isolates pool checkout overhead.
+     *
+     * Used in the "dual calibration" protocol (plan.md §3.4): run both before each
+     * measurement cell. If calibrateLoaded p99 >> calibrate p99, pool contention is present.
+     *
+     * Default n=10000 (same as calibrate for direct comparison).
+     */
+    public CalibrateResult calibrateLoaded(int n) throws SQLException {
+        long[] samples = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            long start = System.nanoTime();
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement ps = conn.prepareStatement("SELECT 1");
+                 ResultSet rs = ps.executeQuery()) {
+                rs.next(); // consume result
+            }
+            samples[i] = (System.nanoTime() - start) / 1000L; // ns -> us
         }
 
         Arrays.sort(samples);

@@ -44,22 +44,55 @@ def load_calibrations(results_dir):
                 records.append(json.loads(line))
             except json.JSONDecodeError:
                 continue
+    # Smoke-time assertion: verify first record resolves all three fields correctly.
+    if records:
+        first = records[0]
+        # (1) timestamp key must resolve to a numeric epoch
+        ts_raw = first.get('timestamp') or first.get('epoch') or first.get('ts') or 0
+        if isinstance(ts_raw, str):
+            import datetime as _dt
+            try:
+                _dt.datetime.fromisoformat(ts_raw.replace('Z', '+00:00')).timestamp()
+            except (ValueError, AttributeError):
+                print(f"WARN: calibration first record timestamp '{ts_raw}' not parseable as ISO or int", file=sys.stderr)
+        # (2) nominal delay key must resolve
+        nom = first.get('nominal_delay_us', first.get('nominal_rtt_us', first.get('nominal')))
+        if nom is None:
+            print(f"WARN: calibration first record missing nominal_delay_us / nominal_rtt_us / nominal keys", file=sys.stderr)
+        # (3) nested p50 path: calib['held']['p50']
+        held = first.get('held') or {}
+        if held.get('p50') is None:
+            print(f"WARN: calibration first record missing held.p50 (keys: {list(held.keys()) if held else 'held missing'})", file=sys.stderr)
     return records
 
 
 def nearest_calibration(calibs, epoch, rtt_nominal):
-    """Latest calibration at or before this run's epoch with matching nominal rtt."""
+    """Latest calibration at or before this run's epoch with matching nominal rtt.
+
+    Field-name mapping (R4 fix):
+      - timestamp key: calibrate.sh writes 'timestamp' as ISO string; fall back to 'epoch'/'ts' int.
+      - nominal key: calibrate.sh writes 'nominal_delay_us'; fall back to 'nominal_rtt_us'/'nominal'.
+      - p50 path: calibrate.sh nests stats under 'held': {'p50': ...}; calib['held']['p50'].
+    """
     best = None
     for c in calibs:
-        c_epoch = c.get("epoch") or c.get("ts") or 0
-        c_rtt = str(c.get("nominal_rtt_us", c.get("nominal", "")))
+        # (1) Parse timestamp key: ISO string from calibrate.sh 'timestamp' field.
+        c_epoch_raw = c.get('timestamp') or c.get('epoch') or c.get('ts') or 0
+        if isinstance(c_epoch_raw, str):
+            import datetime as _dt
+            try:
+                c_epoch = int(_dt.datetime.fromisoformat(c_epoch_raw.replace('Z', '+00:00')).timestamp())
+            except (ValueError, AttributeError):
+                try:
+                    c_epoch = int(c_epoch_raw)
+                except ValueError:
+                    continue
+        else:
+            c_epoch = int(c_epoch_raw or 0)
+        # (2) Nominal RTT key: calibrate.sh writes 'nominal_delay_us'.
+        c_rtt = str(c.get('nominal_delay_us', c.get('nominal_rtt_us', c.get('nominal', ''))))
         if str(rtt_nominal) != c_rtt:
             continue
-        if isinstance(c_epoch, str):
-            try:
-                c_epoch = int(c_epoch)
-            except ValueError:
-                continue
         if c_epoch <= epoch and (best is None or c_epoch > best[0]):
             best = (c_epoch, c)
     return best[1] if best else None
@@ -111,7 +144,8 @@ def extract_run(path, calibs):
         "dropped_ratio": round(dropped_ratio, 5),
         "error_rate": error_rate,
         "valid": 1 if (error_rate <= 0.001 and dropped_ratio <= 0.01) else 0,
-        "calib_p50_us": (calib or {}).get("p50"),
+        # (3) calib['held']['p50'] — calibrate.sh nests stats under 'held' key (R4 fix).
+        "calib_p50_us": (calib.get('held') or {}).get('p50') if calib else None,
         "file": os.path.basename(path),
     }
     return row

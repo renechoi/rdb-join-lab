@@ -30,7 +30,8 @@ services:
       start_period: 30s
 
   # netem sidecar: shares mysql's network namespace so tc applies to its eth0.
-  # Apply latency by exec-ing: docker compose exec netem tc qdisc replace dev eth0 root netem delay <Xus>
+  # No cpuset is assigned to this container; it is idle (sleep infinity) during measurements.
+  # Apply latency: docker compose exec netem tc qdisc replace dev eth0 root netem delay <Xus>
   netem:
     image: alpine
     container_name: lab-netem
@@ -56,7 +57,8 @@ services:
     cpuset: "2,3"
     mem_limit: 2g
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:mysql://lab-mysql:3306/lab?rewriteBatchedStatements=true"
+      # rewriteBatchedStatements removed: confounds per-query wire count in Hibernate stats.
+      SPRING_DATASOURCE_URL: "jdbc:mysql://lab-mysql:3306/lab"
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: labpass
       # Pass through HIBERNATE_DEFAULT_BATCH_FETCH_SIZE if set in the calling shell.
@@ -71,6 +73,7 @@ services:
       - labnet
     profiles:
       - tools
+    cpuset: "4,5"
     volumes:
       - ./k6:/scripts
       - ./results:/results

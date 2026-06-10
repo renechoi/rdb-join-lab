@@ -61,6 +61,13 @@ run_sql_pipe() {
         mysql -u root -plabpass lab
 }
 
+# Helper: run a SQL query and return only the scalar result (strips warnings and whitespace).
+run_sql_read() {
+    docker-compose exec -T "$MYSQL_SERVICE" \
+        mysql -u root -plabpass lab -sN -e "$1" 2>/dev/null \
+        | grep -v "Warning\|level=" | tr -d '[:space:]' | head -1
+}
+
 echo "[1/6] Truncating tables..."
 run_sql "SET FOREIGN_KEY_CHECKS=0; TRUNCATE coupon_issue; TRUNCATE coupon_policy; TRUNCATE member; SET FOREIGN_KEY_CHECKS=1;"
 
@@ -185,15 +192,90 @@ SQL
     CHUNK_IDX=$((CHUNK_IDX + 1))
 done
 
+echo "[5b/6] Seeding member_buckets (high-volume member concentration table)..."
+# R4 fix: member_buckets extended to cover N>=100/300/500 thresholds (not just N=1000).
+# At SCALE=full, run-cell.sh overrides MAX_MEMBER_ID=10000 for ALL N>=100 cells so that
+# random member_id picks hit members guaranteed to have enough issues.
+# Without this, N=100/300/500 cells with unrestricted MAX_MEMBER_ID often sample members
+# with only a few issues, meaning the effective N is less than declared N — a silent
+# measurement error that confounds the N-axis analysis.
+#
+# The table now stores all members in [1, 10000] with their issue count.
+# A min_issues column records the highest threshold bracket the member satisfies
+# (i.e. the maximum N value they can meaningfully serve).
+# run-cell.sh uses MAX_MEMBER_ID=10000 for N>=100 so any member in the table satisfies N>=100.
+#
+# Note: Zipf/power-law skew applies to policy_id distribution, NOT to member_id.
+# Member issue concentration is due to the seeder drawing member_ids uniformly from 1-10000
+# for the first 10k members, resulting in proportionally higher issue counts for low member_ids.
+if [[ "$SCALE" == "full" ]]; then
+  # At full scale, all members in [1, 10000] should have >> 1000 issues.
+  # Include everyone with >= 100 (minimum N threshold we now measure).
+  HAVING_CLAUSE="HAVING COUNT(*) >= 100"
+  BUCKET_MIN=100
+  BUCKET_LABEL=">= 100 issues (full scale)"
+else
+  HAVING_CLAUSE="HAVING COUNT(*) > 10"
+  BUCKET_MIN=10
+  BUCKET_LABEL="> 10 issues (smoke/pilot scale)"
+fi
+run_sql "DROP TABLE IF EXISTS member_buckets;"
+run_sql "
+CREATE TABLE member_buckets (
+  member_id   BIGINT NOT NULL PRIMARY KEY,
+  issue_count BIGINT NOT NULL,
+  min_issues  BIGINT NOT NULL COMMENT 'highest N threshold this member satisfies (100/300/500/1000)',
+  INDEX idx_bucket_count (issue_count DESC),
+  INDEX idx_bucket_min (min_issues DESC)
+) ENGINE=InnoDB COMMENT='pre-aggregated issue count per high-volume member (seed artifact; not app schema)';
+"
+run_sql "
+INSERT INTO member_buckets (member_id, issue_count, min_issues)
+SELECT member_id, cnt,
+       CASE
+         WHEN cnt >= 1000 THEN 1000
+         WHEN cnt >= 500  THEN 500
+         WHEN cnt >= 300  THEN 300
+         WHEN cnt >= 100  THEN 100
+         ELSE             10
+       END AS min_issues
+FROM (
+  SELECT member_id, COUNT(*) AS cnt
+  FROM coupon_issue
+  WHERE member_id BETWEEN 1 AND 10000
+  GROUP BY member_id
+  ${HAVING_CLAUSE}
+) AS sub
+ORDER BY member_id;
+"
+
+BUCKET_COUNT=$(run_sql_read "SELECT COUNT(*) FROM member_buckets;" || echo "0")
+echo "  member_buckets populated: $BUCKET_COUNT rows (filter: ${BUCKET_LABEL})"
+if [[ "${BUCKET_COUNT:-0}" -lt "$BUCKET_MIN" ]]; then
+  echo "  ERROR: member_buckets has only $BUCKET_COUNT rows (< $BUCKET_MIN). Seed distribution may be wrong." >&2
+  echo "  Scale=${SCALE}: expected filter '${HAVING_CLAUSE}' to yield >= ${BUCKET_MIN} members." >&2
+  exit 1
+fi
+echo "  member_buckets assertion PASSED (>= ${BUCKET_MIN} rows)."
+# Report per-threshold breakdown
+run_sql "
+SELECT min_issues AS threshold, COUNT(*) AS members
+FROM member_buckets
+GROUP BY min_issues
+ORDER BY min_issues DESC;
+" || true
+
 echo "[6/6] Running ANALYZE TABLE and printing final counts..."
-run_sql "ANALYZE TABLE coupon_policy, member, coupon_issue;"
+run_sql "ANALYZE TABLE coupon_policy, member, coupon_issue, member_buckets;"
 
 run_sql "
 SELECT 'coupon_policy' AS tbl, COUNT(*) AS row_count FROM coupon_policy
 UNION ALL
 SELECT 'member',         COUNT(*) FROM member
 UNION ALL
-SELECT 'coupon_issue',   COUNT(*) FROM coupon_issue;
+SELECT 'coupon_issue',   COUNT(*) FROM coupon_issue
+UNION ALL
+SELECT 'member_buckets', COUNT(*) FROM member_buckets;
 "
 
 run_sql "
@@ -202,6 +284,64 @@ SELECT status, COUNT(*) AS cnt,
 FROM coupon_issue
 GROUP BY status;
 "
+
+echo ""
+echo "=== Seed validation ==="
+# Verify row counts match intended scale.
+ACTUAL_POLICY=$(run_sql_read "SELECT COUNT(*) FROM coupon_policy;" || echo "0")
+ACTUAL_MEMBER=$(run_sql_read "SELECT COUNT(*) FROM member;" || echo "0")
+ACTUAL_ISSUE=$(run_sql_read "SELECT COUNT(*) FROM coupon_issue;" || echo "0")
+
+echo "  Expected: policy=$POLICY_COUNT member=$MEMBER_COUNT issue=$ISSUE_COUNT"
+echo "  Actual:   policy=$ACTUAL_POLICY member=$ACTUAL_MEMBER issue=$ACTUAL_ISSUE"
+
+VALIDATION_PASS=true
+if [[ "${ACTUAL_POLICY:-0}" -ne "$POLICY_COUNT" ]]; then
+  echo "  ERROR: coupon_policy count mismatch: got $ACTUAL_POLICY, expected $POLICY_COUNT" >&2
+  VALIDATION_PASS=false
+fi
+if [[ "${ACTUAL_MEMBER:-0}" -ne "$MEMBER_COUNT" ]]; then
+  echo "  ERROR: member count mismatch: got $ACTUAL_MEMBER, expected $MEMBER_COUNT" >&2
+  VALIDATION_PASS=false
+fi
+if [[ "${ACTUAL_ISSUE:-0}" -ne "$ISSUE_COUNT" ]]; then
+  echo "  ERROR: coupon_issue count mismatch: got $ACTUAL_ISSUE, expected $ISSUE_COUNT" >&2
+  VALIDATION_PASS=false
+fi
+
+# Validate policy skew: top 20% of policies should hold ~40-99% of issues (Zipf-like).
+TOP20_LIMIT=$(python3 -c "import math; print(max(1, int(math.floor($POLICY_COUNT * 0.20))))" 2>/dev/null || echo "1")
+SKEW_CHECK=$(run_sql_read "SELECT ROUND(SUM(cnt) * 100.0 / (SELECT COUNT(*) FROM coupon_issue), 1) FROM (SELECT policy_id, COUNT(*) AS cnt FROM coupon_issue GROUP BY policy_id ORDER BY cnt DESC LIMIT ${TOP20_LIMIT}) top_policies;" || echo "0")
+SKEW_CHECK="${SKEW_CHECK:-0}"
+echo "  Top 20% policies cover: ${SKEW_CHECK}% of issues"
+if python3 -c "exit(0 if 40 <= float('${SKEW_CHECK}') <= 99 else 1)" 2>/dev/null; then
+  echo "  Skew validation: PASS (Zipf-like distribution confirmed)"
+else
+  echo "  WARNING: skew outside expected range [40,99]%. Check POW(RAND(),3) seed logic." >&2
+fi
+
+# Write validation report to JSON (always, even if validation failed)
+TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+mkdir -p db
+python3 - <<PYEOF
+import json
+report = {
+  "scale": "$SCALE",
+  "timestamp": "$TS",
+  "expected": {"policy": $POLICY_COUNT, "member": $MEMBER_COUNT, "issue": $ISSUE_COUNT},
+  "actual": {"policy": int("${ACTUAL_POLICY:-0}"), "member": int("${ACTUAL_MEMBER:-0}"), "issue": int("${ACTUAL_ISSUE:-0}")},
+  "top20pct_policy_coverage_pct": float("${SKEW_CHECK}"),
+  "validation_pass": "$VALIDATION_PASS" == "true"
+}
+with open("db/seed-validation-report.json", "w") as f:
+    json.dump(report, f, indent=2)
+print("  Validation report: db/seed-validation-report.json")
+PYEOF
+
+if [[ "$VALIDATION_PASS" == "false" ]]; then
+  echo "ERROR: Seed validation failed. Check output above." >&2
+  exit 1
+fi
 
 echo ""
 echo "=== seed.sh done (SCALE=$SCALE) ==="

@@ -1,15 +1,27 @@
 server:
   port: 8080
+  tomcat:
+    threads:
+      max: 50
+    accept-count: 100
 
 spring:
   datasource:
-    url: jdbc:mysql://lab-mysql:3306/lab?rewriteBatchedStatements=true
+    # rewriteBatchedStatements removed: this harness uses individual SELECT queries,
+    # not JDBC batch INSERTs. Including the flag would mask per-query wire count in
+    # Hibernate statistics and confound N+1 measurements.
+    url: jdbc:mysql://lab-mysql:3306/lab
     username: root
     password: labpass
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
       pool-name: lab-pool
+      # connectionTimeout capped at 5s: if HikariCP cannot acquire a connection within
+      # 5s the request fails fast rather than queuing indefinitely. This makes pool
+      # saturation visible as request failures (measurable) rather than queue growth
+      # (latency that looks like app-level slowness). Scenario L uses this for knee detection.
+      connection-timeout: 5000
 
   jpa:
     open-in-view: false
@@ -31,4 +43,9 @@ spring:
 
 lab:
   c:
+    # candidateCap default is 50000 (startup-safe sentinel).
+    # IMPORTANT: every Scenario C measurement cell MUST override this explicitly via
+    # LAB_C_CANDIDATE_CAP env var in run-cell.sh. The sentinel value of 50000 must
+    # NOT be used for measurement — it must appear in the cell metadata as an explicit
+    # decision, not as a silent default. See PREREGISTRATION.md §5 for the sweep plan.
     candidate-cap: ${LAB_C_CANDIDATE_CAP:50000}

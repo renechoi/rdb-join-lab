@@ -43,8 +43,31 @@ CREATE TABLE IF NOT EXISTS coupon_issue (
 CREATE INDEX idx_issue_member_status
     ON coupon_issue (member_id, status);
 
+-- R4 fix: composite index (member_id, id) for Scenario B ORDER BY id ASC queries.
+-- Without this index, WHERE member_id = ? ORDER BY id ASC requires a filesort after
+-- the idx_issue_member_status range scan, adding O(N log N) sort overhead that grows
+-- with N and inflates measured latency for all styles using the bounded findByMemberId query.
+-- With this index, MySQL can satisfy both the WHERE and ORDER BY clauses in a single
+-- index scan (covering the ORDER BY key via index order), eliminating filesort.
+CREATE INDEX idx_issue_member_id
+    ON coupon_issue (member_id, id);
+
 CREATE INDEX idx_issue_policy_issued
     ON coupon_issue (policy_id, issued_at);
 
 CREATE INDEX idx_policy_expire
     ON coupon_policy (expire_at);
+
+-- Scenario C: covering index for global status queries.
+-- Used by appNaive phase-1 (global status scan, no memberId predicate).
+-- EXPLAIN target for appNaive: range/ref on idx_issue_status or idx_issue_status_policy.
+CREATE INDEX idx_issue_status
+    ON coupon_issue (status);
+
+-- Scenario C: covering index for candidateCap-bounded status scans.
+-- Used by appNaive phase-1 (global status scan) when the planner prefers the narrower
+-- (status, policy_id, issued_at) covering path over idx_issue_status.
+-- NOT used by appOptimized, which scopes on memberId and uses idx_issue_member_status.
+-- NOT used by join style, which joins on memberId+status and uses idx_issue_member_status.
+CREATE INDEX idx_issue_status_policy
+    ON coupon_issue (status, policy_id, issued_at);

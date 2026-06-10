@@ -64,6 +64,8 @@ apply_env_overrides() {
     restore_app_env
     return 0
   fi
+  # HIBERNATE_DEFAULT_BATCH_FETCH_SIZE requires an app container recreate (changes Spring
+  # startup environment). Handle this special case with docker-compose up -d.
   if [[ "$overrides" == *"HIBERNATE_DEFAULT_BATCH_FETCH_SIZE"* ]]; then
     local kv val
     kv=$(echo "$overrides" | tr ',' '\n' | grep '^HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=')
@@ -73,9 +75,26 @@ apply_env_overrides() {
     wait_app_health
     APP_ENV_DIRTY=1
   fi
+  # Generic fallback: export all KEY=VAL pairs from the env_overrides column so that
+  # run-cell.sh can read them (e.g. LAB_C_CANDIDATE_CAP, MAX_MEMBER_ID).
+  # These are shell-env overrides consumed by run-cell.sh, not app container env vars.
+  local kv
+  for kv in $(echo "$overrides" | tr ',' ' '); do
+    if [[ "$kv" =~ ^[A-Z_][A-Z0-9_]*=.* ]]; then
+      export "$kv"
+    fi
+  done
 }
 
 TOTAL=0; DONE=0; SKIPPED=0; FAILED=0; STOPPED_BY_CAP=0
+
+# JVM priming: fire WARM_REQS requests per style before first measurement cell
+# so HotSpot C2 reaches tier-2 compilation. See scripts/prime-jvm.sh.
+echo "[campaign] Running JVM primer (prime-jvm.sh)..."
+SCALE="${SCALE:-smoke}" APP_URL="http://localhost:18080" ./scripts/prime-jvm.sh || {
+  echo "[campaign] WARNING: JVM priming failed — continuing without priming (first cells may show cold-JIT overhead)" >&2
+}
+echo "[campaign] JVM priming complete."
 
 while IFS=$'\t' read -r scenario style rtt rate duration extra envov || [[ -n "${scenario:-}" ]]; do
   [[ -z "${scenario:-}" || "$scenario" == \#* ]] && continue
@@ -98,13 +117,15 @@ while IFS=$'\t' read -r scenario style rtt rate duration extra envov || [[ -n "$
 
   echo ""
   echo "[campaign] ($((DONE + FAILED + 1))) cell: ${KEY}"
-  apply_env_overrides "${envov:--}"
 
   EXTRA_ARG=""
   [[ -n "${extra:-}" && "$extra" != "-" ]] && EXTRA_ARG="$extra"
 
+  # apply_env_overrides is called INSIDE the retry loop (R4 fix) so that env state
+  # is deterministically reset before each attempt rather than only before attempt 1.
   ATTEMPT=1; CELL_OK=0
   while (( ATTEMPT <= 2 )); do
+    apply_env_overrides "${envov:--}"
     if ./scripts/run-cell.sh "$scenario" "$style" "$rtt" "$rate" "$duration" "$EXTRA_ARG"; then
       CELL_OK=1
       break

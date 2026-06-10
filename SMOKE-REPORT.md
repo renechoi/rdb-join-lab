@@ -42,28 +42,37 @@ After netem removed:
 
 ## Endpoint Checks — All 18 PASS
 
-| Endpoint | Result |
-|----------|--------|
-| GET /a/join?issueId=1 | PASS HTTP 200 |
-| GET /a/seq?issueId=1 | PASS HTTP 200 |
-| GET /a/par?issueId=1 | PASS HTTP 200 |
-| GET /a/jdbc-join?issueId=1 | PASS HTTP 200 |
-| GET /a/jdbc-seq?issueId=1 | PASS HTTP 200 |
-| GET /b/lazy?memberId=324&limit=20 | PASS HTTP 200 |
-| GET /b/joinfetch?memberId=324&limit=20 | PASS HTTP 200 |
-| GET /b/byid?memberId=324&limit=20 | PASS HTTP 200 |
-| GET /b/inbatch?memberId=324&limit=20 | PASS HTTP 200 |
-| GET /b/jdbc-join?memberId=324&limit=20 | PASS HTTP 200 |
-| GET /b/jdbc-inbatch?memberId=324&limit=20 | PASS HTTP 200 |
-| GET /c/join?status=ISSUED&limit=20 | PASS HTTP 200 |
-| GET /c/app?status=ISSUED&limit=20 | PASS HTTP 200 |
-| GET /calibrate?n=1000 | PASS HTTP 200 |
-| N+1 evidence (query count=17 > 10) | PASS |
-| JOIN efficiency (query count=1 <= 3) | PASS |
-| Netem 2ms: p50=3096us > 1500us | PASS |
-| Netem removed: p50=58us < 700us | PASS |
+> **NOTE (R4 adversarial cycle fix)**: Rows 13-14 below reflect the state at smoke-test time
+> (pre-R3 code). Endpoints `/c/app` and `/c/join` used only `status` + `limit` parameters
+> (no `memberId`). After R3 refactoring, Scenario C endpoints were split into `app-naive`,
+> `app-optimized`, and `join` styles, all requiring `memberId` + `status` + `limit`.
+> The correct current endpoints are listed in the CORRECTED column.
+> The historical PASS results below are valid for the version they were tested against.
+
+| Endpoint | Result | Corrected Current Endpoint |
+|----------|--------|---------------------------|
+| GET /a/join?issueId=1 | PASS HTTP 200 | (unchanged) |
+| GET /a/seq?issueId=1 | PASS HTTP 200 | (unchanged) |
+| GET /a/par?issueId=1 | PASS HTTP 200 | (unchanged) |
+| GET /a/jdbc-join?issueId=1 | PASS HTTP 200 | (unchanged) |
+| GET /a/jdbc-seq?issueId=1 | PASS HTTP 200 | (unchanged) |
+| GET /b/lazy?memberId=324&limit=20 | PASS HTTP 200 | (unchanged) |
+| GET /b/joinfetch?memberId=324&limit=20 | PASS HTTP 200 | (unchanged) |
+| GET /b/byid?memberId=324&limit=20 | PASS HTTP 200 | (unchanged) |
+| GET /b/inbatch?memberId=324&limit=20 | PASS HTTP 200 | (unchanged) |
+| GET /b/jdbc-join?memberId=324&limit=20 | PASS HTTP 200 | (unchanged) |
+| GET /b/jdbc-inbatch?memberId=324&limit=20 | PASS HTTP 200 | (unchanged) |
+| GET /c/join?status=ISSUED&limit=20 | PASS HTTP 200 | **GET /c/join?memberId=324&status=ISSUED&limit=20** |
+| GET /c/app?status=ISSUED&limit=20 | PASS HTTP 200 | **GET /c/app-naive?memberId=324&status=ISSUED&limit=20** (split into app-naive and app-optimized) |
+| GET /calibrate?n=1000 | PASS HTTP 200 | (unchanged) |
+| N+1 evidence (query count=17 > 10) | PASS | (unchanged) |
+| JOIN efficiency (query count=1 <= 3) | PASS | (unchanged) |
+| Netem 2ms: p50=3096us > 1500us | PASS | (unchanged) |
+| Netem removed: p50=58us < 700us | PASS | (unchanged) |
 
 **SMOKE SUMMARY: 18 PASS / 0 FAIL**
+
+**R4 smoke re-run required** after applying R4 fixes (schema.sql new index + my.cnf AHI/stats changes require a fresh container). Run: `docker-compose up -d --build app && bash scripts/smoke.sh`
 
 ---
 

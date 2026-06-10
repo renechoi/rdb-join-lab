@@ -4,19 +4,28 @@
 # Orchestrates a single measurement cell:
 #   1. Apply netem delay (set-netem.sh)
 #   2. Warm buffer pool (warmup.sh)
-#   3. Calibrate actual RTT (calibrate.sh)
-#   4. Run k6 load test; write summary to results/<scenario>-<style>-rtt<RTT_US>-r<RATE>-<epoch>.json
+#   3. Dual calibration: calibrate (held conn) + calibrate/loaded (per-checkout)
+#   4. Run k6 load test COARSE_REPEATS times; write summary to results/ per repeat.
+#
+# Pre-registration: see PREREGISTRATION.md for hypotheses, judgment criteria, and
+# multiple-comparison protocol (Benjamini-Hochberg FDR).
 #
 # Parameters:
-#   SCENARIO    a, b, or c
-#   STYLE       endpoint style (e.g. join, seq, inbatch, lazy ...)
-#   RTT_US      nominal one-way delay in microseconds (0 = no netem)
-#   RATE        k6 arrival rate (requests/second)
-#   DURATION    k6 test duration string (e.g. 2m, 5m)
-#   EXTRA_QS    (optional) extra query string appended to the request (e.g. "limit=100")
+#   SCENARIO       a, b, or c
+#   STYLE          endpoint style (e.g. join, seq, inbatch, lazy ...)
+#   RTT_US         nominal one-way delay in microseconds (0 = no netem)
+#   RATE           k6 arrival rate (requests/second)
+#   DURATION       k6 test duration string (e.g. 2m, 5m)
+#   EXTRA_QS       (optional) extra query string appended to the request (e.g. "limit=100")
+#
+# Environment overrides (set before calling this script):
+#   SCALE              smoke | pilot | full (used to set MAX_MEMBER_ID, MAX_ISSUE_ID)
+#   COARSE_REPEATS     number of k6 runs per cell (default: 2 for coarse sweep, 3 for precision)
+#   LAB_C_CANDIDATE_CAP candidateCap for Scenario C (required for Scenario C cells)
 #
 # Example:
-#   ./scripts/run-cell.sh b inbatch 300 50 2m "limit=20"
+#   SCALE=pilot ./scripts/run-cell.sh b inbatch 300 50 2m "limit=20"
+#   SCALE=pilot LAB_C_CANDIDATE_CAP=10000 ./scripts/run-cell.sh c app-naive 300 50 2m
 set -euo pipefail
 
 SCENARIO="${1:?SCENARIO required}"
@@ -28,10 +37,33 @@ EXTRA_QS="${6:-}"
 
 cd "$(dirname "$0")/.."
 
-EPOCH=$(date +%s)
-OUTPUT_FILE="results/${SCENARIO}-${STYLE}-rtt${RTT_US}-r${RATE}-${EPOCH}.json"
+SCALE="${SCALE:-smoke}"
+COARSE_REPEATS="${COARSE_REPEATS:-2}"
+# N: result-set size for Scenario B cells; forwarded to k6 via env (k6 uses it to
+# parameterise the limit= query string within the script). Default 20 (coarse sweep min).
+N="${N:-20}"
 
-echo "=== Cell: scenario=${SCENARIO} style=${STYLE} rtt=${RTT_US}us rate=${RATE}rps duration=${DURATION} ==="
+# Scale-dependent dataset size parameters (must match seed.sh SCALE values)
+case "$SCALE" in
+  smoke)
+    MAX_ISSUE_ID=100000
+    MAX_MEMBER_ID=10000
+    ;;
+  pilot)
+    MAX_ISSUE_ID=1000000
+    MAX_MEMBER_ID=100000
+    ;;
+  full)
+    MAX_ISSUE_ID=10000000
+    MAX_MEMBER_ID=1000000
+    ;;
+  *)
+    echo "Unknown SCALE='$SCALE'. Use: smoke | pilot | full" >&2
+    exit 1
+    ;;
+esac
+
+echo "=== Cell: scenario=${SCENARIO} style=${STYLE} rtt=${RTT_US}us rate=${RATE}rps duration=${DURATION} scale=${SCALE} repeats=${COARSE_REPEATS} ==="
 
 # Step 1: Set netem
 echo "[1/4] Setting netem delay ${RTT_US}us..."
@@ -41,21 +73,79 @@ echo "[1/4] Setting netem delay ${RTT_US}us..."
 echo "[2/4] Warming InnoDB buffer pool..."
 ./scripts/warmup.sh
 
-# Step 3: Calibrate actual RTT
-echo "[3/4] Calibrating actual RTT (nominal=${RTT_US}us)..."
+# Step 3: Dual calibration (held connection + per-checkout)
+echo "[3/4] Dual calibration (nominal=${RTT_US}us)..."
+APP_URL="${APP_URL:-http://localhost:18080}"
+echo "  [held conn] calibrate n=10000..."
+curl -sf "${APP_URL}/calibrate?n=10000" | python3 -m json.tool 2>/dev/null || true
+echo "  [per checkout] calibrate/loaded n=10000..."
+curl -sf "${APP_URL}/calibrate/loaded?n=10000" | python3 -m json.tool 2>/dev/null || true
+# Also write to calibration.jsonl for cell records
 ./scripts/calibrate.sh "$RTT_US"
 
-# Step 4: Run k6
-echo "[4/4] Running k6 (output -> ${OUTPUT_FILE})..."
-docker-compose run --rm \
-  -e SCENARIO="$SCENARIO" \
-  -e STYLE="$STYLE" \
-  -e RATE="$RATE" \
-  -e DURATION="$DURATION" \
-  -e BASE_URL="http://lab-app:8080" \
-  -e EXTRA_QS="$EXTRA_QS" \
-  k6 run \
-    --summary-export "/results/$(basename "$OUTPUT_FILE")" \
-    /scripts/scenario.js
+# Step 4: Run k6 COARSE_REPEATS times
+for REP in $(seq 1 "$COARSE_REPEATS"); do
+  EPOCH=$(date +%s)
 
-echo "=== Cell complete. Results in ${OUTPUT_FILE} ==="
+  # Build k6 env from scale parameters
+  K6_ENV=(
+    -e SCENARIO="$SCENARIO"
+    -e STYLE="$STYLE"
+    -e RATE="$RATE"
+    -e DURATION="$DURATION"
+    -e BASE_URL="http://lab-app:8080"
+    -e EXTRA_QS="$EXTRA_QS"
+    -e MAX_ISSUE_ID="$MAX_ISSUE_ID"
+    -e MAX_MEMBER_ID="$MAX_MEMBER_ID"
+    -e N="$N"
+  )
+
+  # par style saturation cap: Tomcat maxThreads=50 / avg_query_chains=3 → ~16 rps before
+  # pool saturation. Exceeding this inflates Scenario A par latency via Tomcat queue rather
+  # than measuring the actual parallel-query cost. Cap at 3 rps below theoretical limit.
+  if [[ "$STYLE" == "par" ]]; then
+    PAR_MAX_RATE=14
+    if (( RATE > PAR_MAX_RATE )); then
+      echo "INFO: Capping RATE from $RATE to $PAR_MAX_RATE for par style (Tomcat saturation limit: maxThreads=50 / 3 chains = ~16 rps)"
+      RATE=$PAR_MAX_RATE
+      K6_ENV=(-e SCENARIO="$SCENARIO" -e STYLE="$STYLE" -e RATE="$PAR_MAX_RATE" -e DURATION="$DURATION" -e BASE_URL="http://lab-app:8080" -e EXTRA_QS="$EXTRA_QS" -e MAX_ISSUE_ID="$MAX_ISSUE_ID" -e MAX_MEMBER_ID="$MAX_MEMBER_ID" -e N="$N")
+    fi
+  fi
+
+  # Scenario B/L cells N>=100: override MAX_MEMBER_ID to target the member_buckets subset
+  # (members 1-10000 are seeded with enough issues to satisfy each N threshold; see db/seed.sh §5b).
+  # R4 fix: threshold changed from N==1000 to N>=100 to cover N=100/300/500/1000 cells.
+  # Without this, random member IDs for N=100/300/500 often don't have enough issues,
+  # causing effective N to be lower than declared N.
+  if [[ ( "$SCENARIO" == "b" || "$SCENARIO" == "l" ) && ${N:-20} -ge 100 ]]; then
+    MAX_MEMBER_ID=10000
+    K6_ENV=(-e SCENARIO="$SCENARIO" -e STYLE="$STYLE" -e RATE="$RATE" -e DURATION="$DURATION" -e BASE_URL="http://lab-app:8080" -e EXTRA_QS="$EXTRA_QS" -e MAX_ISSUE_ID="$MAX_ISSUE_ID" -e MAX_MEMBER_ID="$MAX_MEMBER_ID" -e N="$N")
+  fi
+
+  # Scenario C: require LAB_C_CANDIDATE_CAP (for app-naive / app-optimized styles).
+  # join style is exempt (does not use candidateCap on the server side).
+  if [[ "$SCENARIO" == "c" && "$STYLE" != "join" ]]; then
+    if [[ -z "${LAB_C_CANDIDATE_CAP:-}" ]]; then
+      echo "ERROR: LAB_C_CANDIDATE_CAP must be set for Scenario C app-naive/app-optimized cells." >&2
+      exit 1
+    fi
+    K6_ENV+=(-e LAB_C_CANDIDATE_CAP="$LAB_C_CANDIDATE_CAP")
+  fi
+
+  # OUTPUT_FILE is computed AFTER any rate cap / env overrides so the filename
+  # reflects the actual RATE used (e.g. par capped at 14 rps, not the incoming 50).
+  OUTPUT_FILE="results/${SCENARIO}-${STYLE}-rtt${RTT_US}-r${RATE}-rep${REP}-${EPOCH}.json"
+
+  echo "[4/${COARSE_REPEATS}] Running k6 repeat ${REP}/${COARSE_REPEATS} (output -> ${OUTPUT_FILE})..."
+
+  docker-compose run --rm \
+    --cpuset-cpus "4,5" \
+    "${K6_ENV[@]}" \
+    k6 run \
+      --summary-export "/results/$(basename "$OUTPUT_FILE")" \
+      /scripts/scenario.js
+
+  echo "  Repeat ${REP} complete. Results in ${OUTPUT_FILE}"
+done
+
+echo "=== Cell complete: ${COARSE_REPEATS} repeat(s) for ${SCENARIO}/${STYLE} rtt=${RTT_US}us ==="

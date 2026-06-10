@@ -23,7 +23,7 @@ measurement artifact.
 ### 1. Build and start all services
 
 ```bash
-docker compose up -d --build
+docker-compose up -d --build
 ```
 
 Services started:
@@ -81,7 +81,7 @@ bash scripts/warmup.sh
 bash scripts/bufferpool-dump.sh
 
 # Run k6 manually (tools profile)
-docker compose run --rm k6 run /scripts/scenario-runner.js
+docker-compose run --rm k6 run /scripts/scenario.js
 ```
 
 ---

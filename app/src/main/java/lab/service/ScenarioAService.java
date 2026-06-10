@@ -34,14 +34,22 @@ public class ScenarioAService {
     private final MemberRepository memberRepo;
     private final CouponJdbcDao jdbcDao;
 
-    // Small fixed executor for parallel sub-queries in the 'par' style.
-    // Two threads are sufficient: we fan out exactly 2 tasks (policy + member).
-    private final Executor parallelExecutor = Executors.newFixedThreadPool(2,
-            r -> {
-                Thread t = new Thread(r, "scenario-a-par");
-                t.setDaemon(true);
-                return t;
-            });
+    /**
+     * Virtual-thread executor for the 'par' style.
+     *
+     * Each par() request uses exactly 3 HikariCP connections concurrently:
+     *   1. The caller's connection (held by the @Transactional context for the ref lookup).
+     *   2. A connection for the policy future.
+     *   3. A connection for the member future.
+     * At pool size 10 this bounds concurrent par() requests to ~3 before queuing starts.
+     * This is intentional: the experiment measures how connection-per-roundtrip overhead
+     * compounds at increasing arrival rates (Scenario L in plan.md §3.2).
+     *
+     * Virtual threads (Java 21) are used instead of a fixed pool to avoid introducing
+     * a separate thread-pool bottleneck that is independent of HikariCP saturation.
+     * With virtual threads, OS scheduling is not the constraint; only the DB pool is.
+     */
+    private final Executor parallelExecutor = Executors.newVirtualThreadPerTaskExecutor();
 
     public ScenarioAService(CouponIssueRepository issueRepo,
                              CouponIssueRefRepository issueRefRepo,
@@ -125,7 +133,16 @@ public class ScenarioAService {
 
     /**
      * jdbc-seq: 3 sequential raw SQL SELECTs, no JPA.
+     *
+     * R4 fix: added @Transactional(readOnly=true) to match the seq() connection lifecycle.
+     * Without a transaction boundary, Spring's JdbcTemplate issues each SQL on a separate
+     * HikariCP checkout, contributing 3 connection acquisitions per request (vs seq()'s 1).
+     * The goal of jdbc-seq is to measure the overhead of raw JDBC vs JPA seq for the same
+     * 3-query workload — not to measure 3x pool-checkout overhead. The @Transactional
+     * annotation ensures both seq() and jdbcSeq() use 1 pool checkout for 3 queries,
+     * isolating the JPA/JDBC processing difference from the connection-management difference.
      */
+    @Transactional(readOnly = true)
     public IssueDetailDto jdbcSeq(long issueId) {
         return jdbcDao.findByIdSeq(issueId);
     }

@@ -15,13 +15,13 @@
  *
  *     Scenario B:  MAX_MEMBER_ID  (default: 10000)
  *                  N              (default: 20)   — list limit
- *       styles: lazy | joinfetch | byid | inbatch | jdbc-join | jdbc-inbatch
+ *       styles: lazy | lazy-unbounded | joinfetch | byid | inbatch | inbatch-nodup | batchfetch | jdbc-join | jdbc-inbatch
  *
- *     Scenario C:  (no extra params; uses status=ISSUED&limit=20)
- *       styles: join | app
+ *     Scenario C:  memberId=<random>, status=ISSUED, limit=20 (built into buildUrl(); no EXTRA_QS needed)
+ *       styles: join | app-naive | app-optimized
  *
  * Executor: constant-arrival-rate (open model).
- *   Avoids coordinated omission (Gil Tene).  preAllocatedVUs=50, maxVUs=200.
+ *   Avoids coordinated omission (Gil Tene).  preAllocatedVUs=100, maxVUs=1000.
  *
  * Thresholds: none — this harness collects data; it does not gate.
  *
@@ -58,11 +58,18 @@ export const options = {
             rate:            RATE,
             timeUnit:        '1s',
             duration:        DURATION,
-            preAllocatedVUs: 50,
-            maxVUs:          200,
+            preAllocatedVUs: 100,
+            maxVUs:          1000,
         },
     },
-    // No thresholds: results are analyzed offline, not gated here.
+    // VU-cap threshold: alert if k6 needed more than 800 VUs (80% of maxVUs).
+    // This indicates the system was overloaded beyond measurement intent (Scenario L boundary).
+    // Threshold is informational only (abortOnFail: false); do not gate the test.
+    thresholds: {
+        vus_max: [{ threshold: 'value<800', abortOnFail: false }],
+    },
+    // Ensure p(99) is included in --summary-export JSON (k6 default omits p(99)).
+    summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
 };
 
 // ── URL builders ──────────────────────────────────────────────────────────────
@@ -99,8 +106,12 @@ function buildUrl() {
             return `${BASE_URL}/b/${STYLE}?${qs}`;
         }
         case 'c': {
-            // GET /c/{style}?status=ISSUED&limit=20
-            const qs = withExtra('status=ISSUED&limit=20');
+            // GET /c/{style}?memberId=<random>&status=ISSUED&limit=20
+            // memberId scoping added to match Scenario B framing and enable fair comparison.
+            // app-naive style ignores memberId on the server side but we still pass it for
+            // consistent URL structure across styles.
+            const memberId = randInt(MAX_MEMBER_ID);
+            const qs = withExtra(`memberId=${memberId}&status=ISSUED&limit=20`);
             return `${BASE_URL}/c/${STYLE}?${qs}`;
         }
         default:
