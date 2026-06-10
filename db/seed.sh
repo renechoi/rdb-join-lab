@@ -360,7 +360,8 @@ ACTUAL_POLICY=$(run_sql_read "SELECT COUNT(*) FROM coupon_policy;" || echo "0")
 ACTUAL_MEMBER=$(run_sql_read "SELECT COUNT(*) FROM member;" || echo "0")
 ACTUAL_ISSUE=$(run_sql_read "SELECT COUNT(*) FROM coupon_issue;" || echo "0")
 
-echo "  Expected: policy=$POLICY_COUNT member=$MEMBER_COUNT issue=$ISSUE_COUNT"
+EXPECTED_ISSUE_TOTAL=$((ISSUE_COUNT + HOT_MEMBER_COUNT * HOT_ISSUES_PER))
+echo "  Expected: policy=$POLICY_COUNT member=$MEMBER_COUNT issue=$EXPECTED_ISSUE_TOTAL (uniform $ISSUE_COUNT + hot tier $((HOT_MEMBER_COUNT * HOT_ISSUES_PER)))"
 echo "  Actual:   policy=$ACTUAL_POLICY member=$ACTUAL_MEMBER issue=$ACTUAL_ISSUE"
 
 VALIDATION_PASS=true
@@ -372,8 +373,8 @@ if [[ "${ACTUAL_MEMBER:-0}" -ne "$MEMBER_COUNT" ]]; then
   echo "  ERROR: member count mismatch: got $ACTUAL_MEMBER, expected $MEMBER_COUNT" >&2
   VALIDATION_PASS=false
 fi
-if [[ "${ACTUAL_ISSUE:-0}" -ne "$ISSUE_COUNT" ]]; then
-  echo "  ERROR: coupon_issue count mismatch: got $ACTUAL_ISSUE, expected $ISSUE_COUNT" >&2
+if [[ "${ACTUAL_ISSUE:-0}" -ne "$EXPECTED_ISSUE_TOTAL" ]]; then
+  echo "  ERROR: coupon_issue count mismatch: got $ACTUAL_ISSUE, expected $EXPECTED_ISSUE_TOTAL" >&2
   VALIDATION_PASS=false
 fi
 
