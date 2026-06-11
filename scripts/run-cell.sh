@@ -87,11 +87,15 @@ echo "[2/4] Warming InnoDB buffer pool..."
 echo "[3/4] Dual calibration (nominal=${RTT_US}us)..."
 APP_URL="${APP_URL:-http://localhost:18080}"
 echo "  [held conn] calibrate n=10000..."
-curl -sf "${APP_URL}/calibrate?n=10000" | python3 -m json.tool 2>/dev/null || true
+# Calibration n is RTT-adaptive: at high RTT a 10k-roundtrip probe costs minutes per
+# cell while adding no labeling precision. 2000 samples keep p50/p95 stable.
+CAL_N=10000
+if [[ "$RTT_US" -ge 5000 ]]; then CAL_N=2000; fi
+curl -sf "${APP_URL}/calibrate?n=${CAL_N}" | python3 -m json.tool 2>/dev/null || true
 echo "  [per checkout] calibrate/loaded n=10000..."
-curl -sf "${APP_URL}/calibrate/loaded?n=10000" | python3 -m json.tool 2>/dev/null || true
+curl -sf "${APP_URL}/calibrate/loaded?n=${CAL_N}" | python3 -m json.tool 2>/dev/null || true
 # Also write to calibration.jsonl for cell records
-./scripts/calibrate.sh "$RTT_US"
+CAL_N="$CAL_N" ./scripts/calibrate.sh "$RTT_US"
 
 # Step 4: Run k6 COARSE_REPEATS times
 for REP in $(seq 1 "$COARSE_REPEATS"); do

@@ -23,8 +23,9 @@ cd "$(dirname "$0")/.."
 mkdir -p results
 
 echo "Running dual calibration probe (n=10000 held + n=10000 loaded)..."
-HELD_RESPONSE=$(curl -sf "${APP_URL}/calibrate?n=10000")
-LOADED_RESPONSE=$(curl -sf "${APP_URL}/calibrate/loaded?n=10000")
+CAL_N="${CAL_N:-10000}"
+HELD_RESPONSE=$(curl -sf "${APP_URL}/calibrate?n=${CAL_N}")
+LOADED_RESPONSE=$(curl -sf "${APP_URL}/calibrate/loaded?n=${CAL_N}")
 
 echo "=== held (pure wire RTT) ==="
 echo "$HELD_RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$HELD_RESPONSE"
