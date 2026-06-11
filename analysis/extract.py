@@ -26,7 +26,7 @@ import sys
 
 FNAME_RE = re.compile(
     r"^(?P<scenario>[a-z]+)-(?P<style>[A-Za-z0-9+_.-]+)-rtt(?P<rtt>\d+)-r(?P<rate>\d+)"
-    r"(?:-rep(?P<rep>\d+))?-(?P<epoch>\d+)\.json$"
+    r"(?:-n(?P<n>\d+))?(?:-rep(?P<rep>\d+))?-(?P<epoch>\d+)\.json$"
 )
 
 
@@ -130,6 +130,7 @@ def extract_run(path, calibs):
         "style": m.group("style"),
         "rtt_us_nominal": rtt,
         "rate": int(m.group("rate")),
+        "n": int(m.group("n")) if m.group("n") else None,
         "repeat": int(m.group("rep") or 1),
         "epoch": epoch,
         "p50_ms": dur.get("med"),

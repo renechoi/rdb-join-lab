@@ -157,7 +157,9 @@ for REP in $(seq 1 "$COARSE_REPEATS"); do
 
   # OUTPUT_FILE is computed AFTER any rate cap / env overrides so the filename
   # reflects the actual RATE used (e.g. par capped at 14 rps, not the incoming 50).
-  OUTPUT_FILE="results/${SCENARIO}-${STYLE}-rtt${RTT_US}-r${RATE}-rep${REP}-${EPOCH}.json"
+  N_TAG=""
+  if [[ "$SCENARIO" == "b" || "$SCENARIO" == "l" ]]; then N_TAG="-n${N}"; fi
+  OUTPUT_FILE="results/${SCENARIO}-${STYLE}-rtt${RTT_US}-r${RATE}${N_TAG}-rep${REP}-${EPOCH}.json"
 
   echo "[4/${COARSE_REPEATS}] Running k6 repeat ${REP}/${COARSE_REPEATS} (output -> ${OUTPUT_FILE})..."
 
