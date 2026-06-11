@@ -127,13 +127,14 @@ while [ "$REMAINING" -gt 0 ]; do
 SET SESSION unique_checks=0;
 SET SESSION foreign_key_checks=0;
 SET SESSION cte_max_recursion_depth = $BATCH;
-INSERT INTO member (name, email, created_at)
+INSERT INTO member (id, name, email, created_at)
 WITH RECURSIVE seq(n) AS (
     SELECT 1
     UNION ALL
     SELECT n + 1 FROM seq WHERE n < $BATCH
 )
 SELECT
+    n + $OFFSET,
     CONCAT('Member-', n + $OFFSET),
     CONCAT('m', n + $OFFSET, '@lab.test'),
     DATE_SUB(NOW(), INTERVAL ((n + $OFFSET) MOD 730) DAY)
@@ -362,6 +363,7 @@ ACTUAL_POLICY=$(run_sql_read "SELECT COUNT(*) FROM coupon_policy;" || echo "0")
 ACTUAL_MEMBER=$(run_sql_read "SELECT COUNT(*) FROM member;" || echo "0")
 ACTUAL_ISSUE=$(run_sql_read "SELECT COUNT(*) FROM coupon_issue;" || echo "0")
 ACTUAL_MAX_ID=$(run_sql_read "SELECT MAX(id) FROM coupon_issue;" || echo "0")
+ACTUAL_MEMBER_MAX_ID=$(run_sql_read "SELECT MAX(id) FROM member;" || echo "0")
 
 EXPECTED_ISSUE_TOTAL=$((ISSUE_COUNT + HOT_MEMBER_COUNT * HOT_ISSUES_PER))
 echo "  Expected: policy=$POLICY_COUNT member=$MEMBER_COUNT issue=$EXPECTED_ISSUE_TOTAL (uniform $ISSUE_COUNT + hot tier $((HOT_MEMBER_COUNT * HOT_ISSUES_PER)))"
@@ -385,6 +387,10 @@ fi
 # in the 2026-06-11 campaign, divergent per-style miss handling tainted scenario A).
 if [[ "${ACTUAL_MAX_ID:-0}" -ne "$EXPECTED_ISSUE_TOTAL" ]]; then
   echo "  ERROR: coupon_issue ids are not gapless: MAX(id)=$ACTUAL_MAX_ID != COUNT=$EXPECTED_ISSUE_TOTAL" >&2
+  VALIDATION_PASS=false
+fi
+if [[ "${ACTUAL_MEMBER_MAX_ID:-0}" -ne "$MEMBER_COUNT" ]]; then
+  echo "  ERROR: member ids are not gapless: MAX(id)=$ACTUAL_MEMBER_MAX_ID != COUNT=$MEMBER_COUNT (issue.member_id references would dangle)" >&2
   VALIDATION_PASS=false
 fi
 
