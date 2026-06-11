@@ -168,7 +168,7 @@ SET SESSION foreign_key_checks=0;
 SET SESSION cte_max_recursion_depth = $BATCH;
 SET @policy_count = $POLICY_COUNT;
 SET @member_count = $MEMBER_COUNT;
-INSERT INTO coupon_issue (policy_id, member_id, status, issued_at, used_at)
+INSERT INTO coupon_issue (id, policy_id, member_id, status, issued_at, used_at)
 WITH RECURSIVE seq(n) AS (
     SELECT 1
     UNION ALL
@@ -182,6 +182,7 @@ base AS (
     FROM seq
 )
 SELECT
+    $OFFSET + n,
     GREATEST(1, FLOOR(POW(RAND(), 3) * @policy_count) + 1),
     FLOOR(1 + RAND() * @member_count),
     ELT(
@@ -223,7 +224,7 @@ SET SESSION cte_max_recursion_depth = $BATCH;
 SET @policy_count = $POLICY_COUNT;
 SET @hot_members = $HOT_MEMBER_COUNT;
 SET @offset = $OFFSET;
-INSERT INTO coupon_issue (policy_id, member_id, status, issued_at, used_at)
+INSERT INTO coupon_issue (id, policy_id, member_id, status, issued_at, used_at)
 WITH RECURSIVE seq(n) AS (
     SELECT 1
     UNION ALL
@@ -237,6 +238,7 @@ base AS (
     FROM seq
 )
 SELECT
+    $ISSUE_COUNT + $OFFSET + n,
     GREATEST(1, FLOOR(POW(RAND(), 3) * @policy_count) + 1),
     1 + MOD(@offset + n - 1, @hot_members),
     ELT(
@@ -359,6 +361,7 @@ echo "=== Seed validation ==="
 ACTUAL_POLICY=$(run_sql_read "SELECT COUNT(*) FROM coupon_policy;" || echo "0")
 ACTUAL_MEMBER=$(run_sql_read "SELECT COUNT(*) FROM member;" || echo "0")
 ACTUAL_ISSUE=$(run_sql_read "SELECT COUNT(*) FROM coupon_issue;" || echo "0")
+ACTUAL_MAX_ID=$(run_sql_read "SELECT MAX(id) FROM coupon_issue;" || echo "0")
 
 EXPECTED_ISSUE_TOTAL=$((ISSUE_COUNT + HOT_MEMBER_COUNT * HOT_ISSUES_PER))
 echo "  Expected: policy=$POLICY_COUNT member=$MEMBER_COUNT issue=$EXPECTED_ISSUE_TOTAL (uniform $ISSUE_COUNT + hot tier $((HOT_MEMBER_COUNT * HOT_ISSUES_PER)))"
@@ -375,6 +378,13 @@ if [[ "${ACTUAL_MEMBER:-0}" -ne "$MEMBER_COUNT" ]]; then
 fi
 if [[ "${ACTUAL_ISSUE:-0}" -ne "$EXPECTED_ISSUE_TOTAL" ]]; then
   echo "  ERROR: coupon_issue count mismatch: got $ACTUAL_ISSUE, expected $EXPECTED_ISSUE_TOTAL" >&2
+  VALIDATION_PASS=false
+fi
+# Gapless id assertion: explicit-id seeding means MAX(id) == COUNT(*). Auto-increment
+# bulk-insert gaps would make random-id sampling hit missing rows (4.6% misses found
+# in the 2026-06-11 campaign, divergent per-style miss handling tainted scenario A).
+if [[ "${ACTUAL_MAX_ID:-0}" -ne "$EXPECTED_ISSUE_TOTAL" ]]; then
+  echo "  ERROR: coupon_issue ids are not gapless: MAX(id)=$ACTUAL_MAX_ID != COUNT=$EXPECTED_ISSUE_TOTAL" >&2
   VALIDATION_PASS=false
 fi
 
