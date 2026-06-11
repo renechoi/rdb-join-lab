@@ -57,11 +57,9 @@ done
 for rtt in "${RTTS[@]}"; do
   for n in 20 100 300 500 1000; do
     for style in lazy lazy-unbounded joinfetch byid inbatch inbatch-nodup batchfetch jdbc-join jdbc-inbatch; do
-      if [[ "$n" -ge 100 ]]; then
-        emit b "$style" "$rtt" 20 "$DUR" "-" "N=${n},MAX_MEMBER_ID=10000"
-      else
-        emit b "$style" "$rtt" 20 "$DUR" "-" "N=${n}"
-      fi
+      # All B cells sample hot members (1..2000, each >= 1200 issues) so the
+      # declared N is the actual returned row count for every request.
+      emit b "$style" "$rtt" 20 "$DUR" "-" "N=${n},MAX_MEMBER_ID=2000"
     done
   done
 done

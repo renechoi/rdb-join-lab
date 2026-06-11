@@ -44,6 +44,12 @@ COARSE_REPEATS="${COARSE_REPEATS:-2}"
 N="${N:-20}"
 
 # Scale-dependent dataset size parameters (must match seed.sh SCALE values)
+# MAX_MEMBER_ID may be pre-set via the cells file env_overrides column (campaign
+# runner exports it). Scale defaults apply only when not provided. Scenario B cells
+# MUST sample the hot-member population (1..HOT_MEMBER_COUNT) so every request
+# actually has >= N issues; uniform sampling makes p50 reflect thin members
+# (effective N ~ 10) and silently flattens the N axis.
+MAX_MEMBER_ID_OVERRIDE="${MAX_MEMBER_ID:-}"
 case "$SCALE" in
   smoke)
     MAX_ISSUE_ID=100000
@@ -63,7 +69,11 @@ case "$SCALE" in
     ;;
 esac
 
-echo "=== Cell: scenario=${SCENARIO} style=${STYLE} rtt=${RTT_US}us rate=${RATE}rps duration=${DURATION} scale=${SCALE} repeats=${COARSE_REPEATS} ==="
+if [[ -n "$MAX_MEMBER_ID_OVERRIDE" ]]; then
+  MAX_MEMBER_ID="$MAX_MEMBER_ID_OVERRIDE"
+fi
+
+echo "=== Cell: scenario=${SCENARIO} style=${STYLE} rtt=${RTT_US}us rate=${RATE}rps duration=${DURATION} scale=${SCALE} maxMember=${MAX_MEMBER_ID} repeats=${COARSE_REPEATS} ==="
 
 # Step 1: Set netem
 echo "[1/4] Setting netem delay ${RTT_US}us..."
@@ -117,8 +127,17 @@ for REP in $(seq 1 "$COARSE_REPEATS"); do
   # R4 fix: threshold changed from N==1000 to N>=100 to cover N=100/300/500/1000 cells.
   # Without this, random member IDs for N=100/300/500 often don't have enough issues,
   # causing effective N to be lower than declared N.
-  if [[ ( "$SCENARIO" == "b" || "$SCENARIO" == "l" ) && ${N:-20} -ge 100 ]]; then
-    MAX_MEMBER_ID=10000
+  if [[ ( "$SCENARIO" == "b" || "$SCENARIO" == "l" ) ]]; then
+    # All scenario B/L cells must sample the hot-member population so every request
+    # has >= N issues. member_buckets covers members 1..2000 (hot tier, >= 1200 issues
+    # each); sampling wider mixes thin members (~10 issues) in and flattens the N axis
+    # (found 2026-06-11: lazy/byid p50 did not grow with N because 80 pct of samples
+    # returned ~10 rows). Cells-file env override (MAX_MEMBER_ID_OVERRIDE) wins if set.
+    if [[ -n "$MAX_MEMBER_ID_OVERRIDE" ]]; then
+      MAX_MEMBER_ID="$MAX_MEMBER_ID_OVERRIDE"
+    else
+      MAX_MEMBER_ID=2000
+    fi
     K6_ENV=(-e SCENARIO="$SCENARIO" -e STYLE="$STYLE" -e RATE="$RATE" -e DURATION="$DURATION" -e BASE_URL="http://lab-app:8080" -e EXTRA_QS="$EXTRA_QS" -e MAX_ISSUE_ID="$MAX_ISSUE_ID" -e MAX_MEMBER_ID="$MAX_MEMBER_ID" -e N="$N")
   fi
 
