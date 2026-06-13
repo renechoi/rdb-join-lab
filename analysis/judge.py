@@ -52,8 +52,27 @@ def fnum(x):
 
 
 # --- pure-Python linear algebra (no numpy dependency: artifact must run anywhere) ---
+# t(0.975) critical values for small n (df = n-2), for analytic 95% CIs on OLS slopes.
+_T975 = {1: 12.706, 2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571, 6: 2.447, 7: 2.365, 8: 2.306,
+         9: 2.262, 10: 2.228, 15: 2.131, 20: 2.086, 30: 2.042}
+
+
+def _t975(df):
+    if df <= 0:
+        return None
+    if df in _T975:
+        return _T975[df]
+    keys = sorted(_T975)
+    return _T975[min(keys, key=lambda k: abs(k - df))]  # nearest tabulated df
+
+
 def linfit(xs, ys):
-    """Ordinary least squares y = slope*x + intercept. Returns (slope, intercept, r2)."""
+    """OLS y = slope*x + intercept. Returns (slope, intercept, r2, slope_se, slope_ci95).
+
+    slope_se is the analytic standard error; slope_ci95 = (lo, hi) at 95% (t, df=n-2).
+    These let H2a/H7/cost-model report uncertainty rather than bare point estimates
+    (red-team SM-6). With n=5 sweep points the CIs are wide; that is the honest signal.
+    """
     n = len(xs)
     if n < 2:
         return None
@@ -67,7 +86,14 @@ def linfit(xs, ys):
     ss_tot = sum((y - my) ** 2 for y in ys)
     ss_res = sum((ys[i] - (slope * xs[i] + intercept)) ** 2 for i in range(n))
     r2 = 1 - ss_res / ss_tot if ss_tot else 1.0
-    return slope, intercept, r2
+    slope_se = None; ci = None
+    if n >= 3:
+        mse = ss_res / (n - 2)
+        slope_se = (mse / sxx) ** 0.5
+        t = _t975(n - 2)
+        if t is not None:
+            ci = (slope - t * slope_se, slope + t * slope_se)
+    return slope, intercept, r2, slope_se, ci
 
 
 def origin_slope(xs, ys):
@@ -161,7 +187,7 @@ def fit_cost_model(agg):
         if len(set(xs)) >= 2:
             fit = linfit(xs, ys)
             if fit:
-                slope, intercept, _ = fit
+                slope, intercept, _, _, _ = fit
                 a_style[style] = intercept; c_style[style] = slope
                 continue
         a_style[style] = mean(ys); c_style[style] = 0.0  # single N point (scenario a)
@@ -179,7 +205,17 @@ def fit_cost_model(agg):
             resid = c["p50"] - a - cc * (c["n"] or 0)
             xb.append(rt * c["rtt_rt_ms"]); yb.append(resid)
     b = origin_slope(xb, yb) if xb else None
-    return {"a_style": a_style, "c_style": c_style, "b": b, "n_b_points": len(xb)}
+    # Through-origin b uncertainty (red-team SM-2/SM-9): SE(b)=sqrt(MSE/Sxx), df=n-1.
+    b_ci = None
+    if b is not None and len(xb) >= 3:
+        sxx = sum(x * x for x in xb)
+        ss_res = sum((yb[i] - b * xb[i]) ** 2 for i in range(len(xb)))
+        mse = ss_res / (len(xb) - 1)
+        b_se = (mse / sxx) ** 0.5 if sxx else None
+        t = _t975(len(xb) - 1)
+        if b_se is not None and t is not None:
+            b_ci = (b - t * b_se, b + t * b_se)
+    return {"a_style": a_style, "c_style": c_style, "b": b, "b_ci": b_ci, "n_b_points": len(xb)}
 
 
 # ---------------------------------------------------------------------------
@@ -211,9 +247,10 @@ def judge_H1(agg):
 
 
 def judge_H2a(agg):
-    # N+1 (lazy, byid) p50 linear in distinct refs, PER RTT. Hit if per-RTT R^2>=0.95
-    # (excluding saturated cells) and the slope tracks RTT (gap ~ distinct x round-trip).
-    lines = []; r2_ok = 0; r2_tot = 0
+    # Frozen H2a is a CONJUNCTION (PREREGISTRATION 2): per-RTT linear fit R^2>=0.95 AND
+    # gap >= 80xRTT at distinct ~ 100. We evaluate both conjuncts (red-team SM-1) and report
+    # the slope CI (SM-6). Saturated cells are excluded; the exclusion fraction is reported.
+    lines = []; r2_ok = 0; r2_tot = 0; mag_ok = 0; mag_tot = 0; excl = 0
     for style in ("lazy", "byid"):
         for rtt in (0, 300, 1500, 5000, 10000):
             xs, ys = [], []
@@ -221,22 +258,38 @@ def judge_H2a(agg):
                 c = get(agg, "b", style, rtt, n)
                 if c and c["valid"] and not c["high_var"]:
                     xs.append(DISTINCT_BY_N.get(n, n)); ys.append(c["p50"])
+                elif c is not None:
+                    excl += 1
             if len(xs) < 3:
                 continue
             fit = linfit(xs, ys)
             if not fit:
                 continue
-            slope, icpt, r2 = fit
+            slope, icpt, r2, se, ci = fit
             r2_tot += 1; r2_ok += 1 if r2 >= 0.95 else 0
-            # expected slope ~ round-trip(ms) per ref (one extra round-trip per distinct ref)
             rt_cell = get(agg, "b", style, rtt, 100)
             rt_ms = rt_cell["rtt_rt_ms"] if rt_cell else None
-            lines.append(f"{style} rtt{rtt}: R2={r2:.3f} slope={slope*1000:.0f}us/ref"
-                         + (f" (~{slope*1000/(rt_ms*1000):.2f}x rt/ref)" if rt_ms else ""))
+            # magnitude conjunct: gap over JOIN at distinct~100 >= 80 x round-trip (RTT>0 only).
+            if rtt > 0 and rt_ms:
+                np1 = get(agg, "b", style, rtt, 100); jf = get(agg, "b", "joinfetch", rtt, 100)
+                if np1 and jf and np1["valid"] and jf["valid"]:
+                    mag_tot += 1
+                    mult = (np1["p50"] - jf["p50"]) / rt_ms
+                    if mult >= 80:
+                        mag_ok += 1
+            ci_s = f" [{ci[0]*1000:.0f},{ci[1]*1000:.0f}]us/ref 95%CI" if ci else ""
+            lines.append(f"{style} rtt{rtt}: R2={r2:.3f} slope={slope*1000:.0f}us/ref{ci_s}"
+                         + (f" (~{slope/rt_ms:.2f}x rt/ref)" if rt_ms else ""))
     if r2_tot == 0:
         return J("UNDECIDABLE", None, "insufficient N+1 cells (mostly saturated)")
-    verdict = "HIT" if r2_ok >= r2_tot * 0.75 else "PARTIAL"
-    return J(verdict, f"{r2_ok}/{r2_tot} (style,RTT) fits with R2>=0.95", "; ".join(lines))
+    # Frozen criterion: both conjuncts. Note the 80xRTT conjunct is only testable at RTT>0,
+    # and most RTT>0 high-N cells saturate, so mag_tot is small (an honest scope limit).
+    r2_pass = r2_ok >= r2_tot * 0.75
+    mag_note = (f"; 80xRTT magnitude conjunct: {mag_ok}/{mag_tot} testable cells"
+                if mag_tot else "; 80xRTT magnitude conjunct: untestable (RTT>0 cells saturate)")
+    verdict = "HIT" if r2_pass else "PARTIAL"
+    return J(verdict, f"linearity {r2_ok}/{r2_tot} series R2>=0.95 (excluded {excl} saturated){mag_note}",
+             "; ".join(lines))
 
 
 def judge_H2b(agg):
@@ -339,14 +392,19 @@ def judge_H7(agg):
         fit = linfit(xs, ys)
         if not fit:
             continue
-        slope, icpt, r2 = fit
-        grows = abs(slope) > 0.5  # ms gap per ms round-trip; ~0 => constant
+        slope, icpt, r2, se, ci = fit
+        # Frozen H7 (PREREGISTRATION 2): slope CI includes 0 (RTT-independent) AND abs gap < RTT.
+        # "grows" = CI excludes 0 on the positive side (slope significantly > 0).
+        ci_excludes_0 = ci is not None and ci[0] > 0
+        grows = ci_excludes_0 if ci is not None else abs(slope) > 0.5
         any_growth = any_growth or grows
-        lines.append(f"{jpa}-{jdbc}: slope={slope:.2f}ms/rt-ms intercept={icpt:.2f}ms {'(GROWS)' if grows else '(flat)'}")
+        ci_s = f" 95%CI[{ci[0]:.2f},{ci[1]:.2f}]" if ci else ""
+        lines.append(f"{jpa}-{jdbc}: slope={slope:.2f}ms/rt-ms{ci_s} intercept={icpt:.2f}ms "
+                     f"{'(GROWS: CI excludes 0)' if grows else '(slope~0)'}")
     if not lines:
         return J("UNDECIDABLE", None, "no JPA/JDBC pairs")
     verdict = "REJECT" if any_growth else "HIT"
-    return J(verdict, "constant-overhead prediction" + (" fails: gap grows with round-trip" if any_growth else " holds"),
+    return J(verdict, "constant-overhead prediction" + (" fails: slope CI excludes 0 (gap grows with round-trip)" if any_growth else " holds (slope CI includes 0)"),
              "; ".join(lines))
 
 
@@ -413,7 +471,9 @@ def main():
     print("\n=== Cost model: T = a_style + b * roundtrips * RTT_rt + c_style * N ===")
     cm = fit_cost_model(agg)
     if cm:
-        print(f"  global b (round-trip multiplier) = {cm['b']:.3f}  (from {cm['n_b_points']} cells; ~1.0 = calib is true unit)")
+        ci_s = f" 95%CI[{cm['b_ci'][0]:.3f},{cm['b_ci'][1]:.3f}]" if cm.get("b_ci") else ""
+        print(f"  global b (round-trip multiplier) = {cm['b']:.3f}{ci_s}  (from {cm['n_b_points']} cells; "
+              f"~1.0 = consistency check that model and calib unit agree, NOT independent validation)")
         for st in sorted(cm["a_style"]):
             print(f"  {st:16} a={cm['a_style'][st]:.2f}ms  c={cm['c_style'][st]*1000:.3f}us/row")
     else:
