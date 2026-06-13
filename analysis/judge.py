@@ -434,6 +434,30 @@ def reversal_boundaries(agg):
     return out
 
 
+def ranking_flips(agg):
+    """Detect genuine ranking REVERSALS: a style expected to be slower (N+1, naive app
+    combine) that actually beats a flat reference by the reversal threshold (>=10% AND
+    >=1ms better on p95). An empty result confirms the surface is a degradation onset, not
+    a reversal (red-team NOV-1/SM-8: the boundary search must be bidirectional)."""
+    flips = []
+    slower = ["lazy", "byid", "lazy-unbounded"]
+    faster_refs = ["joinfetch", "inbatch", "batchfetch", "jdbc-join"]
+    for sc in ("a", "b", "c"):
+        for sl in slower:
+            for rf in faster_refs:
+                for rtt in (0, 300, 1500, 5000, 10000):
+                    for n in (None, 20, 100, 300, 500, 1000):
+                        a = get(agg, sc, sl, rtt, n); b = get(agg, sc, rf, rtt, n)
+                        if not a or not b or not a["valid"] or not b["valid"]:
+                            continue
+                        if a["p95"] is None or b["p95"] is None:
+                            continue
+                        better = b["p95"] - a["p95"]  # >0 means the "slower" style is faster
+                        if better >= 1.0 and b["p95"] and better / b["p95"] >= 0.10:
+                            flips.append((sc, sl, rf, rtt, n, a["p95"], b["p95"]))
+    return flips
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("csv", nargs="*", default=["analysis/coarse-final-Nrecovered.csv"])
@@ -479,10 +503,19 @@ def main():
     else:
         print("  (numpy unavailable)")
 
-    print("\n=== Reversal boundaries (p95: challenger >=10% AND >=1ms worse than ref) ===")
+    print("\n=== Degradation boundaries (p95: challenger >=10% AND >=1ms worse than ref) ===")
     rb = reversal_boundaries(agg)
     for ch, ref, rtt, n in rb:
-        print(f"  {ch} vs {ref} @ rtt{rtt}: crosses at N={n} (distinct~{DISTINCT_BY_N.get(n)})")
+        print(f"  {ch} vs {ref} @ rtt{rtt}: degrades past N={n} (distinct~{DISTINCT_BY_N.get(n)})")
+
+    flips = ranking_flips(agg)
+    print(f"\n=== Ranking reversals (slower style actually beats a flat ref by >=10% AND >=1ms): "
+          f"{len(flips)} ===")
+    if flips:
+        for sc, sl, rf, rtt, n, ap, bp in flips:
+            print(f"  REVERSAL: {sc}/{sl} beats {rf} @ rtt{rtt} N={n} ({ap:.1f} vs {bp:.1f}ms p95)")
+    else:
+        print("  none -> the surface is a degradation onset, not a ranking reversal (claim confirmed by code)")
 
     # Write machine-readable hypothesis table.
     os.makedirs(args.outdir, exist_ok=True)
