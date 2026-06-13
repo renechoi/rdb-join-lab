@@ -1,0 +1,9 @@
+hypothesis,verdict,measured,detail
+H1,HIT,"4/4 JPA-seq cells in [1.5,3]x round-trip",JPA seq: rtt300 +1.10ms (2.0x rt); rtt1500 +4.41ms (1.8x rt); rtt5000 +11.14ms (1.7x rt); rtt10000 +22.12ms (1.7x rt) || JDBC-seq control: rtt300 7.4x rt; rtt1500 6.7x rt; rtt5000 6.4x rt; rtt10000 5.9x rt
+H2a,HIT,"4/4 (style,RTT) fits with R2>=0.95",lazy rtt0: R2=0.998 slope=71us/ref (~1.74x rt/ref); lazy rtt300: R2=1.000 slope=516us/ref (~0.93x rt/ref); byid rtt0: R2=0.998 slope=71us/ref (~1.72x rt/ref); byid rtt300: R2=1.000 slope=515us/ref (~1.00x rt/ref)
+H2b,HIT,20/20 cells within 2.5x round-trip,all <= 2.5x
+H3,PENDING,needs precision cells (inbatch N150/200/250 @ rtt0/300),distinct=200 lands at N~225; precision straddles it
+H4,REJECT,app-optimized 0/5 RTT cells >=5x (bounded app-combine competitive),opt(same-scope): rtt0 join 5.9 vs opt 4.8=0.8x; rtt300 join 7.3 vs opt 8.3=1.1x; rtt1500 join 16.6 vs opt 20.5=1.2x; rtt5000 join 44.8 vs opt 51.6=1.2x; rtt10000 join 77.2 vs opt 93.2=1.2x || naive(descriptive): rtt0 saturated; rtt300 saturated; rtt1500 saturated; rtt5000 saturated; rtt10000 saturated
+H5,PENDING,scenario L (load axis) not yet measured,cells-L.tsv prepared; knee = arrival rate where p99 >= 2x prior step
+H6,PENDING,cold buffer sub-round not run (optional per plan),
+H7,REJECT,constant-overhead prediction fails: gap grows with round-trip,joinfetch-jdbc-join: slope=4.73ms/rt-ms intercept=3.63ms (GROWS); inbatch-jdbc-inbatch: slope=4.54ms/rt-ms intercept=3.84ms (GROWS); seq-jdbc-seq: slope=0.03ms/rt-ms intercept=-0.18ms (flat)
