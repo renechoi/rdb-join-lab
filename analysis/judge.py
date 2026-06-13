@@ -28,7 +28,9 @@ import sys
 from collections import defaultdict
 from statistics import median, pstdev, mean
 
-# Measured distinct policy refs among the top-N issues of a hot member (live DB, 2026-06-13).
+# Measured distinct policy refs among the top-N issues (ORDER BY id) of a hot member (live DB).
+# Confirmed on 500 hot members 2026-06-13 (SD < 2% of mean at every N; identical within 0.5%
+# to an initial 60-member sample), so the lookup is representative of the hot-member tier.
 DISTINCT_BY_N = {
     20: 19.6, 40: 38.4, 60: 57.0, 80: 75.2, 100: 93.0, 150: 137.4,
     200: 181.0, 250: 223.9, 300: 265.7, 500: 427.9, 1000: 798.6,
