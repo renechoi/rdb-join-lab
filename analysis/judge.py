@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""judge.py — P4 hypothesis judgment + cost model + reversal boundaries.
+"""judge.py — P4 hypothesis judgment + cost model + degradation boundaries.
 
 Mechanizes PREREGISTRATION.md sections 2 (H1-H7), 3 (metrics), 5 (analysis plan).
 Built against coarse data (analysis/coarse-final-Nrecovered.csv); re-run unchanged
@@ -14,8 +14,8 @@ Design notes (documented for G2 review):
     so the band check is auditable rather than hidden.
   - H2a X-axis: per PREREGISTRATION, the regression abscissa is the measured distinct
     reference count, not nominal N (the first-level cache absorbs duplicate policy lookups).
-    DISTINCT_BY_N below was measured on the live hot-member population (members 1..60,
-    top-N issues by id, COUNT(DISTINCT policy_id)); see analysis/notes.md 2026-06-13.
+    DISTINCT_BY_N below was measured on the live hot-member population (confirmed on 500
+    hot members, top-N issues by id, COUNT(DISTINCT policy_id)); see analysis/notes.md 2026-06-13.
   - Aggregation: repeats are reduced by median (p50, p95). CV(p50) across repeats is the
     section 4 variance gate; with a single repeat (coarse) CV is undefined and the cell is
     kept but flagged cv=None. Cells with CV > 0.15 are excluded from boundary/model and
@@ -242,8 +242,9 @@ def judge_H1(agg):
     inband = [o for o in prim if 1.5 <= o[2] <= 3.0]
     detail = ("JPA seq: " + "; ".join(f"rtt{o[0]} +{o[1]:.2f}ms ({o[2]:.1f}x rt)" for o in prim)
               + " || JDBC-seq control: " + "; ".join(f"rtt{o[0]} {o[2]:.1f}x rt" for o in ctrl))
-    verdict = "HIT" if len(inband) >= len(prim) * 0.75 else "REJECT"
-    return J(verdict, f"{len(inband)}/{len(prim)} JPA-seq cells in [1.5,3]x round-trip", detail)
+    # Frozen H1: in [1.5x,3x] at ALL RTT cells (PREREGISTRATION uses "all RTT cells").
+    verdict = "HIT" if len(inband) == len(prim) else "REJECT"
+    return J(verdict, f"{len(inband)}/{len(prim)} JPA-seq cells in [1.5,3]x round-trip (all required)", detail)
 
 
 def judge_H2a(agg):
@@ -284,10 +285,13 @@ def judge_H2a(agg):
         return J("UNDECIDABLE", None, "insufficient N+1 cells (mostly saturated)")
     # Frozen criterion: both conjuncts. Note the 80xRTT conjunct is only testable at RTT>0,
     # and most RTT>0 high-N cells saturate, so mag_tot is small (an honest scope limit).
-    r2_pass = r2_ok >= r2_tot * 0.75
-    mag_note = (f"; 80xRTT magnitude conjunct: {mag_ok}/{mag_tot} testable cells"
-                if mag_tot else "; 80xRTT magnitude conjunct: untestable (RTT>0 cells saturate)")
-    verdict = "HIT" if r2_pass else "PARTIAL"
+    # Frozen H2a is a CONJUNCTION: R2>=0.95 (all evaluated series) AND gap>=80xRTT at distinct~100.
+    r2_pass = (r2_ok == r2_tot)
+    mag_pass = (mag_tot > 0 and mag_ok == mag_tot)
+    mag_note = (f"; 80xRTT magnitude conjunct: {mag_ok}/{mag_tot} testable cells pass"
+                if mag_tot else "; 80xRTT magnitude conjunct: untestable (RTT>0 high-N cells saturate)")
+    # HIT only if both conjuncts hold; if magnitude untestable, the linearity-only result is PARTIAL.
+    verdict = "HIT" if (r2_pass and mag_pass) else ("PARTIAL" if r2_pass else "MISS")
     return J(verdict, f"linearity {r2_ok}/{r2_tot} series R2>=0.95 (excluded {excl} saturated){mag_note}",
              "; ".join(lines))
 
@@ -347,6 +351,7 @@ def judge_H4(agg):
     if not rows:
         return J("UNDECIDABLE", None, "no scenario-c join/app-optimized pairs")
     hit = [r for r in rows if r[3] and r[3] >= 5.0]
+    # Frozen H4: ratio >= 5x at ALL RTT cells (PREREGISTRATION "전 RTT 셀에서 비율 >= 5x").
     # app-naive (different scope, descriptive only per pre-reg): unbounded candidate scan.
     naive_obs = []
     for rtt in (0, 300, 1500, 5000, 10000):
@@ -360,8 +365,8 @@ def judge_H4(agg):
             naive_obs.append(f"rtt{rtt} saturated")
     detail = ("opt(same-scope): " + "; ".join(f"rtt{r[0]} join {r[1]:.1f} vs opt {r[2]:.1f}={r[3]:.1f}x" for r in rows)
               + " || naive(descriptive): " + "; ".join(naive_obs))
-    verdict = "HIT" if len(hit) >= len(rows) * 0.6 else "REJECT"
-    return J(verdict, f"app-optimized {len(hit)}/{len(rows)} RTT cells >=5x (bounded app-combine competitive)", detail)
+    verdict = "HIT" if len(hit) == len(rows) else "REJECT"
+    return J(verdict, f"app-optimized {len(hit)}/{len(rows)} RTT cells >=5x (all required; bounded app-combine competitive)", detail)
 
 
 def judge_H5(agg, scenario_l_present):
@@ -411,7 +416,7 @@ def judge_H7(agg):
 # ---------------------------------------------------------------------------
 # Reversal boundaries (PREREGISTRATION section 3): style X worse than Y by >=10% AND >=1ms on p95.
 # ---------------------------------------------------------------------------
-def reversal_boundaries(agg):
+def degradation_boundaries(agg):
     out = []
     refs = ["joinfetch", "inbatch"]
     challengers = ["lazy", "byid", "batchfetch", "inbatch-nodup"]
@@ -504,7 +509,7 @@ def main():
         print("  (numpy unavailable)")
 
     print("\n=== Degradation boundaries (p95: challenger >=10% AND >=1ms worse than ref) ===")
-    rb = reversal_boundaries(agg)
+    rb = degradation_boundaries(agg)
     for ch, ref, rtt, n in rb:
         print(f"  {ch} vs {ref} @ rtt{rtt}: degrades past N={n} (distinct~{DISTINCT_BY_N.get(n)})")
 
