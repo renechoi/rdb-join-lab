@@ -27,7 +27,7 @@ def md_table(headers, rows):
     return "\n".join(out)
 
 
-def latex_table(headers, rows, caption, label):
+def latex_table(headers, rows, caption="", label=""):
     spec = "l" + "r" * (len(headers) - 1)
     lines = [r"\begin{table}[t]", r"\centering",
              r"\caption{" + caption + "}", r"\label{" + label + "}",
