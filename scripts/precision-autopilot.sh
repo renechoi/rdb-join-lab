@@ -74,7 +74,11 @@ while true; do
   if (( DONE >= TOTAL )); then
     echo "[precision] all ${TOTAL} precision cells DONE."
     python3 analysis/extract.py results -o analysis/precision-final.csv >/dev/null 2>&1 || true
-    notify "[precision-autopilot] 경계 정밀 측정 완주: ${TOTAL}셀 전체 DONE. 결과는 analysis/precision-final.csv에 추출했습니다. 다음 단계는 P4 분석(가설 H1~H7 기계 판정 + 역전 경계선 산출)입니다."
+    # Auto-advance P4: re-run the judgment pipeline on merged coarse + precision data.
+    python3 analysis/judge.py analysis/coarse-final-Nrecovered.csv analysis/precision-final.csv -o analysis \
+      > results/judge-after-precision.log 2>&1 || true
+    VERDICTS=$(python3 -c "import csv;print(' / '.join(f\"{r['hypothesis']}:{r['verdict']}\" for r in csv.DictReader(open('analysis/hypothesis-table.csv'))))" 2>/dev/null || echo "see analysis/hypothesis-table.csv")
+    notify "[precision-autopilot] 경계 정밀 완주(${TOTAL}셀) + P4 재분석 자동 실행 완료. 갱신 가설 판정: ${VERDICTS}. 상세 analysis/hypothesis-table.csv, 로그 results/judge-after-precision.log. 다음: 시나리오 L(cells-L.tsv 준비됨, 검토 후 실행) + 경계선 figure 생성."
     exit 0
   fi
   ELAPSED=$(( $(date +%s) - START_TS ))
