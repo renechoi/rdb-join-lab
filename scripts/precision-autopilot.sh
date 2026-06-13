@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# precision-autopilot.sh — session-independent precision-campaign completion loop.
+#
+# Mirrors campaign-autopilot.sh but for the boundary-precision phase (P3 stage 2).
+# Key difference: the shared progress ledger (results/campaign-progress.tsv) already
+# holds the 315 coarse cells as DONE, so a whole-ledger done count is useless here.
+# This wrapper counts ONLY the keys present in the precision cells file, so completion
+# is judged against the precision set (default 30 cells), not the coarse set.
+#
+# Repeats: COARSE_REPEATS=3 (precision), DURATION comes from the cells file (5m).
+# Result files for scenario b carry the -n<N> tag, so extract.py captures N directly
+# (no ledger-timestamp recovery needed for precision data).
+#
+# Usage:
+#   nohup ./scripts/precision-autopilot.sh cells-precision.tsv > results/precision-autopilot.log 2>&1 & disown
+#
+# Safety caps: max 6 runs, overall deadline 24h. Stop file: touch results/AUTOPILOT_STOP.
+set -uo pipefail
+
+CELLS_FILE="${1:-cells-precision.tsv}"
+MAX_RUNS=6
+DEADLINE_S=$((24 * 3600))
+PER_RUN_CAP=25200            # 7h per run-campaign invocation, then maintenance + relaunch
+REPEATS=3
+NOTIFY_CH="${NOTIFY_CH:-}"
+NOTIFY_THREAD="${NOTIFY_THREAD:-}"
+NOTIFY_POST="/usr/local/bin/notify-post.sh"
+APP_LOG_ID="0c60510473c83331863aa44ab8e940a429d8d7d777296e14afa418e43d2900df"
+PROGRESS="results/campaign-progress.tsv"
+
+cd "$(dirname "$0")/.."
+START_TS=$(date +%s)
+
+# Build the set of precision cell keys (scenario|style|rtt|rate|extra|envov),
+# matching run-campaign.sh KEY construction exactly.
+cell_keys() {
+  awk -F'\t' '!/^#/ && NF>=7 {
+    extra=($6==""?"-":$6); env=($7==""?"-":$7);
+    printf "%s|%s|%s|%s|%s|%s\n", $1,$2,$3,$4,extra,env
+  }' "$CELLS_FILE"
+}
+
+total_cells() { cell_keys | grep -c . ; }
+
+done_cells() {
+  # Count precision keys that are marked DONE in the shared ledger.
+  local n=0 key
+  while IFS= read -r key; do
+    [[ -z "$key" ]] && continue
+    if grep -qF "${key}	DONE" "$PROGRESS" 2>/dev/null; then n=$((n+1)); fi
+  done < <(cell_keys)
+  echo "$n"
+}
+
+notify() {
+  "$NOTIFY_POST" "$1" --channel "$NOTIFY_CH" --thread "$NOTIFY_THREAD" >/dev/null 2>&1 || true
+}
+
+maintenance() {
+  colima ssh -- sudo sh -c "truncate -s 0 /var/lib/docker/containers/${APP_LOG_ID}/*-json.log 2>/dev/null; fstrim /var/lib/docker" >/dev/null 2>&1 || true
+}
+
+TOTAL=$(total_cells)
+echo "[precision] start: $(done_cells)/$TOTAL done, max ${MAX_RUNS} runs, deadline ${DEADLINE_S}s"
+
+RUN=0
+while true; do
+  if [[ -f results/AUTOPILOT_STOP ]]; then
+    echo "[precision] stop file present, exiting."
+    notify "[precision-autopilot] 정지 파일 감지로 종료했습니다 ($(done_cells)/$TOTAL 셀)."
+    exit 0
+  fi
+  DONE=$(done_cells)
+  if (( DONE >= TOTAL )); then
+    echo "[precision] all ${TOTAL} precision cells DONE."
+    python3 analysis/extract.py results -o analysis/precision-final.csv >/dev/null 2>&1 || true
+    notify "[precision-autopilot] 경계 정밀 측정 완주: ${TOTAL}셀 전체 DONE. 결과는 analysis/precision-final.csv에 추출했습니다. 다음 단계는 P4 분석(가설 H1~H7 기계 판정 + 역전 경계선 산출)입니다."
+    exit 0
+  fi
+  ELAPSED=$(( $(date +%s) - START_TS ))
+  if (( ELAPSED >= DEADLINE_S )); then
+    echo "[precision] 24h deadline reached at ${DONE}/${TOTAL}."
+    notify "[precision-autopilot] 24시간 한도 도달로 중지했습니다 (${DONE}/${TOTAL}셀). 다음 세션이 이어갑니다."
+    exit 1
+  fi
+  RUN=$((RUN + 1))
+  if (( RUN > MAX_RUNS )); then
+    echo "[precision] max runs exceeded at ${DONE}/${TOTAL}."
+    notify "[precision-autopilot] 최대 런 수(${MAX_RUNS}) 도달로 중지했습니다 (${DONE}/${TOTAL}셀). 다음 세션이 이어갑니다."
+    exit 1
+  fi
+
+  echo "[precision] run ${RUN}: ${DONE}/${TOTAL} done, maintenance then campaign..."
+  maintenance
+  SCALE=full COARSE_REPEATS=${REPEATS} ./scripts/run-campaign.sh "$CELLS_FILE" ${PER_RUN_CAP} \
+    > "results/precision-$(date +%Y%m%d-%H%M).log" 2>&1
+  RC=$?
+  echo "[precision] run ${RUN} finished rc=${RC}, done=$(done_cells)/${TOTAL}"
+
+  # Beyond-saturation FAIL handling: cells that fail twice are total-collapse
+  # coordinates (k6 timeout storms). Convert to DONE so they are not retried
+  # forever; analysis treats the missing summary as "unmeasurable (beyond saturation)".
+  if grep -q "	FAIL" "$PROGRESS" 2>/dev/null; then
+    FAILED_KEYS=$(grep "	FAIL" "$PROGRESS" | cut -f1)
+    sed -i '' 's/	FAIL	/	DONE	/g' "$PROGRESS"
+    echo "[precision] converted FAIL->DONE (beyond-saturation): ${FAILED_KEYS}"
+    echo "${FAILED_KEYS}" >> results/beyond-saturation-cells.txt
+  fi
+done

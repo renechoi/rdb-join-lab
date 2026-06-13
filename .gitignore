@@ -18,3 +18,8 @@ app/.gradle/
 # Docker volumes / local MySQL data dumps
 *.ibd
 ib_buffer_pool
+
+# Machine-specific run logs and state (regenerable; harness is reproducible from scripts + cells)
+results/*.log
+results/*.txt
+results/*.tsv
