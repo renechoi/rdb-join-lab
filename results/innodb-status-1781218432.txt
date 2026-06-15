@@ -1,0 +1,250 @@
+*************************** 1. row ***************************
+  Type: InnoDB
+  Name: 
+Status: 
+=====================================
+2026-06-11 22:53:54 278227181215488 INNODB MONITOR OUTPUT
+=====================================
+Per second averages calculated from the last 29 seconds
+-----------------
+BACKGROUND THREAD
+-----------------
+srv_master_thread loops: 5330 srv_active, 0 srv_shutdown, 105716 srv_idle
+srv_master_thread log flush and writes: 0
+----------
+SEMAPHORES
+----------
+OS WAIT ARRAY INFO: reservation count 469421
+OS WAIT ARRAY INFO: signal count 385160
+RW-shared spins 0, rounds 0, OS waits 0
+RW-excl spins 0, rounds 0, OS waits 0
+RW-sx spins 0, rounds 0, OS waits 0
+Spin rounds per wait: 0.00 RW-shared, 0.00 RW-excl, 0.00 RW-sx
+------------
+TRANSACTIONS
+------------
+Trx id counter 12501
+Purge done for trx's n:o < 12483 undo n:o < 0 state: running but idle
+History list length 9
+LIST OF TRANSACTIONS FOR EACH SESSION:
+---TRANSACTION 559703905668200, not started
+0 lock struct(s), heap size 1128, 0 row lock(s)
+---TRANSACTION 559703905659312, not started
+0 lock struct(s), heap size 1128, 0 row lock(s)
+---TRANSACTION 559703905658504, not started
+0 lock struct(s), heap size 1128, 0 row lock(s)
+--------
+FILE I/O
+--------
+I/O thread 0 state: waiting for completed aio requests (insert buffer thread)
+I/O thread 1 state: waiting for completed aio requests (read thread)
+I/O thread 2 state: waiting for completed aio requests (read thread)
+I/O thread 3 state: waiting for completed aio requests (read thread)
+I/O thread 4 state: waiting for completed aio requests (read thread)
+I/O thread 5 state: waiting for completed aio requests (write thread)
+I/O thread 6 state: waiting for completed aio requests (write thread)
+I/O thread 7 state: waiting for completed aio requests (write thread)
+I/O thread 8 state: waiting for completed aio requests (write thread)
+Pending normal aio reads: [0, 0, 0, 0] , aio writes: [0, 0, 0, 0] ,
+ ibuf aio reads:
+Pending flushes (fsync) log: 0; buffer pool: 0
+36604 OS file reads, 10490031 OS file writes, 3424892 OS fsyncs
+0.47 reads/s, 16384 avg bytes/read, 1.62 writes/s, 1.01 fsyncs/s
+-------------------------------------
+INSERT BUFFER AND ADAPTIVE HASH INDEX
+-------------------------------------
+Ibuf: size 1, free list len 0, seg size 2, 0 merges
+merged operations:
+ insert 0, delete mark 0, delete 0
+discarded operations:
+ insert 0, delete mark 0, delete 0
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+Hash table size 796967, node heap has 0 buffer(s)
+0.00 hash searches/s, 2910.35 non-hash searches/s
+---
+LOG
+---
+Log capacity                 104857600
+Log capacity used            104857600
+Log sequence number          10688474610
+Log buffer assigned up to    10688474610
+Log buffer completed up to   10688474610
+Log written up to            10688474610
+Log flushed up to            10688474610
+Added dirty pages up to      10688474610
+Pages flushed up to          10688456532
+Last checkpoint at           10688456532
+Log minimum file id is       3235
+Log maximum file id is       3263
+2672485 log i/o's done, 0.80 log i/o's/second
+----------------------
+BUFFER POOL AND MEMORY
+----------------------
+Total large memory allocated 0
+Dictionary memory allocated 564749
+Buffer pool size   196592
+Free buffers       8178
+Database pages     188414
+Old database pages 69388
+Modified db pages  10
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 1245605, not young 202602
+36.95 youngs/s, 0.47 non-youngs/s
+Pages read 30672, created 548423, written 6214693
+0.47 reads/s, 0.00 creates/s, 0.57 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 3 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 188414, unzip_LRU len: 0
+I/O sum[80]:cur[168], unzip sum[0]:cur[0]
+----------------------
+INDIVIDUAL BUFFER POOL INFO
+----------------------
+---BUFFER POOL 0
+Buffer pool size   24574
+Free buffers       1023
+Database pages     23551
+Old database pages 8673
+Modified db pages  2
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 151423, not young 19059
+4.39 youngs/s, 0.03 non-youngs/s
+Pages read 3979, created 68452, written 774260
+0.03 reads/s, 0.00 creates/s, 0.27 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 1 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23551, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 1
+Buffer pool size   24574
+Free buffers       1022
+Database pages     23552
+Old database pages 8674
+Modified db pages  5
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 163076, not young 27526
+4.22 youngs/s, 0.07 non-youngs/s
+Pages read 6774, created 69275, written 765544
+0.07 reads/s, 0.00 creates/s, 0.17 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 4 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23552, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 2
+Buffer pool size   24574
+Free buffers       1024
+Database pages     23550
+Old database pages 8673
+Modified db pages  0
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 171133, not young 20899
+5.03 youngs/s, 0.00 non-youngs/s
+Pages read 3837, created 68905, written 784419
+0.00 reads/s, 0.00 creates/s, 0.00 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 6 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23550, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 3
+Buffer pool size   24574
+Free buffers       1021
+Database pages     23553
+Old database pages 8674
+Modified db pages  0
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 154590, not young 15405
+4.62 youngs/s, 0.10 non-youngs/s
+Pages read 2874, created 68222, written 783801
+0.10 reads/s, 0.00 creates/s, 0.00 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 1 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23553, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 4
+Buffer pool size   24574
+Free buffers       1020
+Database pages     23554
+Old database pages 8674
+Modified db pages  0
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 148683, not young 22474
+5.20 youngs/s, 0.13 non-youngs/s
+Pages read 4203, created 68864, written 791836
+0.13 reads/s, 0.00 creates/s, 0.03 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 5 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23554, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 5
+Buffer pool size   24575
+Free buffers       1024
+Database pages     23551
+Old database pages 8673
+Modified db pages  1
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 144292, not young 30268
+4.22 youngs/s, 0.00 non-youngs/s
+Pages read 648, created 67550, written 763292
+0.00 reads/s, 0.00 creates/s, 0.07 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 6 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23551, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 6
+Buffer pool size   24573
+Free buffers       1020
+Database pages     23553
+Old database pages 8674
+Modified db pages  2
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 167418, not young 50679
+5.16 youngs/s, 0.13 non-youngs/s
+Pages read 5960, created 68753, written 768629
+0.13 reads/s, 0.00 creates/s, 0.00 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 5 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23553, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+---BUFFER POOL 7
+Buffer pool size   24574
+Free buffers       1024
+Database pages     23550
+Old database pages 8673
+Modified db pages  0
+Pending reads      0
+Pending writes: LRU 0, flush list 0, single page 0
+Pages made young 144990, not young 16292
+4.12 youngs/s, 0.00 non-youngs/s
+Pages read 2397, created 68402, written 782912
+0.00 reads/s, 0.00 creates/s, 0.03 writes/s
+Buffer pool hit rate 1000 / 1000, young-making rate 1 / 1000 not 0 / 1000
+Pages read ahead 0.00/s, evicted without access 0.00/s, Random read ahead 0.00/s
+LRU len: 23550, unzip_LRU len: 0
+I/O sum[10]:cur[21], unzip sum[0]:cur[0]
+--------------
+ROW OPERATIONS
+--------------
+0 queries inside InnoDB, 0 queries in queue
+10 read views open inside InnoDB
+Process ID=1, Main thread ID=278224896323328 , state=sleeping
+Number of rows inserted 39167566, updated 0, deleted 0, read 9992938683
+0.00 inserts/s, 0.00 updates/s, 0.00 deletes/s, 795633.15 reads/s
+Number of system rows inserted 338, updated 6736, deleted 274, read 14420
+0.00 inserts/s, 0.55 updates/s, 0.00 deletes/s, 0.55 reads/s
+----------------------------
+END OF INNODB MONITOR OUTPUT
+============================
+

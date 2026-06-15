@@ -1,0 +1,15 @@
+[scenario-l] start: 1/103 done, max 5 runs, deadline 86400s
+[scenario-l] run 1: 1/103 done, maintenance then campaign...
+[scenario-l] run 1 finished rc=0, done=41/103
+[scenario-l] run 2: 41/103 done, maintenance then campaign...
+[scenario-l] run 2 finished rc=1, done=66/103
+[scenario-l] converted FAIL->DONE (beyond-saturation): b|lazy|1500|50|-|N=100
+b|lazy|1500|60|-|N=100
+b|lazy|1500|80|-|N=100
+b|lazy|1500|100|-|N=100
+b|byid|1500|60|-|N=100
+b|byid|1500|80|-|N=100
+b|byid|1500|100|-|N=100
+[scenario-l] run 3: 73/103 done, maintenance then campaign...
+[scenario-l] run 3 finished rc=0, done=103/103
+[scenario-l] all 103 scenario-L cells DONE.

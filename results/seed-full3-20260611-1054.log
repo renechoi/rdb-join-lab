@@ -1,0 +1,140 @@
+=== seed.sh: SCALE=full ===
+  coupon_policy : 10000
+  member        : 1000000
+  coupon_issue  : 10000000
+
+[1/6] Truncating tables...
+time="2026-06-11T10:54:03+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[2/6] Setting session optimizations for bulk load...
+[3/6] Seeding coupon_policy (10000 rows)...
+time="2026-06-11T10:54:04+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[4/6] Seeding member (1000000 rows, chunked)...
+  member chunk 1: offset=0 batch=500000
+time="2026-06-11T10:54:04+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  member chunk 2: offset=500000 batch=500000
+time="2026-06-11T10:54:06+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[5/6] Seeding coupon_issue (10000000 rows, chunked)...
+  issue chunk 1: offset=0 batch=500000
+time="2026-06-11T10:54:09+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 2: offset=500000 batch=500000
+time="2026-06-11T10:54:17+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 3: offset=1000000 batch=500000
+time="2026-06-11T10:54:26+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 4: offset=1500000 batch=500000
+time="2026-06-11T10:54:36+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 5: offset=2000000 batch=500000
+time="2026-06-11T10:54:57+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 6: offset=2500000 batch=500000
+time="2026-06-11T10:55:26+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 7: offset=3000000 batch=500000
+time="2026-06-11T10:55:59+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 8: offset=3500000 batch=500000
+time="2026-06-11T10:56:39+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 9: offset=4000000 batch=500000
+time="2026-06-11T10:57:12+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 10: offset=4500000 batch=500000
+time="2026-06-11T10:57:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 11: offset=5000000 batch=500000
+time="2026-06-11T10:58:15+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 12: offset=5500000 batch=500000
+time="2026-06-11T10:58:58+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 13: offset=6000000 batch=500000
+time="2026-06-11T10:59:44+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 14: offset=6500000 batch=500000
+time="2026-06-11T11:00:34+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 15: offset=7000000 batch=500000
+time="2026-06-11T11:01:25+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 16: offset=7500000 batch=500000
+time="2026-06-11T11:02:21+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 17: offset=8000000 batch=500000
+time="2026-06-11T11:03:16+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 18: offset=8500000 batch=500000
+time="2026-06-11T11:04:15+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 19: offset=9000000 batch=500000
+time="2026-06-11T11:05:26+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  issue chunk 20: offset=9500000 batch=500000
+time="2026-06-11T11:06:36+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[5a-hot] Seeding hot-member tier (2000 members x 1200 extra issues)...
+  hot chunk 1: offset=0 batch=500000
+time="2026-06-11T11:07:51+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  hot chunk 2: offset=500000 batch=500000
+time="2026-06-11T11:08:47+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  hot chunk 3: offset=1000000 batch=500000
+time="2026-06-11T11:09:37+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  hot chunk 4: offset=1500000 batch=500000
+time="2026-06-11T11:10:34+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  hot chunk 5: offset=2000000 batch=400000
+time="2026-06-11T11:11:30+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  hot tier complete: 2400000 extra issues over members 1..2000
+[5b/6] Seeding member_buckets (high-volume member concentration table)...
+time="2026-06-11T11:12:11+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+time="2026-06-11T11:12:11+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+time="2026-06-11T11:12:12+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+  member_buckets populated: 2000 rows (filter: >= 100 issues (full scale))
+  member_buckets assertion PASSED (>= 100 rows).
+time="2026-06-11T11:12:12+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+threshold	members
+1000	2000
+[6/6] Running ANALYZE TABLE and printing final counts...
+time="2026-06-11T11:12:12+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Table	Op	Msg_type	Msg_text
+lab.coupon_policy	analyze	status	OK
+lab.member	analyze	status	OK
+lab.coupon_issue	analyze	status	OK
+lab.member_buckets	analyze	status	OK
+time="2026-06-11T11:12:13+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+tbl	row_count
+coupon_policy	10000
+member	1000000
+coupon_issue	12400000
+member_buckets	2000
+time="2026-06-11T11:12:14+09:00" level=warning msg="/Users/rene/rdb-join-lab/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+mysql: [Warning] Using a password on the command line interface can be insecure.
+status	cnt	pct
+EXPIRED	185386	1.5
+ISSUED	8679702	70.0
+USED	3534912	28.5
+
+=== Seed validation ===
+  Expected: policy=10000 member=1000000 issue=12400000 (uniform 10000000 + hot tier 2400000)
+  Actual:   policy=10000 member=1000000 issue=12400000
+  Top 20% policies cover: 58.6% of issues
+  Skew validation: PASS (Zipf-like distribution confirmed)
+  Validation report: db/seed-validation-report.json
+
+=== seed.sh done (SCALE=full) ===

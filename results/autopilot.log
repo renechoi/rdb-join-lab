@@ -1,0 +1,5 @@
+[autopilot] start: 239/315 done, max 8 runs, deadline 129600s
+[autopilot] run 1: 239/315 done, maintenance then campaign...
+[autopilot] run 1 finished rc=0, done=315/315, fail=0
+0
+[autopilot] all 315 cells DONE.

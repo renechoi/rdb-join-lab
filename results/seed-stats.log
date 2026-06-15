@@ -1,0 +1,11 @@
+Computing distinct-policy-per-member distribution (sampled 10k members)...
+Wrote results/seed-stats.json:
+{
+  "computed_at": "2026-06-11T02:12:20Z",
+  "members_sampled": 10000,
+  "avg_issues_per_member": 12.41,
+  "avg_distinct_policies_per_member": 11.76,
+  "max_distinct_policies_per_member": 971,
+  "avg_distinct_to_issue_ratio": 0.9883
+}
+Schema sync OK: all 6 declared indexes present in live DB.
