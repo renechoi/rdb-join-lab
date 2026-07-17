@@ -4,8 +4,8 @@
 # Why: run-campaign.sh stops at its 7h time cap and normally needs an operator to
 # relaunch. This wrapper keeps relaunching (resume via the progress ledger) until
 # every cell in the cells file is DONE, doing disk maintenance between runs and
-# posting a note on completion. Designed to survive the operator (Claude
-# session) dying: launch with nohup + disown so it parents to init.
+# posting an optional completion note (set NOTIFY_CMD). Designed to survive the
+# operator dying: launch with nohup + disown so it parents to init.
 #
 # Usage:
 #   nohup ./scripts/campaign-autopilot.sh cells-coarse.tsv > results/autopilot.log 2>&1 & disown
@@ -16,9 +16,6 @@ set -uo pipefail
 CELLS_FILE="${1:-cells-coarse.tsv}"
 MAX_RUNS=8
 DEADLINE_S=$((36 * 3600))
-NOTIFY_CH="${NOTIFY_CH:-}"
-NOTIFY_THREAD="${NOTIFY_THREAD:-}"
-NOTIFY_POST="/usr/local/bin/notify-post.sh"
 APP_LOG_ID="0c60510473c83331863aa44ab8e940a429d8d7d777296e14afa418e43d2900df"
 
 cd "$(dirname "$0")/.."
@@ -29,7 +26,9 @@ done_cells()  { grep -c "	DONE" results/campaign-progress.tsv 2>/dev/null || ech
 fail_cells()  { grep -c "	FAIL" results/campaign-progress.tsv 2>/dev/null || echo 0; }
 
 notify() {
-  "$NOTIFY_POST" "$1" --channel "$NOTIFY_CH" --thread "$NOTIFY_THREAD" >/dev/null 2>&1 || true
+  # Optional completion hook. Set NOTIFY_CMD to a command that takes the message
+  # as its first argument (e.g. a notification poster). No-op if unset.
+  if [ -n "${NOTIFY_CMD:-}" ]; then "$NOTIFY_CMD" "$1" >/dev/null 2>&1 || true; fi
 }
 
 maintenance() {
@@ -50,7 +49,7 @@ while true; do
   if (( DONE >= TOTAL )); then
     echo "[autopilot] all ${TOTAL} cells DONE."
     python3 analysis/extract.py results -o analysis/coarse-final.csv >/dev/null 2>&1 || true
-    notify "[autopilot] 코스 스윕 완주했습니다: ${TOTAL}셀 전체 DONE (FAIL $(fail_cells)건). 결과는 analysis/coarse-final.csv에 추출해뒀고, 다음 단계(경계 정밀 측정)는 다음 세션이 핸드오프 문서(ops/projects/rdb-join-paper/HANDOFF.md)대로 이어갑니다."
+    notify "[autopilot] 코스 스윕 완주했습니다: ${TOTAL}셀 전체 DONE (FAIL $(fail_cells)건). 결과는 analysis/coarse-final.csv에 추출해뒀고, 다음 단계(경계 정밀 측정)는 다음 세션이 핸드오프 문서대로 이어갑니다."
     exit 0
   fi
   ELAPSED=$(( $(date +%s) - START_TS ))

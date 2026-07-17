@@ -22,9 +22,6 @@ MAX_RUNS=6
 DEADLINE_S=$((24 * 3600))
 PER_RUN_CAP=25200            # 7h per run-campaign invocation, then maintenance + relaunch
 REPEATS=3
-NOTIFY_CH="${NOTIFY_CH:-}"
-NOTIFY_THREAD="${NOTIFY_THREAD:-}"
-NOTIFY_POST="/usr/local/bin/notify-post.sh"
 APP_LOG_ID="0c60510473c83331863aa44ab8e940a429d8d7d777296e14afa418e43d2900df"
 PROGRESS="results/campaign-progress.tsv"
 
@@ -53,7 +50,9 @@ done_cells() {
 }
 
 notify() {
-  "$NOTIFY_POST" "$1" --channel "$NOTIFY_CH" --thread "$NOTIFY_THREAD" >/dev/null 2>&1 || true
+  # Optional completion hook. Set NOTIFY_CMD to a command that takes the message
+  # as its first argument (e.g. a notification poster). No-op if unset.
+  if [ -n "${NOTIFY_CMD:-}" ]; then "$NOTIFY_CMD" "$1" >/dev/null 2>&1 || true; fi
 }
 
 maintenance() {
