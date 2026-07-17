@@ -1,0 +1,26 @@
+10	Query	set session transaction read only
+10	Query	SET autocommit=0
+10	Query	select cir1_0.id,cir1_0.issued_at,cir1_0.member_id,cir1_0.policy_id,cir1_0.status,cir1_0.used_at from coupon_issue cir1_0 where cir1_0.member_id=100 order by cir1_0.id limit 20
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=2130
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=2092
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=9744
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=215
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=353
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=2292
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=265
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=16
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=1539
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=7576
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=2026
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=37
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=109
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=1627
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=8617
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=1022
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=744
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=183
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=8851
+10	Query	select cp1_0.id,cp1_0.created_at,cp1_0.discount_amount,cp1_0.expire_at,cp1_0.name,cp1_0.type from coupon_policy cp1_0 where cp1_0.id=434
+10	Query	commit
+10	Query	SET autocommit=1
+10	Query	set session transaction read write

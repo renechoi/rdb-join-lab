@@ -204,3 +204,24 @@ excluded from all load-axis analysis.**
   frozen section 3-4 rule "cells with error rate > 0.1% are invalid", so the series is removed from
   the load-axis knee analysis and the H5 verdict. Entry (c)'s valid load-axis set reflects this
   correction.
+
+**(h) CV-gate escalation not executed; high-variance cells unreported (post-hoc record)**
+- Deviation date: 2026-06-13 to 2026-06-14 (precision campaign)
+- Recorded: 2026-07-17 (post-hoc record, written after data collection)
+- Change: the frozen section 4-3 escalation (3-repeat CV(p50) > 10% triggers +2 runs and a 5-run
+  median; cells still > 15% are flagged high-variance and excluded from boundary inference) was
+  never executed. Among precision cells with multiple repeats, 42 exceeded the 10% CV(p50) gate on
+  3 repeats and none received the mandated +2 additional runs; 32 of them exceeded 15% and should
+  have been flagged high-variance, but no such list was reported in the results section
+  (recomputed from the raw CSVs on 2026-07-17).
+- Rationale: the campaign automation ran a fixed 3 repeats and the CV-triggered escalation branch
+  was never implemented. Disclosed as a limitation in the paper's threats section; boundary
+  figures should be read with the corresponding uncertainty in mind.
+
+**(j) Supplementary round R5/R6 (2026-07-17): post-hoc, not preregistered**
+- Date run: 2026-07-17 (after the main campaign and after the round-3 review)
+- Recorded: 2026-07-17 (post-hoc record)
+- Change: a 42-cell supplementary round was measured to close two gaps found by an adversarial review: (R5) the paper's headline config-rescue claim about Hibernate `default_batch_fetch_size` had never been measured (the main-campaign `batchfetch` style is a hand-coded application-level IN-batch on the association-mapped path, and no main-campaign cell set the env var); (R6) the H7 transaction-wrapper overhead had only been measured under HikariCP's default autocommit configuration, with no tuned-configuration arm. The round adds: same-seed reference cells, `lazy` + `default_batch_fetch_size` at 100 and 1000, JDBC controls, and a tuned arm (hikari auto-commit=false + hibernate.connection.provider_disables_autocommit=true).
+- Status: EXPLORATORY / post-hoc. No hypothesis H1-H7 is judged by this round and no frozen judgment formula is applied to it. The frozen hypothesis verdicts remain those computed from the main campaign by analysis/judge.py.
+- Scope limits (disclosed in the paper): single 2-minute run per cell (no repeats, no CV screening), N in {100, 1000} only, 3 RTT points for the tx arm, regenerated seed (RAND() is unseeded, so the data set differs from the main campaign; measured covariates D(100)=93.7 and D(1000)=800.1 versus the main campaign's 93.0 and 798.6), and a differently-resourced VM (6 CPU / 8 GB). Therefore the round is reported separately and is never merged into the main campaign's cost-model fit; only within-round comparisons are used.
+- Rationale: the paper must not carry an unmeasured headline claim, and a mechanism claim (wire round-trip counts) is worth little unless a configuration that changes those counts is shown to change latency accordingly. Both goals require new measurement, which cannot be preregistered retroactively; the round is therefore labeled exploratory and its limitations are disclosed.
