@@ -171,18 +171,23 @@ analysis scoping).**
 script to the mechanized frozen knee rule.**
 - Date deviation occurred: 2026-06-14 (initial H5 verdict).
 - Date recorded: 2026-07-17 (post-hoc record).
-- Change: the H5 verdict (load-axis knee comparison) was initially derived from a non-preregistered
-  persistence-filtered knee script. As of 2026-07-17, the frozen section 3 knee rule (during a
-  stepwise arrival-rate increase, the step where p99 is at least 2x the previous step, or the step
-  immediately before error/drop onset) is being mechanized in analysis/judge.py: the frozen knee
-  factor (p99 >= 2x the prior step, encoded as KNEE_FACTOR=2.0) and the load-axis style groups are
-  in the code, moving the H5 verdict off the non-preregistered persistence script and onto this
-  frozen rule. The persistence-filtered knee analysis is relabeled as post-hoc robustness.
+- Change: the H5 verdict (load-axis knee comparison) was initially derived only from a
+  non-preregistered persistence-filtered knee script (analyze-scenario-l.py stdout); the
+  machine-readable verdict table (analysis/judge.py) reported H5=PENDING until then. As of
+  2026-07-17, the frozen section 3 knee rule (during a stepwise arrival-rate increase, the step
+  where the median p99 is at least 2x the prior valid step, or the step immediately before
+  error/drop onset) is mechanized in analysis/judge.py (judge_H5, KNEE_FACTOR=2.0 with the
+  load-axis style groups), and H5 is now decided by that rule. The persistence-filtered knee
+  analysis is relabeled as post-hoc robustness, and analyze-scenario-l.py itself states this
+  (judge.py is the authoritative source). Under the frozen rule the mechanized H5 verdict is HIT:
+  the directional part (N+1 knees lower than flat/batch) holds, and the 80% conjunct holds but
+  rests on a fragile single-sample joinfetch spike at rate 60, which is disclosed.
 - Rationale: the persistence filter used in the first verdict was not the pre-registered knee
   definition. Mechanizing the frozen rule in code satisfies section 5-1 (the script applies the
   judgment rules; human involvement is code review only). Results obtained by the non-preregistered
   procedure are reported only as auxiliary robustness evidence.
-- Evidence commit: a9ff6c1 (2026-06-14, the initial persistence-filtered-knee-based H5 verdict).
+- Evidence commits: a9ff6c1 (2026-06-14, the initial persistence-filtered-knee-based H5 verdict);
+  f597eaa (2026-07-17, mechanization of the frozen knee rule in judge_H5; local commit, not pushed).
 
 **(g) Styles-list correction: the Scenario L 'join' series was identified as misconfigured and
 excluded from all load-axis analysis.**
@@ -191,6 +196,10 @@ excluded from all load-axis analysis.**
 - Change: the 'join' series in the Scenario L cell list was found to be misconfigured. join is a
   Scenario A/C style, not a Scenario B/L style, so on the load axis (which is Scenario B based) the
   join series produced 100% HTTP errors. This series is excluded from all load-axis analysis.
+  Additionally, in the load-axis knee analysis 'par' cannot exhibit an observable knee under its
+  pre-registered 14 rps cap, and 'lazy-unbounded' has too few arrival-rate sample points; both are
+  excluded from the verdict. Unlike 'join', these two are not misconfigured: they are untestable
+  due to the rate cap and insufficient sampling, respectively.
 - Rationale: misconfigured cells are not valid measurements. The exclusion also satisfies the
   frozen section 3-4 rule "cells with error rate > 0.1% are invalid", so the series is removed from
   the load-axis knee analysis and the H5 verdict. Entry (c)'s valid load-axis set reflects this

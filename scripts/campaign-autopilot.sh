@@ -16,7 +16,7 @@ set -uo pipefail
 CELLS_FILE="${1:-cells-coarse.tsv}"
 MAX_RUNS=8
 DEADLINE_S=$((36 * 3600))
-APP_LOG_ID="0c60510473c83331863aa44ab8e940a429d8d7d777296e14afa418e43d2900df"
+APP_LOG_ID="${APP_LOG_ID:-$(docker inspect --format '{{.Id}}' lab-app 2>/dev/null || true)}"
 
 cd "$(dirname "$0")/.."
 START_TS=$(date +%s)
@@ -32,7 +32,13 @@ notify() {
 }
 
 maintenance() {
-  colima ssh -- sudo sh -c "truncate -s 0 /var/lib/docker/containers/${APP_LOG_ID}/*-json.log 2>/dev/null; fstrim /var/lib/docker" >/dev/null 2>&1 || true
+  # Truncate the app container's json log (guarded: only if the container id resolved),
+  # then trim the docker disk. Both are best-effort no-ops off the local Colima host.
+  if [ -n "$APP_LOG_ID" ]; then
+    colima ssh -- sudo sh -c "truncate -s 0 /var/lib/docker/containers/${APP_LOG_ID}/*-json.log 2>/dev/null; fstrim /var/lib/docker" >/dev/null 2>&1 || true
+  else
+    colima ssh -- sudo sh -c "fstrim /var/lib/docker" >/dev/null 2>&1 || true
+  fi
 }
 
 TOTAL=$(total_cells)
