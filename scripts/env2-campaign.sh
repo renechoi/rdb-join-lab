@@ -17,6 +17,18 @@ cd "$(dirname "$0")/.."
 export PATH="$HOME/.local/bin:$PATH"
 
 CELLS_FILE="${1:-cells-env2.tsv}"
+
+# Scale guard: abort if the database is not the declared SCALE=full dataset.
+# (Learned the hard way: scripts/smoke.sh reseeds at SCALE=smoke and silently
+# invalidates a full campaign; see results-env2-sam-invalid-run1/INVALID.md.)
+ISSUE_COUNT=$(docker exec lab-mysql mysql -uroot -plabpass lab -N -e "SELECT COUNT(*) FROM coupon_issue" 2>/dev/null | tr -d '[:space:]')
+HOT1500=$(docker exec lab-mysql mysql -uroot -plabpass lab -N -e "SELECT COUNT(*) FROM coupon_issue WHERE member_id=1500" 2>/dev/null | tr -d '[:space:]')
+if [ "${ISSUE_COUNT:-0}" -lt 12000000 ] || [ "${HOT1500:-0}" -lt 1000 ]; then
+  echo "SCALE GUARD FAIL: issue_count=${ISSUE_COUNT:-?} hot_member_1500=${HOT1500:-?} (need >=12,000,000 and >=1,000). Aborting."
+  exit 2
+fi
+echo "scale guard OK: issue_count=$ISSUE_COUNT hot_member_1500=$HOT1500"
+
 PROGRESS="results/env2-progress.tsv"
 touch "$PROGRESS"
 touch results/ENV2_START_MARK
