@@ -47,8 +47,10 @@ while IFS=$'\t' read -r scenario style rtt rate duration extra envov; do
   [[ "$extra" != "-" ]] && EXTRA_ARG="$extra"
 
   echo "[env2 $idx/$total] $(date +%H:%M:%S) START $key n=$N_VAL"
+  # < /dev/null: docker-compose run inside run-cell.sh attaches stdin and would
+  # otherwise swallow the remaining cell lines of this while-read loop.
   if SCALE=full COARSE_REPEATS=3 N="$N_VAL" MAX_MEMBER_ID="$MMID" \
-     bash scripts/run-cell.sh "$scenario" "$style" "$rtt" "$rate" "$duration" "$EXTRA_ARG"; then
+     bash scripts/run-cell.sh "$scenario" "$style" "$rtt" "$rate" "$duration" "$EXTRA_ARG" < /dev/null; then
     echo "${key}	DONE	$(date +%s)" >> "$PROGRESS"
     echo "[env2 $idx/$total] $(date +%H:%M:%S) DONE $key"
   else
