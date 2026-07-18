@@ -1,0 +1,105 @@
+{
+  "d100_env2": 93.5,
+  "rtt_calibrated_ms": {
+    "0": 0.131,
+    "2200": 2.765,
+    "800": 1.06
+  },
+  "median_p50_ms": {
+    "byid@rtt0": 98.23,
+    "byid@rtt800": 261.15,
+    "byid@rtt2200": 442.08,
+    "inbatch@rtt0": 15.52,
+    "inbatch@rtt800": 36.46,
+    "inbatch@rtt2200": 39.0,
+    "jdbc-inbatch@rtt0": 7.56,
+    "jdbc-inbatch@rtt800": 6.46,
+    "jdbc-inbatch@rtt2200": 11.97,
+    "jdbc-join@rtt0": 4.31,
+    "jdbc-join@rtt800": 6.27,
+    "jdbc-join@rtt2200": 8.29,
+    "joinfetch@rtt0": 15.11,
+    "joinfetch@rtt800": 24.73,
+    "joinfetch@rtt2200": 37.08,
+    "lazy@rtt0": 107.05,
+    "lazy@rtt800": 165.15,
+    "lazy@rtt2200": 302.37
+  },
+  "wire_slope_test": {
+    "joinfetch": {
+      "slope_ms_per_rttms": 8.203,
+      "wire_count": 6.0,
+      "ratio_s_over_W": 1.3672
+    },
+    "jdbc-join": {
+      "slope_ms_per_rttms": 1.468,
+      "wire_count": 1.0,
+      "ratio_s_over_W": 1.4676
+    },
+    "inbatch": {
+      "slope_ms_per_rttms": 7.997,
+      "wire_count": 7.0,
+      "ratio_s_over_W": 1.1424
+    },
+    "jdbc-inbatch": {
+      "slope_ms_per_rttms": 1.867,
+      "wire_count": 2.0,
+      "ratio_s_over_W": 0.9335
+    },
+    "lazy": {
+      "slope_ms_per_rttms": 74.919,
+      "wire_count": 99.5,
+      "ratio_s_over_W": 0.753
+    },
+    "byid": {
+      "slope_ms_per_rttms": 127.506,
+      "wire_count": 99.5,
+      "ratio_s_over_W": 1.2815
+    }
+  },
+  "b_env2_aggregate": 1.0324,
+  "b_env1_reference": 0.975,
+  "holdout_checks": {
+    "800": {
+      "lazy_minus_joinfetch": {
+        "measured_ms": 140.42,
+        "predicted_ms": 96.63,
+        "pct_error": 45.3
+      },
+      "inbatch_minus_joinfetch": {
+        "measured_ms": 11.73,
+        "predicted_ms": 1.03,
+        "gap_in_rtt_units": 11.06,
+        "h2b_within_2p5": false
+      },
+      "lazy_vs_byid": {
+        "abs_gap_ms": 96.0,
+        "practically_equivalent": false,
+        "gap_in_rtt_units": 90.57
+      }
+    },
+    "2200": {
+      "lazy_minus_joinfetch": {
+        "measured_ms": 265.29,
+        "predicted_ms": 252.06,
+        "pct_error": 5.2
+      },
+      "inbatch_minus_joinfetch": {
+        "measured_ms": 1.92,
+        "predicted_ms": 2.7,
+        "gap_in_rtt_units": 0.7,
+        "h2b_within_2p5": true
+      },
+      "lazy_vs_byid": {
+        "abs_gap_ms": 139.71,
+        "practically_equivalent": false,
+        "gap_in_rtt_units": 50.53
+      }
+    }
+  },
+  "h2b_env2": {
+    "satisfied": 1,
+    "total": 2
+  },
+  "excluded_repeats": 0
+}
