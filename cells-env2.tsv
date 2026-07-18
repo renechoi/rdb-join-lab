@@ -1,0 +1,29 @@
+# cells-env2.tsv — second-environment (env-2) holdout replication campaign.
+# Environment: native-Linux host "sam" (Ubuntu 24.04, kernel 6.17, 8 cores, no VM layer;
+# netem applies inside the mysql container netns exactly as in env-1).
+# Purpose: paper §6 planned external-validity check. Holdout one-way RTT points
+# 800us and 2200us were never measured in the original sweep (0/300/1500/5000/10000).
+# RTT=0 cells re-fit environment-specific intercepts a'_style(N=100); holdout cells
+# test the transferable model structure T = a' + b * roundtrips(style,N) * RTT_rt.
+# Styles cover roundtrips classes: 0 extra (joinfetch, jdbc-join), 1 extra (inbatch,
+# jdbc-inbatch), D(N) extra (lazy, byid). Scenario B, N=100, rate 20 (matches env-1
+# B cells), 3 repeats per cell for within-cell dispersion.
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+b	joinfetch	0	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-join	0	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	inbatch	0	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-inbatch	0	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	lazy	0	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	byid	0	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	joinfetch	800	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-join	800	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	inbatch	800	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-inbatch	800	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	lazy	800	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	byid	800	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	joinfetch	2200	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-join	2200	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	inbatch	2200	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-inbatch	2200	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	lazy	2200	20	2m	-	N=100,MAX_MEMBER_ID=2000
+b	byid	2200	20	2m	-	N=100,MAX_MEMBER_ID=2000
