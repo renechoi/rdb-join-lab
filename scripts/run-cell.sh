@@ -159,7 +159,12 @@ for REP in $(seq 1 "$COARSE_REPEATS"); do
   # reflects the actual RATE used (e.g. par capped at 14 rps, not the incoming 50).
   N_TAG=""
   if [[ "$SCENARIO" == "b" || "$SCENARIO" == "l" ]]; then N_TAG="-n${N}"; fi
-  OUTPUT_FILE="results/${SCENARIO}-${STYLE}-rtt${RTT_US}-r${RATE}${N_TAG}-rep${REP}-${EPOCH}.json"
+  # CELL_TAG (optional, via cells-file env_overrides): appended to the style segment
+  # of the FILENAME ONLY, so measurement arms that share a controller style but differ
+  # in app config (e.g. lazy vs lazy+default_batch_fetch_size, default vs tuned tx
+  # config) extract as distinct style labels. Does not affect the endpoint called.
+  STYLE_FNAME="${STYLE}${CELL_TAG:+-${CELL_TAG}}"
+  OUTPUT_FILE="results/${SCENARIO}-${STYLE_FNAME}-rtt${RTT_US}-r${RATE}${N_TAG}-rep${REP}-${EPOCH}.json"
 
   echo "[4/${COARSE_REPEATS}] Running k6 repeat ${REP}/${COARSE_REPEATS} (output -> ${OUTPUT_FILE})..."
 

@@ -52,7 +52,7 @@ case "$SCALE" in
   full)   HOT_MEMBER_COUNT=2000; HOT_ISSUES_PER=1200 ;;
 esac
 
-CHUNK=500000   # max rows per INSERT; keeps transaction size manageable
+CHUNK="${CHUNK:-500000}"   # max rows per INSERT; env-overridable (OOM-killed at 500k under a 1GB-headroom container on 2026-07-17; 250000 is the safe reseed value)
 MYSQL_SERVICE="mysql"   # service name in docker-compose.yml
 
 echo "=== seed.sh: SCALE=$SCALE ==="

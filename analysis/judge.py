@@ -43,6 +43,21 @@ INBATCH_STYLES = {"inbatch", "inbatch-nodup", "jdbc-inbatch", "batchfetch"}  # +
 NPLUS1_STYLES = {"lazy", "lazy-unbounded", "byid"}            # + distinct refs
 SEQ_STYLES = {"seq", "jdbc-seq"}                              # +2 (3 sequential queries)
 
+# --- Scenario L (load axis, H5) constants ---
+# The load sweep lives under scenario=='b' in scenario-l-final.csv (NOT scenario=='l');
+# it is a single reference point (rtt=1500us, N=100) swept over arrival rate. Scenario 'a'
+# rows in that file are unrelated single-point cells and are ignored.
+SCENARIO_L_CSV = "analysis/scenario-l-final.csv"
+SCENARIO_L_REF_RTT = 1500     # us, cross-AZ-equivalent reference RTT for the load sweep
+SCENARIO_L_REF_N = 100        # result-set size at the load-sweep reference point
+KNEE_FACTOR = 2.0             # frozen S3: p99 >= 2x prior step
+L_ERR_THRESH = 0.001          # frozen S3/S4.4: error onset (error_rate > 0.1%)
+L_DROP_THRESH = 0.01          # frozen S3/S4.4: drop onset (dropped_ratio > 1%)
+# H5 style groups on the load axis. 'join' is a misconfigured style (100% HTTP errors,
+# valid=0 at every rate) so it carries no measurable knee; 'joinfetch' is the working JOIN.
+H5_NPLUS1 = ("lazy", "byid")
+H5_FLAT_BATCH = ("joinfetch", "inbatch", "inbatch-nodup", "jdbc-join", "jdbc-inbatch", "batchfetch")
+
 
 def fnum(x):
     try:
@@ -321,18 +336,41 @@ def judge_H2b(agg):
 
 
 def judge_H3(agg, precision_present):
-    # exploratory: p95 change across distinct=200 boundary (inbatch N 150/200/250).
-    cells = []
+    # H3 (exploratory, direction-neutral): p95 change across the eq_range_index_dive_limit(200)
+    # boundary. MySQL dedups the IN list before the index dive, so the boundary is in DISTINCT
+    # terms (~200): inbatch N150 (distinct~137) is below, N250 (distinct~224) is above; N200
+    # (distinct~181) still sits below. Frozen criterion: HIT if the relative p95 change from
+    # below (N150) to above (N250) exceeds the 10% CV gate in the SAME direction at BOTH RTT
+    # levels; otherwise NO-INFLECTION (exploratory). Endpoints are the straddling cells, not N200.
+    GATE = 0.10
+    per_rtt = {}
     for rtt in (0, 300):
-        for n in (150, 200, 250):
-            c = get(agg, "b", "inbatch", rtt, n)
-            if c and c["valid"]:
-                cells.append((rtt, n, c["p95"]))
-    if not precision_present or len(cells) < 4:
-        return J("PENDING", "needs precision cells (inbatch N150/200/250 @ rtt0/300)",
-                 "distinct=200 lands at N~225; precision straddles it")
-    detail = "; ".join(f"rtt{r} N{n}(d~{DISTINCT_BY_N.get(n)}): p95={p:.2f}ms" for r, n, p in cells)
-    return J("EXPLORATORY", "see p95 trend across N", detail)
+        below = get(agg, "b", "inbatch", rtt, 150)
+        above = get(agg, "b", "inbatch", rtt, 250)
+        if not below or not above or not below["valid"] or not above["valid"]:
+            continue
+        if below["p95"] is None or above["p95"] is None or not below["p95"]:
+            continue
+        rel = (above["p95"] - below["p95"]) / below["p95"]
+        per_rtt[rtt] = (below["p95"], above["p95"], rel)
+    if not precision_present or len(per_rtt) < 2:
+        return J("PENDING", "needs precision inbatch N150/N250 @ rtt0 and rtt300",
+                 "distinct=200 boundary straddled by N150 (d~137) below and N250 (d~224) above")
+    rels = {rtt: v[2] for rtt, v in per_rtt.items()}
+    exceeds = {rtt: (abs(v) > GATE) for rtt, v in rels.items()}
+    same_dir = len({r > 0 for r in rels.values()}) == 1
+    both_exceed = all(exceeds.values())
+    hit = both_exceed and same_dir
+    detail = "; ".join(
+        f"rtt{rtt} N150(d~{DISTINCT_BY_N.get(150)}) p95={v[0]:.2f} -> N250(d~{DISTINCT_BY_N.get(250)}) "
+        f"p95={v[1]:.2f} ({v[2]*100:+.1f}%, {'>' if abs(v[2]) > GATE else '<'}10% gate)"
+        for rtt, v in sorted(per_rtt.items()))
+    if hit:
+        return J("HIT", "p95 inflection >10% same direction at both RTT levels", detail)
+    reason = f"p95 change exceeds 10% gate at {sum(exceeds.values())}/2 RTT levels"
+    if not same_dir:
+        reason += ", and directions differ"
+    return J("NO-INFLECTION", f"exploratory: {reason} -> no consistent inflection", detail)
 
 
 def judge_H4(agg):
@@ -369,11 +407,151 @@ def judge_H4(agg):
     return J(verdict, f"app-optimized {len(hit)}/{len(rows)} RTT cells >=5x (all required; bounded app-combine competitive)", detail)
 
 
-def judge_H5(agg, scenario_l_present):
-    if not scenario_l_present:
+def load_scenario_l(path, ref_rtt=SCENARIO_L_REF_RTT, ref_n=SCENARIO_L_REF_N):
+    """Load the Scenario-L load sweep from its own CSV, keyed by (style, rate).
+
+    IMPORTANT (isolation): this file is loaded ONLY here, never merged into main()'s agg.
+    Its scenario=='b' rate rows share the (b, style, 1500, 100) key with the N-sweep cells,
+    so merging would collapse the rate axis and corrupt H2a/H2b/degradation. Only scenario
+    =='b' rows at the load-sweep reference point are the sweep; scenario 'a' rows here are
+    unrelated single-point cells.
+    """
+    by = defaultdict(list)
+    with open(path) as f:
+        for r in csv.DictReader(f):
+            if r.get("scenario") != "b":
+                continue
+            try:
+                rtt = int(r["rtt_us_nominal"]); rate = int(r["rate"])
+            except (KeyError, ValueError, TypeError):
+                continue
+            if rtt != ref_rtt or cell_n(r) != ref_n:
+                continue
+            p99 = fnum(r.get("p99_ms"))
+            if p99 is None:
+                p99 = fnum(r.get("p95_ms"))  # k6 omits p99 at tiny sample counts
+            by[(r["style"], rate)].append({
+                "p99": p99,
+                "valid": r.get("valid") == "1",
+                "err": fnum(r.get("error_rate")) or 0.0,
+                "drop": fnum(r.get("dropped_ratio")) or 0.0,
+            })
+    return by
+
+
+def _style_knee(rate_cells):
+    """Frozen S3 knee rule for one style. rate_cells = {rate: [cell dicts]}.
+
+    Returns (knee_rate_or_None, transient_bool, curve_str). knee_rate None => no knee at or
+    below the max swept rate. Frozen rule (PREREGISTRATION S3), applied ascending by rate:
+      (a) p99 branch: the first valid rate step whose median p99 over valid repeats is
+          >= KNEE_FACTOR x the previous valid step's p99 -> knee = that (doubling) step;
+      (b) drop branch: if the NEXT rate step shows error/drop onset (err>0.1% or drop>1%),
+          the knee is the current step (the step immediately BEFORE errors/drops).
+    valid!=1 rows are excluded from the p99 curve, but a rate whose cells cross the err/drop
+    thresholds marks the onset used by branch (b). 'transient' flags a knee whose p99 later
+    recovers below KNEE_FACTOR x baseline at the top rate (a single-sample excursion, not
+    sustained saturation) -- reported so the verdict's fragility is auditable.
+    """
+    rates = sorted(rate_cells)
+    vp99, onset = {}, {}
+    for rate in rates:
+        cells = rate_cells[rate]
+        vps = [c["p99"] for c in cells if c["valid"] and c["p99"] is not None]
+        vp99[rate] = median(vps) if vps else None
+        onset[rate] = any(c["err"] > L_ERR_THRESH or c["drop"] > L_DROP_THRESH for c in cells)
+    baseline = next((vp99[r] for r in rates if vp99[r] is not None), None)
+    curve = " ".join(f"{r}:{vp99[r]:.0f}" if vp99[r] is not None else f"{r}:x" for r in rates)
+    knee, branch = None, None
+    prev_valid = None
+    for i, rate in enumerate(rates):
+        nxt = rates[i + 1] if i + 1 < len(rates) else None
+        if nxt is not None and onset[nxt] and vp99[rate] is not None:
+            knee, branch = rate, "drop"   # step immediately before errors/drops
+            break
+        if vp99[rate] is not None:
+            if prev_valid is not None and vp99[prev_valid] and vp99[rate] >= KNEE_FACTOR * vp99[prev_valid]:
+                knee, branch = rate, "2x"  # p99 doubled vs previous valid step
+                break
+            prev_valid = rate
+    # 'transient' applies only to a 2x-spike knee whose p99 later recovers below KNEE_FACTOR x
+    # baseline at a higher valid rate (a single-sample excursion). A drop-onset knee is a hard
+    # saturation (its tail is invalid / stays elevated), so it is never transient.
+    transient = False
+    if branch == "2x" and baseline:
+        after = [vp99[r] for r in rates if r > knee and vp99[r] is not None]
+        transient = any(p < KNEE_FACTOR * baseline for p in after)
+    return knee, transient, curve
+
+
+def judge_H5(agg, scenario_l_present, l_csv=SCENARIO_L_CSV):
+    # H5 (load axis, scenario L): N+1 styles' p99 knee arrival rate is substantially lower
+    # than JOIN/IN-batch (directional), AND IN-batch knee >= 80% of JOIN knee (conjunct).
+    if not (scenario_l_present and os.path.exists(l_csv)):
         return J("PENDING", "scenario L (load axis) not yet measured",
-                 "cells-L.tsv prepared; knee = arrival rate where p99 >= 2x prior step")
-    return J("PENDING", "L data present: compute knees", "")
+                 "knee = arrival rate where p99 >= 2x prior step OR step before errors/drops")
+    rate_cells = load_scenario_l(l_csv)
+    styles = defaultdict(dict)
+    for (style, rate), cells in rate_cells.items():
+        styles[style][rate] = cells
+    if not any(len(rc) >= 3 for rc in styles.values()):
+        return J("PENDING", "scenario L sweep incomplete (<3 arrival rates)", "")
+
+    knees, transient, curves = {}, {}, {}
+    excluded, insufficient = [], []
+    for style, rc in styles.items():
+        has_valid = any(c["valid"] for cells in rc.values() for c in cells)
+        if not has_valid:
+            excluded.append(style)          # all-error / rate-capped (join misconfig; par 14rps cap)
+            continue
+        if len(rc) < 3:
+            insufficient.append(style)
+            continue
+        knee, tr, curve = _style_knee(rc)
+        knees[style] = knee; transient[style] = tr; curves[style] = curve
+
+    INF = float("inf")
+    kv = lambda s: (knees[s] if knees.get(s) is not None else INF) if s in knees else None
+
+    def kstr(s):
+        if s not in knees:
+            return f"{s}=n/a"
+        return f"{s}={knees[s]}" + ("(transient)" if transient[s] else "") if knees[s] is not None else f"{s}>100"
+
+    np1_vals = [kv(s) for s in H5_NPLUS1 if s in knees]
+    fb_pairs = [(s, kv(s)) for s in H5_FLAT_BATCH if s in knees]
+    max_np1 = max(np1_vals) if np1_vals else None
+    min_fb = min(v for _, v in fb_pairs) if fb_pairs else None
+    directional = (max_np1 is not None and min_fb is not None and max_np1 < min_fb)
+
+    ib, jf = kv("inbatch"), kv("joinfetch")
+    conjunct = (ib is not None and jf is not None and ib >= 0.8 * jf)
+
+    if directional and conjunct:
+        verdict = "HIT"
+    elif directional and not conjunct:
+        verdict = "PARTIAL"
+    else:
+        verdict = "REJECT"
+
+    knee_tbl = ", ".join(kstr(s) for s in list(H5_NPLUS1) + list(H5_FLAT_BATCH) if s in knees)
+    excl_note = (f" | excluded all-error/capped: {', '.join(sorted(excluded))}" if excluded else "")
+    insf_note = (f" | insufficient(<3 rates): {', '.join(sorted(insufficient))}" if insufficient else "")
+    dir_line = (f"directional: max(N+1)={max_np1} {'<' if directional else '>='} "
+                f"min(flat/batch)={'>100' if min_fb == INF else min_fb} -> "
+                f"{'HIT' if directional else 'REJECT'}")
+    jf_disp = ">100" if jf == INF else jf
+    ib_disp = ">100" if ib == INF else ib
+    conj_line = (f"80% conjunct: inbatch({ib_disp}) >= 0.8*joinfetch({jf_disp}) -> "
+                 f"{'HOLDS' if conjunct else 'FAILS'}")
+    frag = ""
+    if jf not in (None, INF) and transient.get("joinfetch"):
+        frag = (" [FRAGILE: the joinfetch knee is a single-sample transient p99 spike that "
+                "recovers by 100rps; excluding it as transient -> joinfetch no-knee -> conjunct "
+                "FAILS -> H5 PARTIAL. inbatch's own knee is drop-backed and stays elevated.]")
+    detail = (f"knees(rps, >100=no knee within sweep): {knee_tbl}{excl_note}{insf_note} || "
+              f"{dir_line} || {conj_line}{frag} || curves[{'; '.join(f'{s} {curves[s]}' for s in sorted(curves))}]")
+    return J(verdict, f"directional {'HIT' if directional else 'REJECT'}; 80% conjunct {'HOLDS' if conjunct else 'FAILS'}", detail)
 
 
 def judge_H6(agg):
@@ -474,7 +652,12 @@ def main():
         print("no data", file=sys.stderr); sys.exit(1)
     agg = aggregate(rows)
     precision_present = any(c["n"] in (40, 60, 80, 150, 200, 250) for c in agg.values())
-    scenario_l_present = any(c["scenario"] == "l" for c in agg.values())
+    # The load sweep lives under scenario=='b' in its own CSV (never merged into agg to keep the
+    # rate axis from collapsing), so presence is detected by the file, not by an 'l' scenario key.
+    l_csv = os.path.join(args.outdir, "scenario-l-final.csv")
+    if not os.path.exists(l_csv):
+        l_csv = SCENARIO_L_CSV
+    scenario_l_present = os.path.exists(l_csv)
 
     print(f"=== judge.py — {len(rows)} rows -> {len(agg)} cells "
           f"(precision={'yes' if precision_present else 'no'}, L={'yes' if scenario_l_present else 'no'}) ===\n")
@@ -489,7 +672,7 @@ def main():
     judgments = {
         "H1": judge_H1(agg), "H2a": judge_H2a(agg), "H2b": judge_H2b(agg),
         "H3": judge_H3(agg, precision_present), "H4": judge_H4(agg),
-        "H5": judge_H5(agg, scenario_l_present), "H6": judge_H6(agg), "H7": judge_H7(agg),
+        "H5": judge_H5(agg, scenario_l_present, l_csv), "H6": judge_H6(agg), "H7": judge_H7(agg),
     }
     print("=== Hypothesis table ===")
     for h, j in judgments.items():

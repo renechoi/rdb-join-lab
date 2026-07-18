@@ -22,10 +22,7 @@ MAX_RUNS=6
 DEADLINE_S=$((24 * 3600))
 PER_RUN_CAP=25200            # 7h per run-campaign invocation, then maintenance + relaunch
 REPEATS=3
-NOTIFY_CH="${NOTIFY_CH:-}"
-NOTIFY_THREAD="${NOTIFY_THREAD:-}"
-NOTIFY_POST="/usr/local/bin/notify-post.sh"
-APP_LOG_ID="0c60510473c83331863aa44ab8e940a429d8d7d777296e14afa418e43d2900df"
+APP_LOG_ID="${APP_LOG_ID:-$(docker inspect --format '{{.Id}}' lab-app 2>/dev/null || true)}"
 PROGRESS="results/campaign-progress.tsv"
 
 cd "$(dirname "$0")/.."
@@ -53,11 +50,19 @@ done_cells() {
 }
 
 notify() {
-  "$NOTIFY_POST" "$1" --channel "$NOTIFY_CH" --thread "$NOTIFY_THREAD" >/dev/null 2>&1 || true
+  # Optional completion hook. Set NOTIFY_CMD to a command that takes the message
+  # as its first argument (e.g. a notification poster). No-op if unset.
+  if [ -n "${NOTIFY_CMD:-}" ]; then "$NOTIFY_CMD" "$1" >/dev/null 2>&1 || true; fi
 }
 
 maintenance() {
-  colima ssh -- sudo sh -c "truncate -s 0 /var/lib/docker/containers/${APP_LOG_ID}/*-json.log 2>/dev/null; fstrim /var/lib/docker" >/dev/null 2>&1 || true
+  # Truncate the app container's json log (guarded: only if the container id resolved),
+  # then trim the docker disk. Both are best-effort no-ops off the local Colima host.
+  if [ -n "$APP_LOG_ID" ]; then
+    colima ssh -- sudo sh -c "truncate -s 0 /var/lib/docker/containers/${APP_LOG_ID}/*-json.log 2>/dev/null; fstrim /var/lib/docker" >/dev/null 2>&1 || true
+  else
+    colima ssh -- sudo sh -c "fstrim /var/lib/docker" >/dev/null 2>&1 || true
+  fi
 }
 
 TOTAL=$(total_cells)

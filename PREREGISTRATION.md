@@ -1,619 +1,227 @@
-# RDB Join Lab — Pre-Registration Document
+# RDB Join Lab — Pre-Registration (English export of the frozen project copy)
 
-**Status**: DRAFT — commit this file before first measurement run to timestamp hypotheses.
+**Status**: Faithful English export of the authoritative project pre-registration, frozen at v1.0.
 
-This document pre-registers hypotheses, analysis plan, and judgment criteria before
-data collection. No measurement results may be used to modify the hypotheses below.
-Post-hoc additions must be labelled as exploratory and kept separate.
+The authoritative pre-registration is the project copy, maintained in a private research
+repository. That copy is frozen (immutable after v1.0); its freezing commit hash is the
+hypothesis timestamp evidence. The freeze commit is dated **2026-06-11** (v1.0, G1-approved).
+After freezing, sections 1-6 of the project copy are immutable; the only permitted changes are
+additions to the Amendment Log with a stated reason.
 
-This file is the English protocol summary derived from the research project's
-pre-registration document; the project copy is authoritative. Hypothesis freezing
-(immutability declaration) is timestamped by the project copy's commit hash.
+This file mirrors sections 1-6 of the frozen project copy and translates its Amendment Log.
+Where an earlier English draft of this file stated rules that contradicted the frozen copy
+(a p99 + CV-threshold crossover rule, a Mann-Whitney two-tier protocol, Benjamini-Hochberg FDR
+correction, a joint-fit cost model, and a per-style M/M/c apparatus), those rules were not part
+of the frozen protocol and have been removed. The only judgment rules below are the ones present
+in the frozen sections 1-6 (plus the amendments recorded in the Amendment Log).
 
----
-
-## 1. Crossover Detection Rule
-
-A crossover between style A and style B occurs when:
-
-```
-mean(p99_A, repeats) < mean(p99_B, repeats)  AND
-  the difference exceeds CV_THRESHOLD * mean(p99_A, repeats)
-```
-
-**CV_THRESHOLD**: Empirically calibrated from the pilot-scale stability probe (SCALE=pilot,
-RTT=300us, Scenario B N=20, 5 repeats). CV_THRESHOLD is set to the observed CV at that cell.
-Minimum floor: 0.05 (5%). This prevents the threshold from being set below measurement noise.
-
-**Calibration step (mandatory before coarse sweep)**:
-1. Run the stability probe: 5 repeats of `run-cell.sh b lazy 300 20 2m "limit=20"` at SCALE=pilot.
-2. Compute CV of p99 across the 5 repeats.
-3. Set `CV_THRESHOLD = max(0.05, observed_CV)` in the analysis script.
-4. Record the calibrated threshold in the results/ directory alongside the pilot run.
-
-Rationale: CV_THRESHOLD=0.05 is a placeholder safe floor. The actual noise floor depends on
-Colima scheduler jitter, which varies with host load. Using an empirically calibrated threshold
-avoids reporting crossovers that are within measurement noise for this specific environment.
+**Statement of honesty**: The Amendment Log distinguishes pre-freeze integrations (folded into
+the body before v1.0) from **post-hoc records (written after data collection)**. Every entry
+under "2026-07-17 batch" is a post-hoc record and is labelled as such.
 
 ---
 
-## 2. Predictive Model Specification
+## 1. Research Question (neutral framing)
 
-Before measuring each scenario, the expected cost order is specified as a
-**prior ranking** (cheapest to most expensive per request at the reference cell).
+In ORM-based services, where do the latency costs of the query patterns induced by association
+mapping (indirect reference) versus ID direct reference — JOIN in 1 query, per-item N+1,
+IN-batch in 2 queries, application-side composition — cross over, as a function of RTT, result-set
+size N, IN-list size, and arrival rate (load)?
 
-### Scenario B (N=20, RTT=300us, SCALE=pilot)
+## 2. Pre-registered Hypotheses (immutable after freeze)
 
-Expected ranking (cheapest first):
+Each hypothesis is a pre-measurement prediction. Hits and rejections are all reported. H4 and H6
+explicitly include predictions unfavorable to the researcher's motivated camp (ID reference).
 
-1. `joinfetch` — 1 SQL + policy in same row, min wire trips
-2. `jdbc-join` — same SQL pattern, no ORM overhead
-3. `inbatch` / `jdbc-inbatch` — 2 SQLs (issue scan + IN policy)
-4. `batchfetch` — same as inbatch but association-mapped entity path (2 queries: issue scan + IN policy)
-5. `lazy` (with Pageable) — N+1 for bounded set; N=20 means 21 queries
-6. `byid` — N+1 equivalent on id-ref; same query count as lazy
-7. `inbatch-nodup` — 2 SQLs but IN list has duplicate policy IDs; measured cost difference vs inbatch
-   is JDBC/wire overhead only (MySQL deduplicates IN() values before eq_range_index_dive_limit
-   range counting, so no plan switch is expected). (R3 amendment: original ranking noted "plan may
-   differ"; corrected — MySQL deduplication prevents a plan change.)
-8. `lazy-unbounded` — fetches ALL rows before slicing; N+1 count = total member issues
-
-These rankings are expected to be stable at RTT=0 (baseline). At higher RTT,
-N+1 styles (lazy, byid, lazy-unbounded) are expected to diverge non-linearly
-because each extra RTT adds (N-1) * RTT to total latency.
-
-### Scenario A (RTT=300us, SCALE=pilot)
-
-Expected ranking:
-
-1. `join` / `jdbc-join` — 1 SQL
-2. `par` — 3 SQLs but 2 run concurrently → wall time ≈ 1 + max(policy, member) RTTs
-3. `jdbc-seq` / `seq` — 3 sequential SQLs → wall time ≈ 3 * RTT
-
-**Key prediction**: `par` wall time < `seq` wall time when RTT > 0.
-
-### Scenario C (status=ISSUED, limit=20, candidateCap sweep, RTT=300us)
-
-Expected ranking:
-
-1. `join` — predicate pushdown to DB, covering index scan
-2. `app-optimized` — 2 SQLs but candidate set bounded by memberId scope
-3. `app-naive` — 2 SQLs but global status scan, candidateCap rows transferred
-
-**Key prediction**: `app-naive` cost grows linearly with `candidateCap`. Crossover
-point between `join` and `app-optimized` is expected near candidateCap=1000 at RTT=300us.
-
-**Scope asymmetry declaration (R3 amendment)**: `app-naive` and `join` are NOT
-iso-scope comparisons. `join` scopes on (memberId, status); `app-naive` scopes on
-(status) only — a global scan with no memberId predicate. This asymmetry is intentional:
-it measures the cost of the predicate-pushdown gap (what happens when the developer
-omits the memberId scope in the app-side composition phase). The fair iso-scope
-comparison is `join` vs `app-optimized` (both scope on memberId+status). All Scenario C
-cells pass `memberId` as a URL parameter; `app-naive` ignores it on the server side.
-This design choice must be stated explicitly in the paper's method section to avoid
-misinterpretation of the `join` vs `app-naive` crossover as an iso-scope boundary.
-
-**HIBERNATE_DEFAULT_BATCH_FETCH_SIZE requirement**: All Scenario C cells MUST be run
-with `HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=-1` (disabled). If batch_fetch_size is enabled,
-Hibernate automatically chunks the `findAllById` / `findDtosByIdIn` IN() query for
-`app-naive` and `app-optimized`, which reduces the roundtrip count from 2 to
-`ceil(distinct_policyIds / batchSize)`. This would invalidate the pre-registered
-roundtrip table. The `run-campaign.sh` `apply_env_overrides()` default restores
-`HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=-1` between cells. (R3 amendment)
-
----
-
-## 1.5 Statistical Test Specification (R3 amendment)
-
-### Two-tier Protocol
-
-The crossover detection protocol uses two tiers based on repeat count:
-
-**Tier 1 — Coarse cells (COARSE_REPEATS=2)**:
-- Aggregate: mean of 2 repeats (median of 2 equals mean; not meaningful as a distinct statistic).
-- Crossover criterion: magnitude threshold only (CV_THRESHOLD from §1 and §3).
-- Rationale: COARSE_REPEATS=2 is insufficient for a Mann-Whitney U test (minimum n=3 required
-  for any non-trivial power). Do NOT apply Mann-Whitney to coarse cells.
-
-**Tier 2 — Precision cells (COARSE_REPEATS=8, R4 amendment)**:
-- Aggregate: median of 8 repeats.
-- Crossover criterion: Mann-Whitney U test on per-repeat p99 values, FDR-corrected at q=0.05
-  (Benjamini-Hochberg globally across all precision comparisons — see §4).
-- The magnitude threshold (§1 CV_THRESHOLD) is a prerequisite gate: if the magnitude threshold
-  is not exceeded, Mann-Whitney is not applied (no comparison to make).
-- Both gates must pass for a crossover to be declared in precision cells.
-- **Rationale (R4 fix)**: Mann-Whitney U is statistically inoperative at n=3. With n=3 pairs,
-  the minimum achievable two-sided p-value is 0.10 (not 0.05), making it impossible to reject H0
-  at alpha=0.05 even for large effect sizes. n=8 gives minimum p=0.014 for the most extreme
-  rank configuration, enabling a meaningful alpha=0.05 gate with ~80% power for Cohen's d >= 1.5
-  effect sizes typical in this domain. The previous value of COARSE_REPEATS=3 was pre-registered
-  in R3 but was operationally invalid for Mann-Whitney; this R4 amendment corrects it.
-
-**Paper reporting**: All boundary inferences in the paper body are drawn exclusively from
-precision cells (Tier 2). Coarse cell results are used for survey/direction only and are
-explicitly labelled as "coarse sweep" in figures and tables.
-
----
-
-## 3. CV Threshold
-
-The coefficient of variation threshold for declaring a cell result "stable" is **CV < 0.10**
-(less than 10% relative standard deviation across COARSE_REPEATS=2 repeats).
-
-For COARSE_REPEATS=2, the aggregate value is the **mean** of the 2 repeats (not median;
-median of 2 values equals the mean and is not a meaningful statistic). For COARSE_REPEATS >= 3,
-the aggregate is the **median**.
-
-Cells where CV >= 0.10 require additional repeats (up to 5) before the result is used
-in boundary inference.
-
----
-
-## 3.5. Stability Gate Pipeline
-
-The stability gate is an ordered pipeline. Steps must be executed in sequence; failure at any
-step stops the pipeline and the cell is retried or discarded.
-
-**Pipeline** (per cell, before boundary inference):
-
-1. **Prior-art search gate**: prior-art search protocol (maintained in the research project; results summarized here before hypothesis freeze)
-   first execution must be complete and results incorporated into §2 prior rankings before
-   the coarse sweep begins. If prior-art search reveals a style ordering conflict with the
-   registered priors, amend via §7 Amendment Log before continuing.
-
-2. **netem RTT gate**: Measure actual RTT with `calibrate.sh`. If measured RTT deviates from
-   nominal label by > 15%, re-apply netem and re-measure. Discard cell if deviation persists.
-
-3. **CV gate**: COARSE_REPEATS=2 (mean); if CV >= 0.10, add up to 3 more repeats.
-   If CV >= 0.15 after 5 repeats, mark cell "high-variance" and exclude from boundary inference.
-
-4. **Error-rate gate**: If k6 `http_req_failed` > 0.1%, discard cell.
-
-5. **pool-contention gate** (R4 amendment — idle-path pre-check only):
-   Before measurement, call `GET /calibrate/loaded?n=10000`. This endpoint fires requests
-   sequentially (one at a time), checking per-checkout latency on an otherwise **idle** app.
-   If `calibrateLoaded.p99 > 3 * calibrate.p99` even at idle load, pause and re-run warmup.
-   The delta signals abnormal pool contention (e.g. pool not reset, leaked connections) at
-   the start of the cell — before k6 load is applied.
-   **Important clarification (R4)**: this gate is an idle-path pre-check only. It does NOT
-   measure pool contention under load (that would require concurrent requests). Under actual
-   k6 load, pool checkout time is a non-trivial fraction of measured latency for styles with
-   multiple round-trips. To capture this, `pool_contention_flag` is recorded as a post-run
-   covariate in the result metadata (0 = idle pre-check passed, 1 = failed/re-run required).
-   Post-run pool_contention_flag is used as a covariate in the parametric model (§9) to
-   control for between-cell contention variation; it is not a gate that discards cells.
-
----
-
-## 3.4 JVM Priming Protocol (R3 amendment)
-
-Before the first measurement cell in a campaign, `run-campaign.sh` calls `scripts/prime-jvm.sh`
-to send `WARM_REQS=2000` warmup requests per scenario/style combination. This ensures HotSpot
-C2 reaches tier-2 JIT compilation before measurement begins.
-
-Without priming, the first cell(s) of each style can be 10-30% slower due to interpretation
-overhead, which would bias coarse sweep results toward the first cells in the campaign order.
-Priming eliminates this confound.
-
-**Pre-registered**: Priming fires at campaign start only (once per run), not before each cell.
-Individual-cell repriming would add 2000 * 15 styles * RTT overhead per cell and is not needed
-once C2 compilation is stable.
-
----
-
-## 4. Multiple Comparison Protocol
-
-All pairwise style comparisons use Benjamini-Hochberg (BH) FDR correction at q=0.05,
-applied **globally across all comparisons in the coarse sweep** (not per-scenario per-RTT).
-
-The number of comparisons per scenario (R4 amendment: corrected Scenario B count):
-- Scenario A: C(5,2) = 10 pairs x 5 RTT points = 50
-- Scenario B: C(9,2) = 36 pairs x **5** N values x 5 RTT points = **900**
-  (R4 fix: N-axis is {20, 100, 300, 500, 1000} = 5 values, not 3; R3 added N=300, N=500
-  but the comparison count in §4 was not updated to reflect this. Previous value 540 was wrong.)
-- Scenario C: C(3,2) = 3 pairs x 5 RTT points = 15
-
-Total: ~965 comparisons for coarse sweep (was pre-registered as ~605 in R1, updated to ~965 in R4).
-
-**Rationale for global BH**: Applying BH per-scenario per-RTT (per-stratum) artificially lowers
-the effective number of comparisons in each stratum, which makes each individual test easier to
-declare significant — inflating the effective alpha. Global BH controls FDR over the entire
-family of comparisons across the experiment, which is the scientifically conservative choice.
-
----
-
-## 5. candidateCap Sweep (Scenario C)
-
-The following candidateCap values are pre-registered for the Scenario C sweep:
-
-| candidateCap | LAB_C_CANDIDATE_CAP | Rationale |
+| ID | Hypothesis (quantitative prediction) | Judgment criterion |
 |---|---|---|
-| 100 | 100 | Very tight; expected to miss most valid candidates |
-| 500 | 500 | Moderate; likely 1+ policy pages |
-| 1000 | 1000 | Expected crossover boundary region |
-| 5000 | 5000 | 5x crossover; app cost clearly higher than join |
-| 10000 | 10000 | 10x; baseline for app-naive global cost |
-| 50000 | 50000 | Pre-R1 default; now measured explicitly |
+| H1 | In single-detail (Scenario A), the p50 of sequential 3-query (S5-seq) is about +2xRTT vs JOIN (S2). At RTT <= 1.5ms, the absolute gap is under 4ms. | Hit if the measured p50 gap falls within [1.5xRTT, 3xRTT]. |
+| H2a | In a list of N (Scenario B), the p50 of N+1 styles (S1, S4) is linearly proportional to the actual number of extra round-trips. The regression X-axis is NOT nominal N but the per-cell measured distinct-reference count (the first-level cache absorbs duplicate policy lookups). | Hit if linear-regression R^2 >= 0.95 AND the gap is >= 80xRTT at cells with ~100 distinct references. |
+| H2b | The p50 of IN-batch (S5) is within +2.5xRTT of JOIN (S2) across all N (<= 1000) and all RTT. | Hit if the gap is <= 2.5xRTT at every applicable cell. |
+| H3 | When the IN list crosses the eq_range_index_dive_limit (200) boundary, IN-batch latency p95 changes measurably. Note: MySQL deduplicates IN values before the index dive, so the dedup'd list size is the boundary criterion. Plan-switch observation is exploratory. | Hit (exploratory, direction-agnostic) if the p95 difference across the boundary exceeds the CV gate as a significant change. |
+| H4 | In a searchability query (Scenario C), application-side composition is at least 5x worse on p50 than JOIN (predicate-pushdown effect). **JOIN-camp win prediction.** | Judged by an iso-scope comparison (join vs app-optimized); hit if the ratio is >= 5x at every RTT cell. app-naive has a different scope and is reported with descriptive statistics only. |
+| H5 | On the load axis (Scenario L), the p99 knee arrival rate for N+1 styles is markedly lower than for JOIN / IN-batch. The IN-batch knee is at least 80% of the JOIN knee. | Judged by the knee arrival-rate ratio. Knee definition in section 3. |
+| H6 | On a cold buffer pool, per-item PK lookup becomes more disadvantaged than JOIN (round-trips plus individual page misses compound). **Prediction unfavorable to the ID-reference camp.** | Hit if the S4/S5 relative gap widens in the cold auxiliary round vs warm. |
+| H7 | ORM overhead (JPA vs JDBC on the same pattern) is a constant term independent of RTT, and at RTT >= 0.3ms it is smaller than the round-trip effect. | Hit if the per-style (JPA - JDBC) gap has a near-zero slope on the RTT axis (the regression-slope confidence interval includes 0) and its absolute value is < RTT. |
 
-Each value is run as a separate cell: `run-cell.sh c app-naive <rtt> <rate> 2m`.
-The crossover with `join` is identified by binary search if the 6 pre-registered
-points do not contain the crossover.
+## 3. Measurement Metrics and Judgment Rules (immutable after freeze)
 
----
+- Primary metric: per-cell p50 / p95 / p99 (k6 http_req_duration, aggregated as the **median of 3 repeats**).
+- Throughput and error rate are secondary metrics. Cells with error rate > 0.1% are invalid.
+- "No practical difference" verdict: the two styles' p95 gap is under 10% AND under 1ms absolute.
+- Reversal boundary: the smallest parameter value (N, RTT, arrival rate) at which style X becomes
+  worse than Y by at least 10% AND at least 1ms absolute on p95.
+- Knee definition (H5): during a stepwise arrival-rate increase, the step where p99 is at least
+  2x the previous step, or the step immediately before error/drop onset.
 
-## 5.5 Validity Threats (R3 amendment)
+## 4. Controls and Invalidity Criteria (immutable after freeze)
 
-**appNaive buffer pool bias**: `app-naive` at large candidateCap values (e.g. 50000) performs a
-global status scan over a large fraction of `coupon_issue`. At SCALE=full with 10M rows, this
-scan touches a large number of data pages. If these pages are hot in the buffer pool (from
-a prior warm-up or prior cell), `app-naive` benefits from hot-page cache hits that would not
-be present in a cold production environment. Conversely, at cold start, `app-naive` incurs
-disproportionate physical read cost.
+1. Measure only after confirming the buffer-pool warm protocol is complete. Cold is used only for
+   the H6 auxiliary round.
+2. RTT calibration probe: measured before each cell. If the measured RTT deviates by more than
+   +-15% from the nominal label, the cell is invalid and is re-measured.
+3. If the 3-repeat CV > 10% (on p50), take 2 more measurements and use the 5-repeat median. If it
+   is still > 15%, mark the cell "high-variance" and exclude it from boundary computation (report
+   the exclusion).
+4. Cells with k6 dropped iterations > 1% are invalid.
+5. Cells with a container restart / OOM during measurement are invalid.
+6. Log all invalid / re-measure history; report the number of invalid cells in the paper.
 
-**Mitigation**: warmup.sh primes `idx_issue_status_policy` for all Scenario C styles (warm
-state), so `app-naive` high-cap cells represent the best-case (hot buffer pool) cost.
-Any advantage of `app-naive` over `join` at large candidateCap would therefore be an
-upper bound; real production environments without warm-cache policy would perform worse.
-This threat applies to `app-optimized` to a lesser extent (smaller candidate set).
+## 5. Analysis Plan (immutable after freeze)
 
-This threat is stated in the paper limitations section.
+1. Boundary computation: a script mechanically applies the section 3 judgment rules. Human
+   involvement is code review only.
+2. Cost model: fit T(style, N, RTT) = a_style + b * roundtrips(style, N) * RTT + c_style * N
+   (least squares, **two-stage**: RTT=0 cells are used only for estimating a and are excluded from
+   estimating b). Because the par style's round-trip count is 1+overlap, judge par by a slope-ratio
+   comparison rather than a fixed beta band. Fit on the coarse-sweep data; validate on the
+   precision-cell holdout and (optionally) an independent cloud environment.
+3. Hypothesis verdict table: hit / reject / indeterminate plus measured values for each of H1-H7.
+4. All body numbers are verified by a re-extraction script from the results/ raw data.
 
----
+## 6. Known Limitations (declared in advance)
 
-## 6. Scenario L — VU-Cap and M/M/c Prediction
+- Single DB engine (MySQL 8), single ORM (Hibernate 6), virtualized environment.
+- Fixed arrival-rate comparison is a single sub-saturation point except in Scenario L.
+- No bandwidth shaping (RTT is the only controlled network variable).
 
-Scenario L tests the load-dependency of the crossover boundary.
+## 7. Amendment Log
 
-**Reference cell**: Scenario B, N=100, RTT=1500us (cross-AZ equivalent).
-
-**Controlled variables (fixed throughout Scenario L)**:
-- Tomcat maxThreads = 50 (server.tomcat.threads.max in application.yml)
-- HikariCP pool size = 10 (spring.datasource.hikari.maximum-pool-size)
-- HikariCP connectionTimeout = 5000ms (spring.datasource.hikari.connection-timeout)
-
-These values are fixed constants, not free parameters. Changing them constitutes a new
-scenario variant that must be registered separately.
-
-**M/M/c prediction step** (pre-registered, before Scenario L measurement):
-
-mu is **pilot-measured per style** (R4 fix: was a single shared mu; now per-style):
-Run a short single-VU warm measurement of each Scenario B style at the reference cell
-(N=100, RTT=1500us, rate=1 rps) using `calibrate.sh` in loaded mode for each style endpoint.
-Record `mu_style = 1 / (median_p50_us_style / 1e6)` per style.
-
-**Rationale (R4 fix)**: A single shared mu assumes all styles have the same effective service
-time. This is false: lazy (N+1, 1+N queries) has mu << joinfetch (1 query). Using a shared
-mu predicts identical saturation boundaries for all styles, which is the null hypothesis we are
-testing — a circular pre-registration. Per-style mu gives a testable prediction: styles with
-more round-trips saturate at lower lambda, and the model predicts the ordering of saturation
-boundaries.
-
-Given pool size c=10, per-style pilot-measured mu_style, the M/M/c saturation boundary is:
-
-```
-lambda_sat_style = c * mu_style
-```
-
-For the `par` style (3 connections per request), effective c_par = floor(10/3) = 3, so:
-
-```
-lambda_sat_par = c_par * mu_par = 3 * mu_par
-```
-
-**M/D/c deterministic bound** (service time constant, not exponential):
-M/D/c gives tighter saturation bounds. For deterministic service time (approximate for
-DB-dominated workloads), the saturation delay at utilization rho = lambda/(c*mu) is:
-
-```
-T_wait_MD1 = (rho / (2*mu*(1-rho)))   # M/D/1 approximation
-```
-
-The M/D/c bound predicts ~50% lower queueing delay than M/M/c at rho=0.7.
-Both bounds are computed before Scenario L measurement and reported alongside empirical results.
-
-**lazy-unbounded in Scenario L (R4 amendment)**:
-`lazy-unbounded` is included in the Scenario L style set with a rate cap of 10 rps.
-At N=100 (reference cell), lazy-unbounded issues 1 + total_member_issues queries per request
-(unbounded, no LIMIT). At moderate load, this quickly saturates the HikariCP pool (10 connections),
-causing saturation at much lower arrival rates than bounded styles. Including lazy-unbounded in
-Scenario L provides an empirical anchor for the unbounded-N+1 saturation boundary, which the
-M/M/c model predicts to be much lower than bounded styles (mu_lazy_unbounded << mu_joinfetch).
-Rate cap 10 rps prevents catastrophic pool exhaustion from making other concurrent cells unmeasurable.
-
-**N=100 MAX_MEMBER_ID override (R4 amendment)**:
-Scenario L uses N=100 as the reference cell. MAX_MEMBER_ID is overridden to 10000 (member_buckets
-subset) for all Scenario L cells, matching the R4 extension to gen-cells-coarse.sh. This ensures
-k6 samples only members guaranteed to have >= 100 issues, so the declared N is satisfied for
-every VU on every iteration.
-
-**par style rate cap** (pre-registered operational constraint):
-For the `par` style (3 pool connections per request), Tomcat maxThreads=50 allows
-at most floor(50/3) = 16 concurrent requests before thread exhaustion. The operational
-rate cap is set to 14 rps (2 rps below thread limit) to avoid confounding Tomcat queue
-latency with pool-checkout latency. This cap is enforced in run-cell.sh.
-
-This predicts that `par` saturates at 1/3 the arrival rate of single-connection styles.
-The Scenario L measurement verifies whether the empirical p99 inflection matches this prediction.
-
-**Pre-registered VU-cap**: k6 maxVUs=1000 (set in scenario.js). If the VU-cap threshold
-alert fires (>800 VUs used), the cell is flagged as "overloaded" and excluded from
-boundary inference. It is retained as a saturation reference point.
+> Pre-freeze integration history (v0.9 -> v1.0-rc): five R3 adversarial-cycle amendments (the H3
+> dedup caveat, the Scenario C scope asymmetry, the N-axis extension, the par round-trip count, and
+> the RTT=0 exclusion) and one pilot finding (H2a regression X-axis = measured distinct-reference
+> count) were folded into the body before freezing. After freezing, additions go only in this
+> section. Sections 1-6 are immutable; no amendment may alter hypotheses H1-H7.
 
 ---
 
-## 7. Scenario B Member Buckets (High-N Cells)
+### 2026-07-17 batch: post-hoc records (written after data collection)
 
-For Scenario B cells with N=1000, the seeder must produce members with >= 1000 issues.
-With the default seed distribution (100k members, 10M issues), average issues/member = 100.
-Members with >= 1000 issues exist due to the seeder drawing member_ids from 1-10000 for
-the initial high-concentration bucket. (Note: Zipf skew applies to policy_id, not member_id.)
+Entries (a)-(g) below are all **post-hoc records written on 2026-07-17, after data collection**.
+They were not recorded here at measurement time. They are reconstructed to honestly disclose the
+protocol deviations and analysis-scoping decisions that occurred during the actual campaign. Each
+entry states the date the deviation actually happened and the date it was recorded (2026-07-17).
+None of these records changes hypotheses H1-H7 or their judgment formulas, and sections 1-6 remain
+unchanged.
 
-**N values**: The coarse sweep includes N in {20, 100, 300, 500, 1000}. N=300 and N=500
-were added (R3 amendment) to resolve the crossover boundary between N=100 and N=1000.
+**(a) Run-3 Scenario B sampling-population defect fix.**
+- Date deviation occurred: 2026-06-11.
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: run-3 Scenario B cells sampled member IDs uniformly across all members, so the actual
+  row count fell short of the declared N (most members have ~10 issues, which flattened the N axis).
+  Fixed by pinning MAX_MEMBER_ID=2000 so sampling draws only from the high-issue member range
+  (1..2000). The defective run-3 Scenario B cell results were quarantined to
+  results/invalid-run3-thinmembers/.
+- Rationale: when the declared N and the measured distinct-reference count diverge, the H2a
+  regression (X-axis = measured distinct-reference count) is contaminated. This is a
+  sampling-population protocol fix; the hypotheses are unchanged.
+- Evidence commit: 734d847 (2026-06-11).
 
-**Pre-registration (R4 amendment — extended to N>=100)**:
-For ALL Scenario B/L cells with N >= 100, MAX_MEMBER_ID is overridden to 10000 (the member_buckets
-subset). This was previously only done for N=1000; R4 extends it to N=100, 300, 500, and 1000.
+**(b) Coarse-sweep measurement budget: single 2-minute run per cell (the frozen section 3
+3-repeat median was not applied to coarse cells).**
+- Date deviation occurred: 2026-06-11 to 06-12 (coarse-sweep execution window).
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: each coarse-sweep cell was measured as a single 2-minute run (COARSE_REPEATS=1). The
+  "median of 3 repeats" defined in the frozen section 3 was not applied to coarse cells. The
+  3-repeat median was applied only to the 30 boundary-precision cells.
+- Rationale: measuring the entire cell grid with 3 repeats would greatly exceed the time budget.
+  The coarse sweep is used only for direction-finding and candidate-boundary discovery, and all
+  boundary inference in the paper body is drawn only from the precision cells, which honored the
+  3-repeat rule. Nevertheless, not following the frozen section 3 metric definition for coarse
+  cells is disclosed here as a deviation.
 
-**Rationale (R4)**: At SCALE=full with unrestricted MAX_MEMBER_ID (1,000,000), most randomly
-sampled member IDs will not have enough issues to satisfy N=100 or N=300. The effective N for
-those cells is lower than declared N, silently confounding the N-axis analysis. The member_buckets
-table (extended in seed.sh) now records a min_issues column (highest N threshold each member
-satisfies), enabling per-threshold subset queries.
+**(c) Scenario L (load axis): single 9-minute run per cell, not 3 repeats. The CV gate was never
+applied to the load axis.**
+- Date deviation occurred: 2026-06-13 to 06-14 (Scenario L measurement window).
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: the load-axis cells (101 cells in the analysis set at measurement time) were each
+  measured as a single 9-minute run (REPEATS=1). Because the arrival-rate sweep is itself the
+  curve, p99 was stabilized by a longer duration instead of repeats. The 3-repeat median was not
+  applied, and the frozen section 4-3 CV gate was never applied to the load axis.
+- Rationale: the load axis targets detection of the knee position as a function of arrival rate,
+  not per-cell precision latency. A single 9-minute run per arrival-rate point resolves the sweep
+  curve more finely than 3 repeats would. The repeat-based CV gate is undefined for this design and
+  was therefore not applied. (The verifiable facts here are REPEATS=1 in the scenario-L driver and
+  the 9-minute duration; the count 101 is attributed to the analysis set at measurement time,
+  not to a file line count.)
 
-**member_buckets schema (R4)**:
-- `member_id`: primary key
-- `issue_count`: actual count of issues for this member
-- `min_issues`: highest N threshold satisfied (100 / 300 / 500 / 1000 / 10+)
-All members with issue_count >= 100 are included at SCALE=full.
+**(d) Calibration probe sample count reduced from 10000 to 2000 for rtt>=5000 cells mid-campaign;
+labeling-only impact.**
+- Date deviation occurred: 2026-06-12 (mid-campaign).
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: for rtt>=5000 cells, the RTT calibration probe's sample count was reduced from 10000 to
+  2000 partway through the campaign. This value feeds only the RTT label (the calibrated measured
+  RTT) and does not enter the cell's measurement data.
+- Rationale: at high RTT, 10000 probes cost 13+ minutes per cell. 2000 probes preserve label
+  precision. This change affects labeling only.
+- Evidence commit: b7ba687 (2026-06-12).
 
-**SCALE-conditional HAVING clause (R4 update)**:
-- SCALE=full: `HAVING COUNT(*) >= 100` (extended from 1000; covers all N>=100 thresholds)
-- SCALE=smoke/pilot: `HAVING COUNT(*) > 10` (relaxed; seed volume is too small for >= 100)
+**(e) H2a regression excluded the rtt>=1500 series (pool saturation of N>=300 cells; post-hoc
+analysis scoping).**
+- Decision point: analysis stage (after measurement).
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: the rtt>=1500 series was excluded from the H2a linear regression, because at that RTT
+  the N>=300 cells left the round-trip-linear regime due to connection-pool saturation.
+- Rationale: H2a predicts that N+1-style latency is linearly proportional to the measured
+  distinct-reference count. Including the high-RTT / high-N cells that became non-linear under pool
+  saturation would distort the slope estimate for the linear regime. This is post-hoc analysis
+  scoping, and the exclusion is disclosed in the paper. The hypothesis itself is unchanged.
 
-The k6 MAX_MEMBER_ID for N>=100 cells is overridden to 10000 (targeting the member_buckets subset).
-Bucket validation (>= BUCKET_MIN rows) is part of seed.sh.
+**(f) H5 judgment procedure: corrected from an initial non-preregistered persistence-filtered knee
+script to the mechanized frozen knee rule.**
+- Date deviation occurred: 2026-06-14 (initial H5 verdict).
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: the H5 verdict (load-axis knee comparison) was initially derived only from a
+  non-preregistered persistence-filtered knee script (analyze-scenario-l.py stdout); the
+  machine-readable verdict table (analysis/judge.py) reported H5=PENDING until then. As of
+  2026-07-17, the frozen section 3 knee rule (during a stepwise arrival-rate increase, the step
+  where the median p99 is at least 2x the prior valid step, or the step immediately before
+  error/drop onset) is mechanized in analysis/judge.py (judge_H5, KNEE_FACTOR=2.0 with the
+  load-axis style groups), and H5 is now decided by that rule. The persistence-filtered knee
+  analysis is relabeled as post-hoc robustness, and analyze-scenario-l.py itself states this
+  (judge.py is the authoritative source). Under the frozen rule the mechanized H5 verdict is HIT:
+  the directional part (N+1 knees lower than flat/batch) holds, and the 80% conjunct holds but
+  rests on a fragile single-sample joinfetch spike at rate 60, which is disclosed.
+- Rationale: the persistence filter used in the first verdict was not the pre-registered knee
+  definition. Mechanizing the frozen rule in code satisfies section 5-1 (the script applies the
+  judgment rules; human involvement is code review only). Results obtained by the non-preregistered
+  procedure are reported only as auxiliary robustness evidence.
+- Evidence commits: a9ff6c1 (2026-06-14, the initial persistence-filtered-knee-based H5 verdict);
+  f597eaa (2026-07-17, mechanization of the frozen knee rule in judge_H5; local commit, not pushed).
 
-If the natural distribution does not produce sufficient high-N members at SCALE=pilot,
-the cell is run at SCALE=full only.
+**(g) Styles-list correction: the Scenario L 'join' series was identified as misconfigured and
+excluded from all load-axis analysis.**
+- Date deviation occurred: 2026-07-17.
+- Date recorded: 2026-07-17 (post-hoc record).
+- Change: the 'join' series in the Scenario L cell list was found to be misconfigured. join is a
+  Scenario A/C style, not a Scenario B/L style, so on the load axis (which is Scenario B based) the
+  join series produced 100% HTTP errors. This series is excluded from all load-axis analysis.
+  Additionally, in the load-axis knee analysis 'par' cannot exhibit an observable knee under its
+  pre-registered 14 rps cap, and 'lazy-unbounded' has too few arrival-rate sample points; both are
+  excluded from the verdict. Unlike 'join', these two are not misconfigured: they are untestable
+  due to the rate cap and insufficient sampling, respectively.
+- Rationale: misconfigured cells are not valid measurements. The exclusion also satisfies the
+  frozen section 3-4 rule "cells with error rate > 0.1% are invalid", so the series is removed from
+  the load-axis knee analysis and the H5 verdict. Entry (c)'s valid load-axis set reflects this
+  correction.
 
----
+**(h) CV-gate escalation not executed; high-variance cells unreported (post-hoc record)**
+- Deviation date: 2026-06-13 to 2026-06-14 (precision campaign)
+- Recorded: 2026-07-17 (post-hoc record, written after data collection)
+- Change: the frozen section 4-3 escalation (3-repeat CV(p50) > 10% triggers +2 runs and a 5-run
+  median; cells still > 15% are flagged high-variance and excluded from boundary inference) was
+  never executed. Among precision cells with multiple repeats, 42 exceeded the 10% CV(p50) gate on
+  3 repeats and none received the mandated +2 additional runs; 32 of them exceeded 15% and should
+  have been flagged high-variance, but no such list was reported in the results section
+  (recomputed from the raw CSVs on 2026-07-17).
+- Rationale: the campaign automation ran a fixed 3 repeats and the CV-triggered escalation branch
+  was never implemented. Disclosed as a limitation in the paper's threats section; boundary
+  figures should be read with the corresponding uncertainty in mind.
 
-## 9. Parametric Cost Model (Pre-registered)
-
-The analysis will fit a parametric cost model of the form:
-
-```
-T(style, N, RTT) = alpha_style + beta * roundtrips(style, N) * RTT + gamma_style * N
-```
-
-where:
-- `alpha_style`: per-style fixed overhead (ORM initialization, connection checkout, result mapping)
-- `beta`: coefficient on round-trip cost (should be near 1 if RTT is the dominant variable)
-- `roundtrips(style, N)`: analytically derived query count per style (see table below)
-- `gamma_style`: per-style per-row marginal cost (memory allocation, serialization)
-
-**Pre-registered roundtrip counts** (used as model inputs, not fitted):
-
-| Style       | roundtrips(style, N) | Notes |
-|-------------|----------------------|-------|
-| join        | 1                    | |
-| joinfetch   | 1                    | |
-| jdbc-join   | 1                    | |
-| seq         | 3                    | |
-| par         | 1+overlap [1]        | |
-| jdbc-seq    | 3                    | |
-| lazy        | 1 + N                | |
-| lazy-unbounded | 1 + M (M = total member issues) | |
-| byid        | 1 + N                | |
-| inbatch     | 2                    | |
-| inbatch-nodup | 2 [2]              | |
-| batchfetch  | 2                    | |
-| jdbc-inbatch | 2                   | |
-| app-naive   | 2 [3]               | |
-| app-optimized | 2 [3]             | |
-
-**Footnotes**:
-
-[1] `par` roundtrips = `1 + overlap`. The `par` style fires 3 queries: 1 issue fetch (serial
-    anchor), then policy and member queries in parallel. The wall-clock round-trip count is
-    `1 + max(policy_RTT, member_RTT)`, which for symmetric RTT simplifies to `1 + 1 = 2`.
-    In the cost model, `overlap` is the fraction of the second round-trip that extends beyond
-    the anchor. For homogeneous RTT: `overlap = 1`, so roundtrips = 2. This table entry was
-    previously `2 (join + parallel 2)` which was a description, not the formula. The model
-    uses `1+overlap` as the analytic input. (R3 amendment)
-
-    **Falsification criterion for `par`**: The `par` cost model predicts
-    `T_par = alpha_par + beta * (1+overlap) * RTT + gamma_par * N`.
-    This is falsified if the measured RTT slope for `par` is significantly greater than
-    `(1+overlap)` times the slope for `seq` divided by `seq`'s roundtrip count (3). Use
-    slope ratio comparison: `slope_par / slope_seq` should be near `(1+overlap) / 3`.
-    If the observed ratio exceeds this by more than CV_THRESHOLD, the additive model
-    is inadequate for `par` (likely due to connection-pool contention or Tomcat thread
-    saturation at high rates). (R3 amendment — replaces the [0.8, 1.2] beta band criterion
-    for `par` specifically; global beta band applies to all other styles.)
-
-[2] `inbatch-nodup` roundtrips = 2. MySQL deduplicates IN() values before counting ranges
-    for eq_range_index_dive_limit, so duplicate IDs in the IN list do NOT trigger a plan
-    switch. The measured cost difference vs `inbatch` is JDBC/wire overhead from transmitting
-    the larger IN list. The roundtrip count is identical to `inbatch`. (R3 amendment)
-
-[3] `app-naive` and `app-optimized` roundtrips = 2. This count assumes
-    `HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=-1` (disabled). If batch_fetch_size is set to a
-    positive value (e.g. 100), Hibernate chunks the IN() query into
-    `ceil(distinct_policyIds / batchSize)` queries, increasing the effective roundtrip count.
-    All Scenario C cells must be run with `HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=-1` to preserve
-    the pre-registered roundtrip count. (R3 amendment)
-
-**Fitting procedure (R4 amendment — joint fit replaces two-stage)**:
-
-**R4 identification problem**: The two-stage fit (R3) is unidentified at Stage 1. At RTT=0,
-the model is `T = alpha_style + gamma_style * N`. This is a regression of T on N per style,
-but alpha_style and gamma_style are jointly unidentified from a single N-axis at one RTT point:
-any (alpha, gamma) pair satisfying the linear constraint T_observed = alpha + gamma*N is
-equally supported by the data. Stage 1 cannot uniquely decompose the intercept from the
-per-row slope using RTT=0 data alone.
-
-**R4 fix: joint fit on all RTT > 0 data**:
-1. Use RTT > 0 cells only (RTT axis: 300, 1500, 5000, 10000 us; N axis: 20, 100, 300, 500, 1000).
-2. Fit all parameters jointly in a single regression:
-   ```
-   T(style, N, RTT) = alpha_style + beta * roundtrips(style, N) * RTT + gamma_style * N
-   ```
-   Style indicators enter as fixed effects (one alpha_style per style, one gamma_style per style).
-   beta is a shared scalar (or per-style if the global fit is rejected by residual analysis).
-3. RTT=0 cells are retained as OUT-OF-SAMPLE validation points only: plug fitted (alpha, gamma)
-   back into the model at RTT=0 and compare `alpha_style + gamma_style * N` to RTT=0 observed T.
-   Large prediction error (>20%) at RTT=0 indicates missing confounders (e.g. ORM init cost
-   not captured by alpha, or N-dependent effects not linear in gamma).
-4. Validate on holdout cells (precision sweep) and optionally on an independent cloud environment.
-   The cross-environment validation uses the fitted model to predict p99 at an unseen RTT point;
-   prediction error > 20% of observed value indicates model inadequacy. (R3 criterion retained)
-
-**Pre-registered falsification criterion**:
-For all styles except `par`: if beta deviates from [0.8, 1.2], the additive RTT model is
-inadequate for that style (possible non-linear regime, pool saturation, or systematic bias).
-For `par`: see footnote [1] slope ratio criterion.
-Any falsification requires a new model form and an Amendment Log entry.
-
----
-
-## 8. netem One-Way vs Round-Trip Note
-
-netem applies delay to **egress** traffic on the MySQL container's eth0.
-This simulates one-way delay from DB to app.
-
-The calibrate() probe (app → DB → app) measures round-trip latency.
-For a netem setting of X microseconds, the expected calibrate p50 ≈ 2X us.
-
-Plan.md §1.1 documents the empirical validation:
-- netem 300us → calibrate p50 ≈ 566us (approx 2x)
-- netem 750us → calibrate p50 ≈ 1252us
-- netem 2ms → calibrate p50 ≈ 3357us
-
-RTT labels in results/ use the calibrate p50 (actual measured RTT), NOT the netem setting.
-
----
-
-## 10. Amendment Log
-
-Amendments must include: date, key affected, change description, rationale.
-No amendments may alter hypotheses H1–H7. Post-hoc additions must be labelled as exploratory.
-
-### 2026-06-10: R3 batch — adversarial cycle round 3 amendments
-
-**§2 Scenario B inbatch-nodup ranking**:
-- Corrected: "plan may differ from inbatch" → "no plan switch expected; MySQL deduplicates IN()
-  values before eq_range_index_dive_limit range counting; measured cost is JDBC/wire overhead only."
-- Rationale: adversarial review identified that the original claim assumed MySQL preserves
-  duplicates for range counting, which is incorrect.
-
-**§2 Scenario B batchfetch ranking**:
-- Clarified: batchfetch uses association-mapped CouponIssue entity (not CouponIssueRef) with
-  scalar policyId mirror column. 2 queries: issue scan + IN-policy.
-- Rationale: more precise description for experiment reproducibility.
-
-**§2 Scenario C scope-asymmetry declaration**:
-- Added: explicit statement that join vs app-naive is NOT iso-scope; join vs app-optimized IS.
-- Added: HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=-1 requirement for all Scenario C cells.
-- Rationale: adversarial review identified that ambiguous scope framing could misrepresent
-  the join vs app-naive crossover as an iso-scope performance boundary.
-
-**§1.5 Statistical Test Specification (new section)**:
-- Added two-tier protocol: coarse cells (COARSE_REPEATS=2) use magnitude threshold only;
-  precision cells (COARSE_REPEATS=3) use Mann-Whitney U test.
-- Rationale: n=2 is insufficient for Mann-Whitney (minimum n=3).
-
-**§3 CV aggregation**:
-- Clarified COARSE_REPEATS=2 aggregate = mean (not median; median of 2 = mean).
-
-**§3.4 JVM Priming Protocol (new section)**:
-- Added: prime-jvm.sh fires 2000 warmup requests per style before first campaign cell.
-- Rationale: without priming, HotSpot tier-2 JIT overhead biases first cells.
-
-**§5 candidateCap sweep**:
-- No change to pre-registered values {100, 500, 1000, 5000, 10000, 50000}.
-- Rate changed from 10 rps to 14 rps (matching par cap; Scenario C is also multi-query).
-
-**§7 Scenario B member_buckets**:
-- Added N=300 and N=500 to the coarse sweep N-axis (was {20, 100, 1000}).
-- Added SCALE-conditional HAVING clause: SCALE=full uses >= 1000; smoke/pilot uses > 10.
-- Corrected: Zipf skew applies to policy_id, not member_id. member_id concentration
-  is due to seeder drawing from 1-10000 bucket, not Zipf.
-
-**§9 par roundtrips**:
-- Corrected: `2 (join + parallel 2)` → `1+overlap` where overlap=1 for symmetric RTT.
-- Added: par falsification criterion (slope ratio comparison, not [0.8, 1.2] beta band).
-- Added: RTT=0 cells excluded from beta estimation pass (two-stage fit).
-- Added: cross-environment validation error threshold (20% of observed value).
-- Added footnotes [1][2][3] for par, inbatch-nodup, and app-naive/app-optimized.
-- Updated N-axis to {20, 100, 300, 500, 1000} (added 300 and 500 for resolution).
-
-**prior-art-search-protocol.md**:
-- Added Q9–Q13 (structured ACM/IEEE search queries, RTT crossover boundary query,
-  IN-list index dive limit query).
-- These queries must be executed before Phase 2 (pilot) begins (P1 gate, plan.md §3.5).
-
-### 2026-06-11: R4 batch — adversarial cycle round 4 amendments
-
-**§1.5 Mann-Whitney precision cells COARSE_REPEATS 3 → 8**:
-- Changed: COARSE_REPEATS for precision cells from 3 to 8.
-- Rationale: Mann-Whitney U is statistically inoperative at n=3. Minimum achievable two-sided
-  p-value at n=3 is p=0.10, which cannot meet alpha=0.05 under any rank configuration. n=8
-  gives minimum p=0.014, enabling a meaningful alpha=0.05 gate with ~80% power for large effects.
-
-**§4 Multiple comparison count Scenario B 540 → 900 (total ~965)**:
-- Changed: Scenario B comparison count from 540 to 900 (36 pairs x 5 N values x 5 RTT).
-- Rationale: N-axis is {20, 100, 300, 500, 1000} = 5 values. R3 added N=300 and N=500 but
-  §4 was not updated. Total corrected from ~605 to ~965.
-
-**§3.5 pool-contention gate: idle-path pre-check clarification + post-run covariate**:
-- Clarified: the calibrateLoaded gate is an idle-path pre-check (idle app only), not a measure
-  of contention under load.
-- Added: pool_contention_flag recorded as post-run covariate in result metadata.
-- Rationale: the original wording implied the gate measured pool contention during the k6 run,
-  which is not what the /calibrate/loaded endpoint measures.
-
-**§6 M/M/c: per-style mu**:
-- Changed: from single shared mu to per-style mu (mu_style = 1 / median_p50_style).
-- Rationale: styles with different roundtrip counts have different effective service times.
-  A shared mu makes all saturation boundary predictions identical (testing the null hypothesis
-  rather than generating falsifiable predictions).
-
-**§6 Scenario L: lazy-unbounded added**:
-- Added: lazy-unbounded to the Scenario L style set with 10 rps cap.
-- Rationale: provides empirical anchor for unbounded N+1 saturation boundary.
-
-**§6 N=100 MAX_MEMBER_ID override**:
-- Added: MAX_MEMBER_ID=10000 override for Scenario L (N=100 reference cell), matching R4
-  extension to gen-cells-coarse.sh (N>=100 threshold).
-
-**§7 member_buckets extended to N>=100/300/500**:
-- Changed: SCALE=full HAVING threshold from >= 1000 to >= 100.
-- Added: min_issues column in member_buckets schema for per-threshold subset queries.
-- Changed: MAX_MEMBER_ID override from N==1000 to N>=100.
-- Rationale: N=100/300/500 cells with unrestricted MAX_MEMBER_ID sample members without
-  enough issues, making effective N lower than declared N — a silent measurement confound.
-
-**§9 two-stage model → joint fit (identifiability)**:
-- Changed: Stage 1 (RTT=0 alpha estimation) + Stage 2 (RTT>0 beta/gamma) → joint fit on
-  all RTT>0 data, with RTT=0 cells as out-of-sample validation only.
-- Rationale: Stage 1 is unidentified. At RTT=0, alpha_style and gamma_style cannot be jointly
-  decomposed from a single N-axis. The joint fit resolves the identification problem.
-
-**Harness fixes (non-protocol)**:
-- extract.py: calibration field name mismatches fixed (timestamp ISO parse, nominal_delay_us,
-  held.p50 path). These were silent data-loss bugs: no calibration records were being matched.
-- run-campaign.sh: apply_env_overrides moved inside retry loop (dirty env on retry 2 fix).
-- gen-cells-coarse.sh: duplicate limit= bug fixed; N propagated via env_overrides, not extra_qs.
-- gen-cells-L.sh: DUR 5m → 9m; rates 1,2 removed; lazy-unbounded added; N via env_overrides.
-- run-cell.sh: N>=100 member_buckets condition (was N==1000).
-- prime-jvm.sh: fixed IDs replaced with sequential distribution across working set.
-- CouponIssueRefRepository: explicit @Query + ORDER BY id ASC for findByMemberId, findByStatus.
-- CouponIssueRepository#findByMemberIdWithPolicy: removed JOIN FETCH ci.member (systematic overhead).
-- ScenarioBService: inBatch + batchFetch changed from findAllById to findDtosByIdIn.
-- ScenarioAService#jdbcSeq: added @Transactional(readOnly=true).
-- db/schema.sql: added idx_issue_member_id (member_id, id) for Scenario B ORDER BY.
-- db/my.cnf: innodb_stats_persistent_sample_pages=200, innodb_adaptive_hash_index=OFF.
-- db/seed.sh: member_buckets extended to min_issues column + N>=100 HAVING clause.
-- scripts/warmup.sh: SHOW ENGINE INNODB STATUS capture + EXPLAIN filesort check.
+**(j) Supplementary round R5/R6 (2026-07-17): post-hoc, not preregistered**
+- Date run: 2026-07-17 (after the main campaign and after the round-3 review)
+- Recorded: 2026-07-17 (post-hoc record)
+- Change: a 42-cell supplementary round was measured to close two gaps found by an adversarial review: (R5) the paper's headline config-rescue claim about Hibernate `default_batch_fetch_size` had never been measured (the main-campaign `batchfetch` style is a hand-coded application-level IN-batch on the association-mapped path, and no main-campaign cell set the env var); (R6) the H7 transaction-wrapper overhead had only been measured under HikariCP's default autocommit configuration, with no tuned-configuration arm. The round adds: same-seed reference cells, `lazy` + `default_batch_fetch_size` at 100 and 1000, JDBC controls, and a tuned arm (hikari auto-commit=false + hibernate.connection.provider_disables_autocommit=true).
+- Status: EXPLORATORY / post-hoc. No hypothesis H1-H7 is judged by this round and no frozen judgment formula is applied to it. The frozen hypothesis verdicts remain those computed from the main campaign by analysis/judge.py.
+- Scope limits (disclosed in the paper): single 2-minute run per cell (no repeats, no CV screening), N in {100, 1000} only, 3 RTT points for the tx arm, regenerated seed (RAND() is unseeded, so the data set differs from the main campaign; measured covariates D(100)=93.7 and D(1000)=800.1 versus the main campaign's 93.0 and 798.6), and a differently-resourced VM (6 CPU / 8 GB). Therefore the round is reported separately and is never merged into the main campaign's cost-model fit; only within-round comparisons are used.
+- Rationale: the paper must not carry an unmeasured headline claim, and a mechanism claim (wire round-trip counts) is worth little unless a configuration that changes those counts is shown to change latency accordingly. Both goals require new measurement, which cannot be preregistered retroactively; the round is therefore labeled exploratory and its limitations are disclosed.

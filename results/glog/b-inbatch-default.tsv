@@ -1,0 +1,7 @@
+10	Query	set session transaction read only
+10	Query	SET autocommit=0
+10	Query	select cir1_0.id,cir1_0.issued_at,cir1_0.member_id,cir1_0.policy_id,cir1_0.status,cir1_0.used_at from coupon_issue cir1_0 where cir1_0.member_id=100 order by cir1_0.id limit 100
+10	Query	select cp1_0.id,cp1_0.name,cp1_0.type,cp1_0.discount_amount,cp1_0.expire_at from coupon_policy cp1_0 where cp1_0.id in (2130,2092,9744,215,353,2292,265,16,1539,7576,2026,37,109,1627,8617,1022,744,183,8851,434,2262,5609,5983,1825,3987,3,825,1,3021,8486,5178,3637,7009,1324,33,3759,119,713,2,3657,6583,6455,19,8303,2153,561,9529,25,1024,1342,931,3105,400,6981,71,1620,8945,976,8909,231,5024,85,385,29,651,2967,2766,7,6463,40,44,1932,45,220,1996,485,7403,5239,2356,54,84,7508,3228,2426,65,7617,616,4410,79,2315,6790,3405,4117,3350)
+10	Query	commit
+10	Query	SET autocommit=1
+10	Query	set session transaction read write

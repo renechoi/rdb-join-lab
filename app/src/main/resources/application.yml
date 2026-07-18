@@ -17,6 +17,11 @@ spring:
     hikari:
       maximum-pool-size: 10
       pool-name: lab-pool
+      # LAB_HIKARI_AUTOCOMMIT=false is the "tuned" transaction-config arm (H7 config-arm
+      # round). Default true = MySQL/HikariCP out-of-the-box behavior measured in the
+      # main campaign. Pair with LAB_PROVIDER_DISABLES_AUTOCOMMIT=true so Hibernate
+      # skips the per-transaction SET autocommit round trips.
+      auto-commit: ${LAB_HIKARI_AUTOCOMMIT:true}
       # connectionTimeout capped at 5s: if HikariCP cannot acquire a connection within
       # 5s the request fails fast rather than queuing indefinitely. This makes pool
       # saturation visible as request failures (measurable) rather than queue growth
@@ -31,6 +36,11 @@ spring:
     properties:
       hibernate:
         generate_statistics: true
+        # Tuned arm: tells Hibernate the pool already hands out autocommit=false
+        # connections, eliminating SET autocommit=0/=1 wire round trips per tx.
+        # Only meaningful when LAB_HIKARI_AUTOCOMMIT=false.
+        connection:
+          provider_disables_autocommit: ${LAB_PROVIDER_DISABLES_AUTOCOMMIT:false}
         # default_batch_fetch_size is disabled by default (-1).
         # Set env HIBERNATE_DEFAULT_BATCH_FETCH_SIZE to a positive integer
         # (e.g. 100) to enable automatic IN-batch fetching for LAZY associations.

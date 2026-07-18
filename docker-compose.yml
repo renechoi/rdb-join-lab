@@ -65,6 +65,10 @@ services:
       # If not set, defaults to -1 (disabled). See application.yml.
       # NOTE: must be a valid integer string; empty string would fail Spring integer binding.
       HIBERNATE_DEFAULT_BATCH_FETCH_SIZE: "${HIBERNATE_DEFAULT_BATCH_FETCH_SIZE:--1}"
+      # H7 config-arm round: tuned transaction demarcation (see application.yml).
+      # Defaults preserve the main campaign's out-of-the-box behavior.
+      LAB_HIKARI_AUTOCOMMIT: "${LAB_HIKARI_AUTOCOMMIT:-true}"
+      LAB_PROVIDER_DISABLES_AUTOCOMMIT: "${LAB_PROVIDER_DISABLES_AUTOCOMMIT:-false}"
 
   k6:
     image: grafana/k6:latest

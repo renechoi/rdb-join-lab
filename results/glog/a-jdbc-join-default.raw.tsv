@@ -1,0 +1,7 @@
+29	Quit	
+30	Connect	root@127.0.0.1 on  using SSL/TLS
+30	Quit	
+10	Query	SELECT ci.id, ci.status, ci.issued_at, ci.used_at,\n       p.id AS p_id, p.name AS p_name, p.type AS p_type,\n       p.discount_amount, p.expire_at,\n       m.id AS m_id, m.name AS m_name, m.email AS m_email\nFROM coupon_issue ci\nJOIN coupon_policy p ON ci.policy_id = p.id\nJOIN member m ON ci.member_id = m.id\nWHERE ci.id = 500000
+31	Connect	root@localhost on  using Socket
+31	Query	select @@version_comment limit 1
+31	Query	SELECT thread_id, command_type, CONVERT(argument USING utf8mb4) FROM mysql.general_log ORDER BY event_time, thread_id

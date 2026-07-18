@@ -1,0 +1,8 @@
+10	Query	set session transaction read only
+10	Query	SET autocommit=0
+10	Query	SELECT id, policy_id, member_id, status, issued_at, used_at FROM coupon_issue WHERE id = 500000
+10	Query	SELECT id, name, type, discount_amount, expire_at FROM coupon_policy WHERE id = 4164
+10	Query	SELECT id, name, email FROM member WHERE id = 416939
+10	Query	commit
+10	Query	SET autocommit=1
+10	Query	set session transaction read write
