@@ -1,0 +1,81 @@
+{
+  "d100_env2": 93.5,
+  "rtt_calibrated_ms": {
+    "0": 0.154,
+    "2200": 2.513,
+    "800": 1.044
+  },
+  "median_p50_ms": {
+    "inbatch@rtt0": 26.0,
+    "inbatch@rtt800": 38.3,
+    "inbatch@rtt2200": 36.2,
+    "jdbc-inbatch@rtt0": 4.59,
+    "jdbc-inbatch@rtt800": 12.04,
+    "jdbc-inbatch@rtt2200": 11.76,
+    "jdbc-join@rtt0": 3.43,
+    "jdbc-join@rtt800": 5.07,
+    "jdbc-join@rtt2200": 8.26,
+    "joinfetch@rtt0": 24.82,
+    "joinfetch@rtt800": 36.59,
+    "joinfetch@rtt2200": 51.54,
+    "lazy@rtt0": 228.35,
+    "lazy@rtt800": 685.99
+  },
+  "wire_slope_test": {
+    "joinfetch": {
+      "slope_ms_per_rttms": 11.214,
+      "wire_count": 6.0,
+      "ratio_s_over_W": 1.869
+    },
+    "jdbc-join": {
+      "slope_ms_per_rttms": 2.058,
+      "wire_count": 1.0,
+      "ratio_s_over_W": 2.058
+    },
+    "inbatch": {
+      "slope_ms_per_rttms": 3.75,
+      "wire_count": 7.0,
+      "ratio_s_over_W": 0.5358
+    },
+    "jdbc-inbatch": {
+      "slope_ms_per_rttms": 2.718,
+      "wire_count": 2.0,
+      "ratio_s_over_W": 1.3589
+    },
+    "lazy": {
+      "slope_ms_per_rttms": 514.2,
+      "wire_count": 99.5,
+      "ratio_s_over_W": 5.1678
+    }
+  },
+  "b_env2_aggregate": 4.6229,
+  "b_env1_reference": 0.975,
+  "holdout_checks": {
+    "800": {
+      "lazy_minus_joinfetch": {
+        "measured_ms": 649.4,
+        "predicted_ms": 95.17,
+        "pct_error": 582.3
+      },
+      "inbatch_minus_joinfetch": {
+        "measured_ms": 1.7,
+        "predicted_ms": 1.02,
+        "gap_in_rtt_units": 1.63,
+        "h2b_within_2p5": true
+      }
+    },
+    "2200": {
+      "inbatch_minus_joinfetch": {
+        "measured_ms": -15.34,
+        "predicted_ms": 2.45,
+        "gap_in_rtt_units": -6.1,
+        "h2b_within_2p5": true
+      }
+    }
+  },
+  "h2b_env2": {
+    "satisfied": 2,
+    "total": 2
+  },
+  "excluded_repeats": 15
+}

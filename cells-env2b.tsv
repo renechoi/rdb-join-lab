@@ -1,0 +1,24 @@
+# cells-env2b.tsv — round 3: identical to cells-env2.tsv except (a) rate 10 req/s
+# (halves self-induced CPU demand after evening-cron contention invalidated round 2's
+# N+1 cells; rate is constant across cells so within-env slope and difference analyses
+# are unaffected, cross-env comparisons disclose the rate change), (b) N+1 styles run
+# first inside each RTT group to occupy the quietest wall-clock window.
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+b	lazy	0	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	byid	0	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	joinfetch	0	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-join	0	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	inbatch	0	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-inbatch	0	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	lazy	800	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	byid	800	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	joinfetch	800	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-join	800	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	inbatch	800	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-inbatch	800	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	lazy	2200	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	byid	2200	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	joinfetch	2200	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-join	2200	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	inbatch	2200	10	2m	-	N=100,MAX_MEMBER_ID=2000
+b	jdbc-inbatch	2200	10	2m	-	N=100,MAX_MEMBER_ID=2000

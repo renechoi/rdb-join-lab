@@ -58,6 +58,18 @@ while IFS=$'\t' read -r scenario style rtt rate duration extra envov; do
   EXTRA_ARG=""
   [[ "$extra" != "-" ]] && EXTRA_ARG="$extra"
 
+  # Optional load gate: wait for the 1-min host load to drop below LOAD_GATE
+  # before starting a cell (evening cron bursts on this shared host invalidated
+  # round 2's N+1 cells; see results-env2-sam-invalid-run2/INVALID.md).
+  if [ -n "${LOAD_GATE:-}" ]; then
+    for _w in $(seq 1 60); do
+      L=$(cut -d. -f1 /proc/loadavg)
+      if [ "$L" -lt "$LOAD_GATE" ]; then break; fi
+      echo "  [load-gate] load ${L} >= ${LOAD_GATE}, waiting 15s ($_w/60)"
+      sleep 15
+    done
+  fi
+
   echo "[env2 $idx/$total] $(date +%H:%M:%S) START $key n=$N_VAL"
   # < /dev/null: docker-compose run inside run-cell.sh attaches stdin and would
   # otherwise swallow the remaining cell lines of this while-read loop.
