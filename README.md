@@ -1,3 +1,9 @@
+> **투고 관리 문서는 이 저장소 밖에서 관리합니다.**
+>
+> 투고 현황(`PAPERS.md`), 학회·저널 규정(`venues/`), 투고 서류 템플릿(`submission-kit/`),
+> 투고처 결정 기록(`decisions/`)이 거기 있습니다. **이 레포는 원고/하네스만 들고 있습니다.**
+> 투고 관련 판단은 그 레포를 먼저 읽으십시오.
+
 # rdb-join-lab
 
 Benchmark harness for the paper:
