@@ -115,7 +115,7 @@ unchanged.
 - Rationale: when the declared N and the measured distinct-reference count diverge, the H2a
   regression (X-axis = measured distinct-reference count) is contaminated. This is a
   sampling-population protocol fix; the hypotheses are unchanged.
-- Evidence commit: 734d847 (2026-06-11).
+- Evidence commit: 017a1fe (2026-06-11).
 
 **(b) Coarse-sweep measurement budget: single 2-minute run per cell (the frozen section 3
 3-repeat median was not applied to coarse cells).**
@@ -154,7 +154,7 @@ labeling-only impact.**
   RTT) and does not enter the cell's measurement data.
 - Rationale: at high RTT, 10000 probes cost 13+ minutes per cell. 2000 probes preserve label
   precision. This change affects labeling only.
-- Evidence commit: b7ba687 (2026-06-12).
+- Evidence commit: a72c8d3 (2026-06-12).
 
 **(e) H2a regression excluded the rtt>=1500 series (pool saturation of N>=300 cells; post-hoc
 analysis scoping).**
@@ -186,8 +186,8 @@ script to the mechanized frozen knee rule.**
   definition. Mechanizing the frozen rule in code satisfies section 5-1 (the script applies the
   judgment rules; human involvement is code review only). Results obtained by the non-preregistered
   procedure are reported only as auxiliary robustness evidence.
-- Evidence commits: a9ff6c1 (2026-06-14, the initial persistence-filtered-knee-based H5 verdict);
-  f597eaa (2026-07-17, mechanization of the frozen knee rule in judge_H5; local commit, not pushed).
+- Evidence commits: dc188bb (2026-06-14, the initial persistence-filtered-knee-based H5 verdict);
+  8bd34aa (2026-07-17, mechanization of the frozen knee rule in judge_H5; local commit, not pushed).
 
 **(g) Styles-list correction: the Scenario L 'join' series was identified as misconfigured and
 excluded from all load-axis analysis.**
