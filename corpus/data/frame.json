@@ -1,0 +1,5412 @@
+[
+ {
+  "full_name": "canonical/charmcraft",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dee1024/sloth",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dzinot/spring-boot-oauth2-jwt",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "arafkarsh/ms-springboot-310-jakarta-10",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "42BV/restzilla",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bzdgn/spring-boot-restful-web-service-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "brant-hwang/spring-logback-slack-notification-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "juanjoowendler/Backend-System-for-Used-Car-Sales",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gyan0149/Employee_management_system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Zeini-23025/Gestion-des-Employes",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "arnaugarcia/realstatecamp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "otimizes/OPLA-Tool",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ViniMTrevisan/Kybernus-CLI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Sandhyar-Sandhyar/Sandhyawork",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YashviG99/studybuddy",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DITAS-Project/tub-dummy-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sivaprasadreddy/progen",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "entando/generator-jhipster-entando",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "m-lamonaca/dev-notes",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "riddhiparkhiya/spring-boot-security-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "minhbddeveloper-jpg/arxgen_architecture",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "keefe/conversation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Gokul2236/Currencychecking",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "lalitk1997/Revision",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "zathuracode/zathuracode-generator",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "welingtonfs/delivery-tech",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "valentinoBootcamp/plan_carrera",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "2400090247/skill-8",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "devs-from-matrix/template-hexagonal-spring-boot-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ariel323/proyectoRetaurant",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mhdb96/cs-framework",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AlekOmOm/library",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pyhipster/generator-pyhipster",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "UnProgramadorNaceOfficial/spring-dao-vs-dto",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "coderdream/java-architect-util",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "anjana200218648/PAF_Project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RaresHoro/Tennis-Tournament-Registration-and-Login",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "allaoui2025/cti",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "integraldominio/ng-builder-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LDVictor/ProjetoSI2017.1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "techworldwithmurali/devops-zero-to-hero",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "guraudrk/graduateproject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "claude-dev-suite/claude-dev-suite",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "shaikimranmr/myown",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sarkr8/northwind-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "git-akshat/interview-prep",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "KripaGIT009/order-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mgmetehan/Spring-custom-query",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kaustav2608/atsea-sample-shop-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DanyHidalgo/QuickMart-Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mvmn/ACCtrl-HAP",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Hayathshaik/Library",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Luiso3312MG/studio",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nishantunderstand/springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hqlcc/emgSensor",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "wdavilaneto/guick",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SalemNabeelSalem/complete-user-login-and-registration-backend-with-email-verification",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Jim2014/CoffeeShop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mtnaln/docker-springboot-postgresql",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Motuitionapplication/JrTransportManagement-BackEnd-Spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "changwskr/skax-eatool-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "OneTrackingFramework/tcn-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ankitlakade77/sfg-pet-clinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "younnes-chebli/car-booking-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jgvogt/spring-boot-jpa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "waiwai2233/KafkaSetup",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vaibhavr2107/store-proc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "learning-project-01/bookstore-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "edmarsoares/apiContaBancaria",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MrBraro/Proyecto_Facturacion_Modelos",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "saidulu458/homefood-delivery-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sbrunomello/java-api-generator",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "konstantin13-hi/cg-source-repo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LuisSalas94/Spring-Boot-User-DTO",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Dokleat/NeoFlow_ERP_JavaPHP",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kalana-maduranga001/-Spring_Boot_Project_Back_end",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dmanias/spring-boot-save-logs-from-rabbitmq",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hdonghong/sell",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "meganjacobs/EmployeeTimeManagementSystem",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mohamedmabrouk09/archigen",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "joshlong-attic/the-operationalized-application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bbazwalt/chat",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gnouh404/appointment-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "lamthanhnam01/LAM-THANH-NAM",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jroneil/Bookproject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "TruongTXK18FPT/agent-workflow-kit-cli",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "wappcode/java-graphql-utilities",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SpiritualForest/servicemanual",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rochacaiov/IncidenteZero",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sprashantofficial/ToDo-App",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "InduwaraKulaweera/Movie-Reservation-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "OctoConsulting/generator-fedhipster",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RameshMF/spring-boot-tutorial",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "totvs/tjf-samples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "datacenter/profiler",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "iSEarchAI/OPLA-Tool",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "edilsonjrcode/CRUD-em-Java-Backend-2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "111031075jack/Springboot-demo1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "aklakl/MUM-CS545-final",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RaySourish/Todo-Springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jbram2001/To_Do_App",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "venkatnarayana143/RoomBookingApp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "fedeviotti/spring-boot-security-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "WalterJr2408/POO-III-Sistematizacao",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Frantoja05/Portfolio",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "chandru-kumar/todo-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "marcelodiass/ecowatt-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tabreubr/Musiclass",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "indiana-university/lms-canvas-3rdparty-provisioning",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sandeepbegudem/springboot-completablefuture-modelmapper",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vishnusangadala/creditflow-ai",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Madhan-29/HMS_Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Matheus2237/agendamento-consultas",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "fe1ipesena/projetosSpringFaculdade",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harsh589/DocumentMind",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "khalillakhdhar/Spring-Boot-User-DTO",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "wangzhi63/betting",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Dannelysbeth/efolder-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kaiquesantanaw/solibriportifolio",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ciiay/waaCoffeeShop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "daanish764/learning-spring-1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "haticekiziltas/HrmsBackend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AleRxJ/itcycle-whatsapp-hub",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rodrigogambarra/Api-GerenciamentoPessoas",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Soumen-JavaDev/Myntra-Clone-",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JackZhangOnly/springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pranayh24/Distributed-File-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bynour1/tp-cafe--jalila-ben-youssef",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DavidAlfonso12/Back-End_Col-fecciones",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mihlamonteiro/constanciadecor",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Ayush12062000/On-Road-Vehicle-Breakdown-Assistance-Group3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YasharthSinha/To-Do-List",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "siham-ma/ToDoListspring-boot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "upc-pre-202402-si729-wx55/learning-center-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "malekbenabdellatif/Achat-Devops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YuanSol30/ecommerce-spring-angular",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Oliveira-GB/TaskCore",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tatazinhaang/votation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Prashant-knows-it/video-streaming",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "eafiny/spring-one_with_Data",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "KasuvannagariSivaprasad/MitraBuy",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "julien1709/P11",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "duc-gif/bank_manager",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Shubham24999/Daily-Expense-Tracking-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "cristowo/Tingeso_Evaluacion_1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sharmamedplus/department-service-CB",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Siddhant-Gulecha/Eventix",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ARenzDev/linktic-prueba",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "deepakpatibandla23-ai/microservices-exercise",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "inba-1234/banking-microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AlbertoRanno/tsr",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kirankumar866/microservice-Ecommerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "canyonlux/ADTestingMocksF1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "oscartena/SpringF1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "carolmt/SpringF1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Epso1/SpringF1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Epso1/SpringF1_Prueba_repo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nasim-Hasan/SpringFrameworkProjects",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Toffu-BlankieChoccy/63135901_Web2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Chris-Merced/ConfectionCo-Platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "datta30/research-journal",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YounesJabbour/conference-management-app-__Exam-JEE",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RicardoOngari/ecommerce_att",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "miverboven/ede-microservices-ex",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Balasubramani18/fullstack",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "manula-Pehe/nexuspay",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ChanduRaaparthi21/Practices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "reenurya-hub/portfolio",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SachiniPoornima7/AAD2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "cooperlyt/construct-fire",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MMAndresC/pp2ev2DAM",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "CrystalKhadka/Online-Ordering-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "alixblu/review-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SnehalPisal1/study-planner-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "92khsang/udemy-easybytes-msa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "KoulikMukherjee/JAVA_FSE_ID_5020548",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bharathwajan/genericEcom",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jasonw-lab/spring-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nachtigal1/Surf-Shop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tranvietquang3110/MusicPlatformMicroservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YuraDudar/Music_Streaming_Service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "chaxyz/flashcard",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "monicarzk/springboot-basic-01",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vinodborse/Hawthrone",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sandeepdhanni/Springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RakeshSur94/SpringBootMVC",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "X1E2C/Yaz_staj-_envanter_takip_sistemi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kbenjilali2000/WebTechHub",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "fsetiaw/workspace-intellij",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Vishnukrchy/Project-Devops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "top-dev-bln/aiproject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "introproventures/graphql-jpa-query",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rprobinson/MediPi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "suriarasai/CNSDAug21",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "muatik/spring-playground",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sjlvanq/nc-oneiila-e14b",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rabotheuns/webshop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "daudmammaev/jwt-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "adhamshaheen/course-management-system-v2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ita-classroom-projects/RestAPI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "caBatista/screenmatch-series-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "javiercode/template-srpingboot-21",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rohan01-github/SpringBoot_Learning",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Anush980/Traffic-rule-violation-management-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MukhailoK/restapi-m11-s17-team-1-7",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nayab-Haider/multitenant-spring-boot-app-with-keycloak",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Honorioo/AppContatoJava",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pranavbavdhankar/travel-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DongDL/ErpEditionApi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "TomYaMn/srm-springboot-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "marian11a/Softuni-individual-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Naresh2000/Sample-Junit",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sebaKonicoff/clinicaVetApi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sumitAmble/world",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mathhsilva/website-monitoring-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "evairlf/hexagonal-architeture-pratice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "clmoralesl/Sanos-y-salvos-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nishkal08/Ecommerce_Website_SpringWeb",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Yogesh-Mujawdiya/Assignment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sumi2112/sams-pet-clinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "alallaqi/FINANCETB",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MaivMinh/demo-event-driven",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vuongnhattin/kotkit-spring-boot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hasratparwez9162/cards-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dakinnir/url-shortener",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gefisanjaya/payment-gateway-cip",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "developerAkX/cryptox-go-vs-java-benchmark",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Erigert3/Java_SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "amankumar030/Library-Application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Disha395/banking-microservices-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vantrox/portfolio",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Amankarki87/bookmyshow",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Venkat2552004/Critter",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ifrah-adnan/ORM-Spring-Data-JPA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "shjune93/songsite",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "simonwandera/springJWT",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "60secondAppsAI/bayskyfive222-0001",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mertzeybekk/SpringRedis",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LaunchAcademy/java-disney-joins-and-rest",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Gino181105/microservicios-cursos-matriculas-ec3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "marwa-essanousy/Security-Service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "IsmailChabane/flossi-manager",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kumarasinghek/auth-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "A-DILEEP/Prac",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rohitvpatil0810/v2data",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "TKeep21/SpringProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "aminebk99/OAuth-springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "lapochka2019/java-explore-with-me",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MatheusRibeir098/SecurityHub_Epi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "juusokarjanlahti/wiki-data-crud",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harshavardhang272/HelpDesk",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "aadarshkt/Banking-Application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "razzPiyush/Banking-Application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "luoshiF18/treehole-master",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "cloudhubs/train-ticket-aitest",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mohamed-Abdelgawad14/LMS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bilalayazqureshi/ArtGalleryManager",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "cauelima1/Projeto_Filmes_API_V2-Gateway",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "TraperRoku/Backend-Projects",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "serkomma/noteefire-telegram-bot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "IGaXoWnI/Tricol-Tests-Unitaires-et-Recherche-Avanc-e",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MayssaSmeti/SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dsvasudev19/Capstone-Project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "malka810/Smart_parking_system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RaunakShrivastwa/EduHub",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Khoidmse/Tshop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nerminebe/AGIL_backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LSFabi/ProjetoFinalJava",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "martindoychinov07/sales_reloaded",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "shalini06mittal/CitiAfternoonMS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "George152/assignment3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Rushmitkarki/E-Market",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "FrancisBoyyy/novaevents3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AnupriyaaS/Online-Boating-House-Booking-Portal",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "itsnick118/EcomEdgeSpringBackendProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gabriel-rost/spring-microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tuyucheng777/taketoday-tutorial4j",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dcosmin2000/ECommerce-Clothes",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Aika8/fitness-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mohamedanaskhairate/microservices-architecture-spring-boot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "davidgeorgehope/multi-cloud",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Dinhhoanghm/movie-hust",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "OguzAlpCepni/BankManagementSystem",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BraianLopez/bootcamp-JAVA-fullstack",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "johnwesley18/AGILE-ACTIONS-UST-",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "integration-jenkins/MiDS-Selenium",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yelken/camel-integration-soap",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "omey12/TKA-JAVA_HANDS-ON",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Leinad745/DevOps-Desafio",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MinhVi2004/j2ee_review",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Anushadu/Assignment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rajasingh1619/Capstone-Project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "OtusTeam/Spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "niaobulashi/spring-boot-learning",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "negretenico/HelloImplementation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "luisfe1505/csd230-s26-lab3-Luis-Davila",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "luisfe1505/sd230-s26-lab2-Luis-Felipe",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "luisfe1505/csd230-s26-lecture-2.5-in-class-exercise-Luis-Felipe",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "itailouis/PaytmTask5",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "s-noroozi-cs/JavaHobbies",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SINHOLEE/letsgg_pjt",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Blak-Ish/spring-data-rest-vuejs",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "aakashloyar/BasicSpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Monicamathursivakumar/Java-Based-Digital-Banking-Fraud-Detection-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gauravnewton/account-management-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pipe9827/EntregaFinalDevOps",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jmloudis/BasicAuthenticationApp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "krushna1133/english-learning-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "trigunom/SpringSecureEMS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "arpineoganisian/OpenSchool3-Logger",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "leehaut/spring-howto",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PaulosdOliveira/Livraria-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Ferry72morang/EMPLOYEE-MANAGEMENT",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PritishDoc/JobOrbit-App",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "saubhagya248/OnitoTechnologiesAssessment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "benlimpic/Java_Spring_React_Vite_Tailwind",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "eubrunoo07/tasktime",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "maiki-d3v/lab2-docker-devops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "arunsak04/Shopping-Cart",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "OsmBHC/patients-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "shkna1368/kurdestan-bootcamp2022",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JeremiAlex04/Libro-Net",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JuliaAngelozi/dslist",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "omey12/noteorbit",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YASHOTKARSH/crm",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GabrielLeme-Java/Project-BookStore",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kannstas/spring_docker",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "EliseevIlya/SumPractBackV1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "cesarsoto/microservicios-2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "CaioCosta29/projeto-av3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tejalbagade2005/spring-boot-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "youssef-faik/TP2-Developpement-un-Micro-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MarcioGTeixeira/dscommerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Zulfiqarkhokhar/EmployeeManagement",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rahath-marisetti/backend-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "fykidwai/mssc-brewery-bom",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "lyl156/product-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Ayamouine/pfa-devops-reservation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kokoa454/MediShare",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GangwarDinesh/OAuth2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "EvstigneevNV/2025-07-otus-spring-evstigneev",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MostafaLotfy00/Smart-Grocery_Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "N9uyen3n/SE",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bag234/TaskManager",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Saidharan-dev/cognizant",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "fabricioriosexe/EjerciciosJava",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "longchangvn/cs545",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mlihk/Smart-Code-Reviewer",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "aiakosnyks/realtura",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mmullerc/bootcamp-spring-tutorial",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nikolaDrljaca/klink",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hochschule-augsburg/subject-registration",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Marloto/cnd-ws2025-26",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vignesh8ireddy/SpringBoot_Data_JPA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tydolla00/Game-Reviewz",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Ramidu-Theekshana/DocLink-healthcare-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "boxer-lab/hotelcmshsjnewnew",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "lzw0514/2-5EXP5",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "VoCongDanh22130033/Mobile_Be",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "fst037/TPO_DAI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "behdadzabihi/snappfood-microservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MrErgos/shawarma-cloud",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SamadhiViduravi/QuickMeet",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dima0808/civ-monopoly-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tiagocorreia21/LAPR4",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tobezero01/Java-SpringBoot-E-Commerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PatrykDz95/shop-kotlin",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RenanCruz7/mini-stripe",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Centro-Tech/BackEnd",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ErshovTimophey/CinemaRec",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Talida-M/Proiect2_AWBD_v2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "phamvanson04/Savvy_Micro",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Anjana2k02/MTIT-Cluade",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vitoriaaoquadrado/tarefas-ebac-Vitoria-Pinto",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nonobeam/haicau-banking",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "TienDung030704/datlichkhambenh",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Timur17/spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "wadiks/otusnew7",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kalmar73/Spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RohithaBonthala/Library-Management-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "arbybyby/ai_step",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GangaSakthivel/projects",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AlexKhmarenko/FP4SocialNetwork",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Madhu696969/DonationApp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Blacknight3648/proyecto_msvc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AHETESHAMS/InfluencerAppBackend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ZbirMohamed/cars-renting-microservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kidzzooo/LabExamProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nhutruong47/orca",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Natasha-R/ChatGPT-Study",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SarathaNatraj/JAVA-FSD-ANGULAR",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "divejdivej/5022557-DIVEJ-SEGU",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rieckpil/learning-samples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "algaworks/curso-especialista-spring-rest",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "javabyraghu/SpringBoot2SecurityOrm",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "javierlete/java-2720",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "0-don/spring-boot-ecommerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "veralizeth/temp-hum-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GustavoLopes12/Teste",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "irinacadu/TDD-Course",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hamil312/final-project-oop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JorgeJLCode/car-marketplace-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GSRK-BZA/BitsSpringAssignment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "carloscasaleiro/bookManagementRESTfulAPI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mdsoln/EntrepNet",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ArturCadorin/TCC-GESTAO-PESSOAS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Cristixndr3s/docker-microservices-lab",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mirakib33/sms-charge-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GusevEgor/security",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mishalp789/Ecommerce-Microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Ahmads4/bookstore",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Jikjii/user-mgmt-system-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JVNTeam/VINHA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hugo-feijo/algaworks-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Emikoya/spring_security",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MarlosIgor/spring-boot-rest-api-event-test",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SirajChaudhary/comprehensive-example-on-microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dopeCape/quiz_app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "KrishnakanthYachareni/angular-springboot-bike-registration",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Chidoshime/Session-Replay-Platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "anwar028/ADMIN",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Junkai-Noel/uni_title",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AnLeo002/Garaluch-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Bloggios/discussion-provider-application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "chetanb-11/ExpensePilot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kietjune2003/DaLieuBackend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SagarUlli/spring-boot-jsp-gram",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "emailducris/CCPInvesting-SA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AshutoshKumarJha2/ES_microservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Zed2199/hospital",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RolleRocker/docker-spring-boot-mysql",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kirill555dg/USEME_SpringServer",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "OblancC/Loja",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Joshe1601/GTICS_LAB9_20193733",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "THANATHIPSTD/331-auction",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Apps-1-2-3/Smart_Hostel_v2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pulkitohri/Learn2Code",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "michelegelmini/spring-la-mia-pizzeria-crud",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BotModeB/TextHub",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PraveenChavan007/Banking_Monolithic_Application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "saikrishnauggi/doctor-appointment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ritunjaykumar/springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rehanpunjwani/SpringBootProjects",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "agshin-ahmadli/patient-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pjovicic/microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Julio20212/listatarefa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jph89689/RedColem",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "matthewyip14/final-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Levaaaaaa/library_service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Leandro208/bingo-manager",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AquilesDias/library-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MohamedAnwerYahyaoui/SmartDelivery_BackEnd",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hendisantika/spring-boot-jpa-multitenancy",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hoakg2000/warframe-helper",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "didier-tp/spring6_2024",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "lionjhs98/hotelcmshsjnew",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BZyeon/hotelcmshsjnewnew",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BZyeon/hotelcmshsjnew",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "boxer-lab/hotelcmshsjnewnewboxer",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "akhyad54321/delcapital",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nikhilkumar33/spring-projects",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dk5144/OrderManagementSystem",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DiegoK2002/Microservicios",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Rennanml/Trabalho2-PRW3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "shamim1979/spring-boot-web-microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "NaUVie/web2-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Valentina-Garcia089/TuDespensa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "larskii12/mygamerlist",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "codingsoo/ARAT-RL",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "achal2911/Atyeti_Achal_Java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "aiakosnyks/realtura-workspace",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Narayan3110/SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "prakruti95/Java_10_30",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hasithaMadushan9903/RapidManagmentSystemBE",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sacrabma92/Java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mrTwice/gb_attestation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Thao-Lo/aiswift-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Trong-Nguyen-DT/FlowerShop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "KaiyuanY/Reddit-Clone",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "pdmhussain/smart_employement_management_system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bangnguyen2264/BDHV_ITCLUB",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jeeraphatC/Hexgaton",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gusrl6394/SpringbootShop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "A-smile-cat/Allnsight",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sreenath2002/bookmart-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "daniyaremes/back",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "IshanChad/AirlineManagementSystem-Microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "111-eln/TurkcellCRMOld",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mohcine50/E-commerce-website-Spring-Boot-and-Angular",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JanessaTech/exercises",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dipu-m18/MusicPlayer",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "NazarethDev/EDS-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "malek-labidi/malek-labidi-test-instadeep",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Wazzups/picpay-challenge",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DhivyaMary/microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "michelegelmini/spring-la-mia-pizzeria-relazioni",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nardos-Tilahun/real_estate_crm",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "suriyaganesh97/java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Maxijrrr/biblioteca-microservicios",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "giorgio-natale/BrugnanoButtiglieri",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "felix-phuctran/BoCongAnh-Flowers-Shop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Rajankumar10/flight-reservation-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JoseManuelMunozManzano/springboot3_chad_darby",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "HadushHailu/enterprise_application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Sangam5756/CDAC",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "HuwaizeAhamed/MyGithubRepository",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Quangntph50607/DATN_ALL",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "praveen-kumar0108/To--Do-List-Application",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nsv671/learnSpringboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yanikFurkann/Spring-Boot-Exception-handling",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JhersonCastro/microservice-communication",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Brijoy/FinancialTransactionProcessing",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kodiererin/Hello-Spring-Boot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Aakash3221W/AakashCGAdvanceJava",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "antoniobarbozaneto/Especialista-Spring-Rest",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "antoniobarbozanetoTR/Especialista-Spring-Rest",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kaushalkumar98/Notification-Microservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "darbyluv2code/fullstack-angular-and-springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "revaturelabs/rss-evaluation-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Apress/practical-microservices-architectural-patterns",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bruno-vsiqueira/flight-delay-hackaton",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Abmccullough1/Unit8Module2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "danielps99/razzie-awards",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "devjudge/incorrect-user-data-java-debug",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harikrishna553/springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rohitkr150015/EventMate-InfosysSpringBoard",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bungaantonio/rest-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harrisonmk/CadastroTarefaSpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "brazil-bruno/banking-ecommerce-microservices-devops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mjrdavidstudent-boop/petstore",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "growni/WoodStore",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "devolw/producer-rest-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AbhishekNair1289/StoreSales",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "datjpro/day1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Axmadullo2000/finanse-tracker",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ntbch/OOP_N01_Term3_2025_K17_Group9",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "FallenBuiscuit/demo-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SunhyeokChoe/traveladvisor-msa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yasaswini88/Event-Review-EC2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GabrielEAG/Laboratorios_NCapas",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Shavindi0609/Disaster-Management-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gargshivam2034/blogging_app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Vmorozov893/school",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kritikamalviya01/RestApi_2026",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Dinar699/3.1.5master",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dkth1122/Project_4",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "axinger/ax-springboot3-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "swaraj39/FullStack",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sanjayyalla/employee-services",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "antsrc/api-rest-spring-boot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "quanhieu/Eshop-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mrudhulaah/employee-management-appplication",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "FatihYigit35/kodlama.io_javacamp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dgukan35/multiplayer-uno-game-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Shumbusho43/web_services",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dilmikavishka/Smart-Parking-Management-System-SPMS-",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tosdanoye/dat152-project2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Manukhurana97/ctsfsd",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "60secondAppsAI/applicationname-0001",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Guilherme-14/InvestBrain",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Susheelcc/RescueLink",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Samillah47/Parking-Management-System-26851",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sewerynstawiarski/SpringFrameworkLessons",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "uddeshrothe/Deals-and-Coupon-finder",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "glender222/backend-ale",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Ahmadkhas89/sbomtest2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LeVuWan/cafemanagement-",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Farabello7/sistema-academico",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "CarnifX/cricket-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "simrathkaur/Mutation_Testing",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "wangxin1248/XEdu",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yacouba01/parking_backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "andersoncaarlos/projeto-integrador-oasis",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Oasis05/OASIS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "devendra1707/Spring-Boot-Program",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Timothy-Balaba/EnfeInt",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JohnFBartlett/song-ranker",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "anilyldz/crud-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Abmccullough1/Unit8project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MDGcode/spring-boot-students",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "FeliGuell/biblioteca",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BusterBlade001/notification-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Tiagommoraes/AV1_ArqWeb",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ylizzr/SmartGrid-payment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "NorqulovAslbek/kun.uz",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GrandDukeNick/duitlater",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "chharsha247/OnlineDietManagement",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "custersnele/SolutionExamenJA2SpringBootJune2020",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jayaprakashll/week3-BTI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nagarkotigit/spring-boot-jdbc-call-stored-procedure-simplejdbccall",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sandeep200215/CricketInformer",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jay35joshi/ProductCatalogService",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "estevan324/spring-crud",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LuisCarlosP/SimpleGraphQL",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "NicolasCaze/Cours-Java-Spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "HarshaPrimeTrainings/Microservices_SpringBoot_SpringData_SpringCloud",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "petshop112/Flowik",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "steffindhas/Student_Management_System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "riyqe/rbpo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JohanGen/dat152-project2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DAVNGU99/DAT152-Oblig2-Gr2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DonCHeto/Extra-Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "alejandroazapa/Extra-Back",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "quoctmdev01/design-patterns",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "camelot123456/Do-an-chuyen-nganh_Tich-hop-he-thong",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jayant733/spring-react-cli",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "matheusbloise/curso-java-spring-angular",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rgonzalez-dev/smbc-demo-api-contacts",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Wiziwax/onboarding-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vuanhhuy93/training",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "FazleRabbbiferdaus172/CS544-EA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "IgnacioLondono/Sanos--y--Salvos",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jay-neo/DN3.0_Exercises",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "wferdinando/rest-with-spring-boot-and-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Anshil1/Smart_Contact_Manager_Project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "arian-esmkhani/maestro-academy",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Rohesa123/aplikasi-penjadwalan",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gerber140/SchoolLibraryRestApi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sandy2030/microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dxnn20/PBD_Chess",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MINAWI0/NeedThisBackend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Jmendezzz/msvc-transactions",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SiwarBaccouche/e-learning-springboot-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "malikarbazakram/spring-boot-v3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "CDE20/Stage3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "NanooDev/ing_informatica_duoc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "isluvubidwuba/JewelryStore-2Ks1.Net",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MayurMohan0654/apc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SofyaPovarova/SD",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nguyenhoangkhq7/DHKTPM18C_Nhom07_play-vault-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jeongwoo76/java_2025",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GabrielVianaNunes/Vehicle-Rental",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "zikozee/spring-security-in-action",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "justhecool/SmallWorlds-Forever",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "thepipeman/bushub-cloud-deprecated",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Niky4000/UsefulUtils",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "bhuvanroyal/microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "atishay46/flight-app-assessment-atishayjain",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "icerzack/ITMO",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hemanth126/Digitiumitservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "GabrielNevarez/2025_Java_Frameworks",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "itzmanoj38/AngularClone",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Bimal194/fullstack-ecommerce-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Sidaga-Manikanta/FullStack-Capstone",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "18dardenia/CabBooking.java-and-SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "javieraviles/split-the-monolith",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Gragolandia1/ChamadasTwitch",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "CarViis/Spring_RestauranteAPI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kaua-Araujo-Soares/price-tracker",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Fouad233/EA_Prog",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "migueelzz/todolist-api-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "raestio/accommodation-booking-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "artsrailink/artslv-gate",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "VoAnhThien/users-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "mazeta1910/PW44S-Entrega02-ECommerce-MatheusCPSantos",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jonnxpr/game-project-back-spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "garethu/spring-ai-ollama-function-calling",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "avergnaud/keycloak-multi-tenant",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SaadBengrich/webclient",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "vietnoob2k4/Testing",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "KandV008/Kango-Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "curiousanand/GDPR-POC",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RusselSand/AsyncArchitecture",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "weerapperuma/MCQ-Management-System-SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MateoZambrano/AuthUsers",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "amaanlari/error-handling-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yuvraj-saraswat/microserviceRepo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Matt-Val/cmcac-infrastructure",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "M3SOulu/ICSA2025_NetworkCentrality",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AlbaTrap/MIASI_Projekt_2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JBouguima/Apache_Flex_Spring_Boot_Remoting",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DhairyaVardhanChauhan/Bitespeed-Backend-Task-Identity-Reconciliation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "becoderpavy/product-management-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "b0wdyy/book-reads",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sofia-munoz/tpfinal_poo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "diegocorteL33T/SmartFridge",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Luberri/evaluationLub",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sh654/Spring_tutorial",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "IMLsehaj/apc_eval1_porject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ryliima/API-login-true",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PiotrPodsiadlo/springboot2-jpa-crud-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Khmelov/Distcomp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Leandrns/autoescola-3ESA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BhurgriShajahan/TMS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dianaforrai/JavaSmartStart",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "TheoMacrez/SafetyNetAlert",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MTA2002/sheba_backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ademhbibi/micro-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Elisa335/Spring-REST",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "amod2android/BajajTraining",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AcornPublishing/spring-boot-jpa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Amirdhesh/Chatbot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Jose2401/Api-Inventario",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "seism0saurus/spring-boot-h2-liquibase-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kam-Tom/spring-todo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "LPQV08102004/financial-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "facuzambellini5/varios",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kensheesh/ESDP_xfood",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JacobsonMT/GraPES",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tuanphan1806/hotelmanagement",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dyflopez/curso_full_stack",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "kaykyoliv/Java-Spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Rushil-Walia/DeepNuture",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RababJarrar/Java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SnehaHS65/SpringBootMicroServices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hirparabhavin/MicroservicesPractise",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yashuday12/AirTicketBooking-UdayKiran-and-Yashwanth-Team-10-",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SANGCO/spring-boot-jpa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Shinto-chandy/EmployeeManagementSystem",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harikrishnan303/AppDevelopment",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "google/kube-startup-cpu-boost",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "digitalsonic/geektime-spring-family",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "edisonX-sudo/BriefOfDomain",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Gadive308/22-9-work",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "andersonblopes/course-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Abu-05/spring-boot-backend-learning",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rundredoffi/MS-Locations",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YashM1234/transactionmanagement",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "sebtitu10/Gestor_Tarjetas_Spring_React",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JosephMutyaba/BSE-24-7",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "berkayalcin/conference-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SergioCamejo/veterinaria",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "nh1528/todoapp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "worlt/unreliable-reading-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "EduardoAuler/api-rest-futebol",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "moon-zhou/spring-learning",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "yoAfifi/SmartStock_backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "froprintoai/RegisterApp-Java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PowerSystem2024/EliteCoders-CuartoSemestre",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "zhangxinzhou/SpringBootLearn",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Liiiziiiiii/Labs_Java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Nataniel-Medeiros/user-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Shyamkumar9645/digital-banking-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Leifhaa/devops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "CZalamea/API-VOLL-MED",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "thisara/json-validator",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BlackMonkcr/Work-Proyect_DBP",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Los-miembros-y-sus-integrantes/trainer-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "niitagile/Mphasis_Batch1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tianhx115/mycode",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "avinashyelmar98/microservicespractice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gautamchodankar/microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "deep4109/springboot-microservice-concept-all",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "FireF0xIl/techradar",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harshal5-dev/cloud-kart",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Neerja13/QuickMedID",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Bubunduc/vet-clinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PanyawutS/Workout-Website",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "shubhra6596/eCommerceAPI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Sergey-Spodarev/-Bank_REST",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mupfy700/pvl-mwt-students",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mupfy700/PVL-MWT-student-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "traumereiii/freeboard",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "apostoloszz/TodoApp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "ericlixj/coinexchangeservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Mulder8vidas/BckendRealme",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "WELF9I/SOA-Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "VaibhavKrishna0607/Credbuzz",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "rahulsahay19/restful-services-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "devAyyoub/eBank",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "devAyyoub/ebank-spring-k8k-devsecops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "harrishjoshi/springboot-kmc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RakshitKashyap/E-Commerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "DBryja/Java-maven-studia",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "tmgnisc/Sajilo-Salon-Java-Web-App",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "hameda9795/Javamentor-final",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jguida941/java-spring-tutorials",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "jakebae87/Petmily",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Raboro/Flower-Meadow-Generator",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Abhi181818/docman-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gsantopaolo/reforge-ai",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "a2ankitrai/spring-cert-code-examples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "soygeanny/next-orden-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BulkSecurityGeneratorProject/fourchetteIppon",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "dadaramjadhav/spring-data-jpa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Natasha-R/Data-Visualisation-Project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Kruthiksp/spring-data-JPA",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "Sujatabatra/Deutsche2025",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "PierreBesson/demo-jhipster-bordeaux-jug-2019",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "JustMon1ka/EchoMark",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "igordsr/gestao-pedidos-microservicos",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "YusufAkin27/Routa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "codebyharii/E-commerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "gmanohar21/Ashok-IT-15JRTP-Projectbatch",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "platformps/lecturedemos",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "SammyUEO/Testing",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "BhaskaraVeda/Wipro-NGA-Training",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "MonuGit91/CodingNinjasSpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "AlvaroJoaquinESP/SEGUNDO",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "RonComico/DN3.0_Exercises",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:pom.xml"
+ },
+ {
+  "full_name": "benwilcock/cqrs-microservice-sampler",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "hackrslab/studyolle",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Darren4641/Baroka",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ITAAcademy/crmChat",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "iproduct/course-spring5",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "assimbly/gateway",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jhscpang/cloudstorage",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "nevenc/spring-music-k8s",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jacobrs/HwrkIt",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "gueradevelopment/data-provision",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dapdelivery/spring-petclinic-template",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "vumrra/TIL",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ejoongseok/product-order-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Monogramm/spring-rest-api-starter",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "SimonHarmonicMinor/spring-security-dynamic-roles-inheritance-model-example",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Roshen-Perera/Green-Shadow-Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "MalinaProject/Malina_server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "rinkkasatiainen/tech_excellence_demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "fgibelin/spring-petclinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "tomjfrog/license-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "zametrics/sopra-fs25-group-09-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dhadukk/spring-petclinic-template",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "valentinfrlch/sopra-fs26-group-12-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "AristideWafo/pre-commit-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "celotts/restaurant-inventory-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "itohiro73/fp-matsuri-2025-formal-verification-and-fp-with-ai",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "andrewsaputra/java-message-queue-exercise",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Ruiz-z/CBTIS239",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Friends-of-Groot-Society/groot-material",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "patrykpalka/anti-fraud-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "DanisonEdiel/orders-create",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "andrewcr90/clinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "GoisEstudos/literaLura",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Joakamakaka1/NewNocturnalHunters",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Romano44e/room-reservations",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "eatthecookies/ru-mirea-5-course-work",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Bruno-Moreira-Dev/santander-dev-week-2023",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Abbiirr/spring-oauth2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "VitFelipe/ems-alga-sensors-device-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "VitFelipe/ems-alga-sensors-temperature-monitoring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jhhong0509/study",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dilution0216/buyme",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "peaknugget/spring-boot-and-jpa-jpabook-practice2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "wolox-training/af-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ldziedziul/matternotes",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "olzzor/shop-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "HyeongJung1/CJ_JavaStudy_Class1_Team2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "joshgav/spring-apiserver",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "pgottam/spring-custom-petclinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "rsdarshana/Train-Ticket-Reservation-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ita-social-projects/dokazovi-be",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "SantinoMin/kosta_java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "mykim8710/springboot-java-to-kotlin",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Noemie-Aubert/booking-epita",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Abdkait/HW-microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jVtec1/cst438_project2_API",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Gyanvlon/UPS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "huncozyboy/PingPongGame",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Augusto11CB/SalesApp-Clean-Architecture-Spring-Kotlin",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "D3vJ30n/zb-account-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "excellalabs/tcp-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "CodeEnthusiasts/TrainingCenter",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "zrur/devops-GS",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "hodaya7/benn_less59",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "peaknugget/demojpa3",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "easywaldo/gprc-helloworld",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "cherrybaiserr92-stack/match-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "hamamukku/reviewtrust-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "bamyanggang-project/bamyanggang-BE",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Madirex/funkos-api-springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "LaunchCodeLiftoffProjects/to-do",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "philips-software/license-scanner",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "lldata/axon-banking",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "MasterChenGitHub/livesystem",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kwon37xi/replication-datasource-boot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "soolung/simblue-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dayan888/springdemo_k8s",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "SungHo4119/eCommerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "business-sixtick/recommend_movie",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "AmirHabiby/ITAS_registration_Tracking_system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Invizible/Catdogtion",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "asete93/kakao_sso_3tier",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "DongwooSeo/ddd-examples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "shivang420/Komrx-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "KangJuHyeong/datebook",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "odemolliens/bitrise-step-gradle-dependency-checker",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "meirongdev/math-learning",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "donghass/e-commerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Vustey/Vehicle-Monitoring-System",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "intoforever/Evergreen",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Grapejun/StudySpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kimgyuhwa/team5_v2sbm3c",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jojoldu/blog-code",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "benwilcock/cf-cqrs-microservice-sampler",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ipillai91/spring-petclinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dapdelivery/spring-petclinic-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "sreeramsunkara/spring-petclinic-tap",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dapdelivery/spring-petclinic-ui-testing",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kzhelyazkova/my-tanzu-petclinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "a-sudarsanan/tsm-tap-gitops-source",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dapdelivery/rahul-spring-petclinic",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kotato/axon-examples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "damiangonzalez/cqrs-microservice-springboot-axon-docker",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "D3vJ30n/zb-weather-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "robotbird/webtap",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Project-Captone-VMS/VMS-repo-BE",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "D3vJ30n/java17-spring-mariadb-template",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "D3vJ30n/fullstack-cloud-project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "D3vJ30n/zb-dividend-study",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "rakia/spring-boot-docker-kubernetes",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "LandvibeDev/2022-Backend-SummerCoding",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "luizhf42/booknook-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "handong-app/handong-feed-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Gabriel-Gerhardt/Url_shortening",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "AI-HeartQuiz/BackEnd",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "andramates/moot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Arpit319-byte/DoctorHub_Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kimyoungtae-kor/realtime-event-sourcing-chat",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "agurha/pet-store-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "k-bashkov/mayak-ecommerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "krishhsuri/users",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "CuongLiam/IT-211-ss06-miniProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "proSbeginner/anuchito-homework3-db",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "bobbo01/B2BPlatform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kraftenty/itemservice-db",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "osjkate/redis-acc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "beachedcoder/2025_14_10_demo_wareops",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "izzyyhh/anime-api-java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "mini-carrot-market-IT/mini-carrot-user-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Romanow/camunda-state-machine",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ssc2011/java",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JiheonMoon/test",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "adkins2010/device.management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "omegafrog/ticketon-DDD",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jskim2x/CapstoneProjectServer-jdbcTemplate",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "fatpounder/DIY-To-Do-List",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "G0fD/ZTPAI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JangseonWon/panel-project-claude",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "adam-kane/bettergetter",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "green-fox-academy/vlahobgm",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Scribunoff/book-store",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "sabsiru/eCommerce-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Nikitkakuzmin/project01-credit",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "chloeyeo/2024dev1-JavaProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "PCloud63514/ohlot-architecture-hexagonal-template",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jos10099/JPACRUDProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "zihoo318/TalkSsogi",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "andreea-sindrilaru/musefy-s6-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "everyone-s-garden/everyone-garden-back",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "juneligan/saas-billing-platform",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "mayuroks/swing-trading-scanner",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "WoodrowDy/shop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "isameddin35/quiz-land",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "subhashis2018/jenkins-cicd-gradle",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "beomsu1/msa_exam.auth",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "inourbubble2/java-springboot-boilerplate",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "AytacAgazada/BusinessService",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "evilchomikk/Plaza",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Spoonsors/spoonsors-server-v2",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "j4nthirty1ne/Spring00002",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "xognstl/JPASHOP",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "cwm-coding-with-mike/learning_lombok",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jinjoo-lab/FrameCheckMate",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JulianRuano/OpenMarket_Argentina_Colombia",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Bohdanken/HospitalService",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "brick0123/spring-boot-in-action",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "KSilverman/applicate",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "sbslc2000/MySlack",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kumarwhocodes/edunexus",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JeremyNakano12/Chocorocks-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "pnoen/Stockify",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Ginder99/vms-project-design",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "YuChanzero/test123",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jmcho2010/ezenSpringTest",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ucmo-cs/FantasticFour_SE3910_Spring22",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ExToozy/banking-app",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "chan0326/TOEICDOIT-Spring-MVC-TX",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "FelipeGadelha/saga-pattern",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "HAYRUNNISA13/maxhomemadecupcake1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "green-fox-academy/Arokohon",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "testunited/testunited-web-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "michelou/spring-examples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jsjune/E-commerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "GuilhermeBiavati/admin-do-catalogo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "lukaszse/asset-management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "mightyTony/mytube",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "fiwka/budget",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "tolik-martyn/spring-gb",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "asthyeon/ssafy-mallook",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "minsesil/springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "AnhTuan1407/A0922I1_HuynhAnhTuan",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "hoangminhtien2000/Aungular",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "B9ND/memoa-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Esh07/Events-Ticket-Booking-App",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "desmondrawls/spring-graphql-demo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kamarbaraka/inventory_management",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "currenjin/alexandria-playground",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "G-Sampaio/Loja-Online",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "eoeqs/task-management-system",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "KIMSIYOUNG/Jpa-Study",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "wafman/codefellowship",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "magnoria/devConecte",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "everydayspring/spring-jpa-scheduler",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "nakayama-luiz/desafioELo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Cygap/SpringBatchDataTransformation",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Joggim/K-Talk_BE",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "BandariChetanKumar/docker-gcp",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Joajy/Spring-Security",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "velSeon/sns",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "RiveriRiv/todo-list",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "BongGuenJun/LoginProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "AZapata27/springboot-testing-from-scratch",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ArthurGrim/MangaLib",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ByeonJuHwan/lecture-clean-tdd",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JoeCP17/Feature-flag-web",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "wuubangdev/spring-jobhunter",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "h2jinee/hoosinsa",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "mkazinauskas/iptv-scanner",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Michigan-Korean-community/Michigan-Korean-Website",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kona-internship/Faketee",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "updown-90/api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "green-fox-academy/couscous-salad-fedex",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kimyongyeon/springboot_sun_study",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "WeixingOu/MindHub-FS049-JAVA-JUN23",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Gemmeg42/alumni",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Oh-Ho-Work-Out/oh-ho-server",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "bitofsyn/EzPay",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "fioravante-dev/microsservicos",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "5th-UMC-HUFS/umc-5th-spring",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Backer0227/SESAC_Final_Project",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "youseokgoodgood/BreakJava",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ChristopherPalloArias/TICKETING_SEM7",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "UNIZAR-30246-WebEngineering/lab6-microservices",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "green-fox-academy/Jirinka",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "ujin302/R04",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "green-fox-academy/agipetho",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "hrshdev/IT3232_practicals",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Kernel360/KUNI_2thecore_backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "grasspring-study/spring-mvc",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "lynnjosse/EvalTool",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "yunut/securities_batch",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "huseynovali/ChatApp_SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Tojaman/JPA1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "prashantdubeypng/YouTubeCourse",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "zerockcode1/api01",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "MinnieMinwoo/RecommendMenu",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dharmana-prasanna/statemachine",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "iamprassana/URL-Shortener-Backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "cheewuk/qna",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "akshay-das/back2-road-autoparts",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JihyeHwang09/spring-webservice",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "onejm/Todo",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "pkp911/Day1_Java_Prashant_Pandey",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "nguyenvu97/ontomany",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jps091/DeliveryService",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "orz-api/orz-data-spring-boot-starter",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "JoseGonzalez1394/seattle-code-java-401d13",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "inovruzovemin/ATL",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "vnikonv/springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "traumereiii/spring-training",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "eunchan96/p-13970-1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "berndheidemann/fa22b_webshop_new",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "bytesworm/java-ecommerce",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "pepperagosta7/deposito_GiuseppeRagosta_SpringBoot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "FammeLn/SpeechKids_AI",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "sennaseo/BBANGGU",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "HAYRUNNISA13/onlineshopping-springbootsecurity",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "YeonnWooo/ddip-web",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Manuela0894/springboot_exercicios",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "cer/exploring-simplicity",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "green-fox-academy/arvisura87",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "GAMERMINHDAT/sesssions13springboot",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "asamal/greenstone",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jeffntseng/AmwayEC-Testing",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "kim-mina000/spring-study",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "valentinajemuovic/test-app-ff0698e8-538bd671ae230926-backend",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "junsekim/Community",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "2yunj007/mallook",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "Leehyoungwoo/Mallook",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "chanhyub/spring-boot-bind-mine",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "yjyoo6831/sesac",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "hfWalid/onlinee-shop",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "wonsongleejo/monkey",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "jayeshkapadnis/assets-service",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "dutra357/auth-Architecture",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "KiNextLevel/finalProject",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "HIGH-CARE/HIGHCARE-SPRINGBOOT",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "bshongwe/fintech-api",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "frauca/samples",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "algaworks/curso-especialista-microsservicos-nivel-5",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "MuhammadAhmadUworx/spring-projects-cummulative",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ },
+ {
+  "full_name": "DuyDuc1206/C0922G1",
+  "fork": false,
+  "query": "spring-boot-starter-data-jpa filename:build.gradle"
+ }
+]

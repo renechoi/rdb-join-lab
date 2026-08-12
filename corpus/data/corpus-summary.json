@@ -1,0 +1,47 @@
+{
+ "scanned": 500,
+ "usable": 497,
+ "excluded_no_entity": 51,
+ "jpa_apps": 446,
+ "mapping": {
+  "association_any": 274,
+  "idref_any": 382,
+  "both": 242,
+  "association_only": 32,
+  "idref_only": 140
+ },
+ "query_layer": {
+  "loop_repo_call_any": 156,
+  "loop_repo_call_total": 2474,
+  "lazy_any": 123,
+  "join_fetch_or_entitygraph_any": 48
+ },
+ "remedy_adoption": {
+  "default_batch_fetch_size": 4,
+  "configured_values": [
+   20,
+   32,
+   100,
+   1000
+  ],
+  "autocommit_false": 3,
+  "provider_disables_autocommit": 2,
+  "both_transaction_settings": 0
+ },
+ "unbounded_reads": {
+  "declared_collection_methods_without_a_bound": 8556,
+  "declared_collection_methods_with_a_bound": 33,
+  "apps_with_at_least_one_unbounded": 275,
+  "findall_noarg_call_sites": 11245,
+  "apps_calling_findall_noarg": 334
+ },
+ "page_sizes": {
+  "observations": 622,
+  "median": 10.0,
+  "p75": 10.0,
+  "p90": 10.0,
+  "max": 500,
+  "at_or_above_300": 1,
+  "at_or_above_100": 14
+ }
+}
