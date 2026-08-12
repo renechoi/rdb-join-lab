@@ -1,0 +1,93 @@
+# PostgreSQL arm of the lab. A separate compose file on purpose: the MySQL arm's
+# docker-compose.yml is read by in-flight campaigns, and the two arms must never
+# run measurements at the same time anyway (they would share cpusets 0-5).
+#
+# Usage:
+#   docker-compose -f docker-compose.pg.yml up -d postgres netem-pg app-pg
+#   docker-compose -f docker-compose.pg.yml --profile tools run --rm k6 ...
+#
+# cpuset layout is identical to the MySQL arm (db 0,1 / app 2,3 / k6 4,5) so a
+# PG cell is resource-isolated exactly the way a MySQL cell is. Bring the MySQL
+# stack down (or leave it strictly idle) before measuring on this stack.
+version: "3.9"
+
+networks:
+  labnet-pg:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: lab-postgres
+    networks:
+      - labnet-pg
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    volumes:
+      - ./db/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./db/schema-pg.sql:/docker-entrypoint-initdb.d/schema-pg.sql:ro
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: labpass
+      POSTGRES_DB: lab
+    ports:
+      - "15432:5432"
+    cpuset: "0,1"
+    mem_limit: 4g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d lab"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # netem sidecar: shares postgres's network namespace so tc applies to its eth0.
+  # Same pattern as the MySQL arm; idle (sleep infinity) during measurements.
+  netem-pg:
+    image: alpine
+    container_name: lab-netem-pg
+    network_mode: "service:postgres"
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "apk add -q iproute2 && sleep infinity"
+    depends_on:
+      - postgres
+
+  app-pg:
+    build:
+      context: ./app
+    container_name: lab-app-pg
+    networks:
+      - labnet-pg
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "18081:8080"
+    cpuset: "2,3"
+    mem_limit: 2g
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://lab-postgres:5432/lab"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: labpass
+      HIBERNATE_DEFAULT_BATCH_FETCH_SIZE: "${HIBERNATE_DEFAULT_BATCH_FETCH_SIZE:--1}"
+      LAB_HIKARI_AUTOCOMMIT: "${LAB_HIKARI_AUTOCOMMIT:-true}"
+      LAB_PROVIDER_DISABLES_AUTOCOMMIT: "${LAB_PROVIDER_DISABLES_AUTOCOMMIT:-false}"
+
+  k6:
+    image: grafana/k6:latest
+    container_name: lab-k6-pg
+    networks:
+      - labnet-pg
+    profiles:
+      - tools
+    cpuset: "4,5"
+    volumes:
+      - ./k6:/scripts
+      - ./results:/results
+    environment:
+      BASE_URL: "http://lab-app-pg:8080"
+
+volumes:
+  pg-data:

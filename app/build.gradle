@@ -16,6 +16,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    // PostgreSQL arm: same image serves both engines; Hibernate picks the
+    // dialect from the JDBC URL. See scripts/pg/PORTING-NOTES.md.
+    runtimeOnly 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {
