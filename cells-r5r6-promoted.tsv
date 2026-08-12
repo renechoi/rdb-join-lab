@@ -1,0 +1,57 @@
+# Supplementary round promoted to main-campaign rigour, 2026-08-12.
+# The original round (cells-r5r6-round.tsv) was a single 2-minute run per cell on a
+# regenerated seed and different VM resources, which is why Section 4.11 could not be
+# merged with the main campaign and why its abstract-level claim rests on the weakest
+# design in the paper. This file is the same cell set at 5 minutes with three repeats,
+# measured on the 6 CPU / 8 GB configuration and the current seed, so the CV gate
+# applies and within-cell variance can be estimated.
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+# --- same-seed reference cells (default app env), N=100 ---
+b	joinfetch	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	lazy	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	joinfetch	300	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	300	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	lazy	300	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	joinfetch	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	lazy	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	joinfetch	5000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	5000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	joinfetch	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=r7
+# --- same-seed reference cells, N=1000 ---
+b	joinfetch	0	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	0	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	joinfetch	1500	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	1500	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	joinfetch	10000	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=r7
+b	inbatch	10000	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=r7
+# --- R6 default-arm JDBC controls (pair partners), N=100 ---
+b	jdbc-join	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx0r7
+b	jdbc-inbatch	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx0r7
+b	jdbc-join	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx0r7
+b	jdbc-inbatch	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx0r7
+b	jdbc-join	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx0r7
+b	jdbc-inbatch	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx0r7
+# --- R5 arm: lazy + default_batch_fetch_size=100 (the real S3), N=100 all 5 RTT ---
+b	lazy	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+b	lazy	300	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+b	lazy	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+b	lazy	5000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+b	lazy	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+# --- R5 arm: lazy + bf100 at N=1000 (batch splitting regime: ~800 distinct refs -> ~9 IN queries) ---
+b	lazy	0	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+b	lazy	1500	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+b	lazy	10000	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=bf100r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=100
+# --- R5 arm: lazy + bf1000 at N=1000 (single-batch regime) ---
+b	lazy	0	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=bf1000r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=1000
+b	lazy	1500	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=bf1000r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=1000
+b	lazy	10000	20	5m	-	N=1000,MAX_MEMBER_ID=2000,CELL_TAG=bf1000r7,HIBERNATE_DEFAULT_BATCH_FETCH_SIZE=1000
+# --- R6 tuned arm: hikari autoCommit=false + provider_disables_autocommit=true, N=100 ---
+b	joinfetch	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx1r7,LAB_HIKARI_AUTOCOMMIT=false,LAB_PROVIDER_DISABLES_AUTOCOMMIT=true
+b	inbatch	0	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx1r7,LAB_HIKARI_AUTOCOMMIT=false,LAB_PROVIDER_DISABLES_AUTOCOMMIT=true
+b	joinfetch	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx1r7,LAB_HIKARI_AUTOCOMMIT=false,LAB_PROVIDER_DISABLES_AUTOCOMMIT=true
+b	inbatch	1500	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx1r7,LAB_HIKARI_AUTOCOMMIT=false,LAB_PROVIDER_DISABLES_AUTOCOMMIT=true
+b	joinfetch	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx1r7,LAB_HIKARI_AUTOCOMMIT=false,LAB_PROVIDER_DISABLES_AUTOCOMMIT=true
+b	inbatch	10000	20	5m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=tx1r7,LAB_HIKARI_AUTOCOMMIT=false,LAB_PROVIDER_DISABLES_AUTOCOMMIT=true

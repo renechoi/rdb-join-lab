@@ -115,7 +115,7 @@ unchanged.
 - Rationale: when the declared N and the measured distinct-reference count diverge, the H2a
   regression (X-axis = measured distinct-reference count) is contaminated. This is a
   sampling-population protocol fix; the hypotheses are unchanged.
-- Evidence commit: 017a1fe (2026-06-11).
+- Evidence commit: 734d847 (2026-06-11).
 
 **(b) Coarse-sweep measurement budget: single 2-minute run per cell (the frozen section 3
 3-repeat median was not applied to coarse cells).**
@@ -154,7 +154,7 @@ labeling-only impact.**
   RTT) and does not enter the cell's measurement data.
 - Rationale: at high RTT, 10000 probes cost 13+ minutes per cell. 2000 probes preserve label
   precision. This change affects labeling only.
-- Evidence commit: a72c8d3 (2026-06-12).
+- Evidence commit: b7ba687 (2026-06-12).
 
 **(e) H2a regression excluded the rtt>=1500 series (pool saturation of N>=300 cells; post-hoc
 analysis scoping).**
@@ -186,8 +186,8 @@ script to the mechanized frozen knee rule.**
   definition. Mechanizing the frozen rule in code satisfies section 5-1 (the script applies the
   judgment rules; human involvement is code review only). Results obtained by the non-preregistered
   procedure are reported only as auxiliary robustness evidence.
-- Evidence commits: dc188bb (2026-06-14, the initial persistence-filtered-knee-based H5 verdict);
-  8bd34aa (2026-07-17, mechanization of the frozen knee rule in judge_H5; local commit, not pushed).
+- Evidence commits: a9ff6c1 (2026-06-14, the initial persistence-filtered-knee-based H5 verdict);
+  f597eaa (2026-07-17, mechanization of the frozen knee rule in judge_H5; local commit, not pushed).
 
 **(g) Styles-list correction: the Scenario L 'join' series was identified as misconfigured and
 excluded from all load-axis analysis.**
@@ -225,3 +225,37 @@ excluded from all load-axis analysis.**
 - Status: EXPLORATORY / post-hoc. No hypothesis H1-H7 is judged by this round and no frozen judgment formula is applied to it. The frozen hypothesis verdicts remain those computed from the main campaign by analysis/judge.py.
 - Scope limits (disclosed in the paper): single 2-minute run per cell (no repeats, no CV screening), N in {100, 1000} only, 3 RTT points for the tx arm, regenerated seed (RAND() is unseeded, so the data set differs from the main campaign; measured covariates D(100)=93.7 and D(1000)=800.1 versus the main campaign's 93.0 and 798.6), and a differently-resourced VM (6 CPU / 8 GB). Therefore the round is reported separately and is never merged into the main campaign's cost-model fit; only within-round comparisons are used.
 - Rationale: the paper must not carry an unmeasured headline claim, and a mechanism claim (wire round-trip counts) is worth little unless a configuration that changes those counts is shown to change latency accordingly. Both goals require new measurement, which cannot be preregistered retroactively; the round is therefore labeled exploratory and its limitations are disclosed.
+
+### 2026-08-12 batch: post-hoc records (written after data collection)
+
+**(n) The CV-gate escalation of amendment (h) was foreclosed, not merely skipped**
+- Discovery date: 2026-08-12
+- Finding: an attempt to execute the escalation established that it had never been possible.
+  The two additional runs must measure the same rows as the original three. The seeder drew
+  every value from an unseeded `RAND()` at twelve call sites, so the dataset the main campaign
+  measured ceased to exist the first time the database was regenerated, and it cannot be
+  recreated. Amendment (h) should therefore be read as recording an impossibility rather than
+  an omission of effort.
+- Remedy applied to the harness: randomness is now derived from the row number by hashing a
+  `SEED`, a per-column salt, and the row index. MySQL cannot supply this directly; `RAND(N)` is
+  deterministic for that call alone and plain `RAND()` after it is not, verified on MySQL 8.4
+  after a first attempt relying on `DO RAND(N)` to seed the session produced different
+  sequences from the same seed. Nine generator sites are covered. Leaving `SEED` unset
+  reproduces the historical behaviour exactly. Future campaigns are extendable; this one is not.
+
+**(o) New-seed replication of the four high-CV coordinates**
+- Date run: 2026-08-12
+- Design: same protocol (scenario B, rate 20, 5 minutes, `MAX_MEMBER_ID=2000`), two runs per
+  cell, numbered rep4 and rep5 through a new `REP_OFFSET` control so they sit beside the
+  originals without colliding. Not merged into `analysis/precision-final.csv`, because a
+  different seed is a different sample.
+- Result: `inbatch-nodup` RTT 0 N=150 gave 8.96 and 5.27 ms (pair CV 25.9%); `inbatch-nodup`
+  RTT 0 N=250 gave 5.60 and 5.64 ms (0.4%); `inbatch` RTT 0 N=150 gave 5.76 and 5.48 ms (2.5%);
+  `inbatch` RTT 300 N=200 gave 9.74 and 27.38 ms (47.5%).
+- Validity caveat, declared rather than discovered by a reader: the host was not quiet. Two
+  unrelated database containers were running and the operator was compiling the manuscript on
+  the measurement machine, violating the frozen section 4 requirement that remaining host cores
+  stay idle during measurement. The two dispersed cells are therefore not offered as evidence
+  about those coordinates. A quiet-host repeat of exactly those two cells is queued
+  (`cells-cv-quiet.tsv`).
+- Full record: `results/CV-REMEASUREMENT-2026-08-12.md`, `results/CAMPAIGN-JOURNAL.md`.

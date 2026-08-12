@@ -1,0 +1,6 @@
+# Quiet-host repeat of the two cells that dispersed in the 2026-08-12 re-measurement.
+# Run these with no other work on the host: no manuscript compiles, no git, no other
+# containers doing work. Three repeats each.
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+b	inbatch-nodup	0	20	5m	-	N=150,MAX_MEMBER_ID=2000,CELL_TAG=quiet
+b	inbatch	300	20	5m	-	N=200,MAX_MEMBER_ID=2000,CELL_TAG=quiet

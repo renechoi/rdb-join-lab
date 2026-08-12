@@ -1,0 +1,15 @@
+# Decisive load-axis cells, re-measured with three repeats, 2026-08-12.
+# The load axis was one nine-minute run per cell. H5's second conjunct rested on a
+# transient spike that did not reproduce, and the inbatch knee at 60 req/s is reported
+# as unexplained. These are the cells that carry those two readings.
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+b	lazy	1500	40	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	lazy	1500	50	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	lazy	1500	60	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	byid	1500	40	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	byid	1500	50	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	byid	1500	60	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	inbatch	1500	60	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	inbatch	1500	80	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	joinfetch	1500	80	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
+b	joinfetch	1500	100	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lrep
