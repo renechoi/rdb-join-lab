@@ -259,3 +259,35 @@ excluded from all load-axis analysis.**
   about those coordinates. A quiet-host repeat of exactly those two cells is queued
   (`cells-cv-quiet.tsv`).
 - Full record: `results/CV-REMEASUREMENT-2026-08-12.md`, `results/CAMPAIGN-JOURNAL.md`.
+
+**(p) Three-repeat re-measurement of the decisive load-axis cells**
+- Date: 2026-08-12. Post-hoc, not preregistered. Cell set: `cells-L-decisive.tsv`.
+- Motivation: every Scenario L cell in the original campaign was a single nine-minute run, so
+  the frozen knee rule adjudicated H5 on one observation per coordinate. The 2026-07-23 round
+  (amendment (o) of the prior batch is unrelated; see the H5 section) repeated only the flat
+  and batch styles, and did so on a different host, so it explicitly declined to re-adjudicate
+  the coordinates. The N+1 arm, which carries the surviving conjunct of H5, had never been
+  repeated at all.
+- Design: the ten decisive coordinates at the Scenario L reference point (scenario B, RTT
+  1,500 us, N = 100), three nine-minute repeats per cell, on the original measurement host at
+  the original resource configuration (6 vCPU, 8 GB), `CELL_TAG=Lrep` so the new runs form
+  their own keys and no original record is overwritten. Seed regenerated under the now
+  deterministic seeder.
+- Result, directional ordering (the conjunct H5 rests on): reproduces exactly. `lazy` and
+  `byid` are valid at 40 req/s and fail the validity gate at 50 and at 60 in every attempt,
+  drop ratios 3.1-3.4 percent at 50 and 15-25 percent at 60.
+- Result, two single-run readings withdrawn: `inbatch` at 80 req/s is clean in 3/3 repeats
+  (p99 20.9-21.1 ms, zero drops), so its onset of 80 and the knee of 60 derived from it were a
+  transient. `joinfetch` at 80 req/s is clean in 3/3 (p99 18.9-19.1 ms) against 148 ms in the
+  original single run, confirming on the original host what 2026-07-23 showed elsewhere.
+- Not covered, queued as `cells-L-followup.tsv`: `inbatch` at 100 req/s (the sole support for
+  describing its saturation as persistent) and `joinfetch` at 60 req/s (the remaining
+  unrepeated spike).
+- Self-reported confound: at 40 req/s both N+1 styles held a steady p50 (CV 2.7 and 0.4
+  percent) but p99 ranged 238-957 ms against originals of 234 and 232 ms, worst repeat first in
+  both cells. The first repeats ran while the manuscript was being compiled on the measurement
+  host. The wider tail is not claimed until the quiet-host repeat, which is in the same
+  follow-up set.
+- Stage completion note: the campaign exited nonzero because four cells exhausted their
+  retries by saturating, which is the finding rather than a failure. Coverage was checked by
+  counting outputs (10 of 10 coordinates attempted). See `results/LOADAXIS_REPS_DONE`.

@@ -1,0 +1,12 @@
+Stage 3 (cells-L-decisive.tsv) completed 2026-08-12 18:59.
+
+The campaign exited rc=1 and therefore did not create this marker itself; it is
+written by hand after checking coverage rather than the return code. All 10
+requested cells were attempted: 6 completed three repeats, and 4 exhausted their
+retries because they saturated (lazy and byid at 50 and 60 req/s). Saturation at
+those coordinates is the measurement's finding, not a harness failure, so the
+stage is complete in substance.
+
+Counterpart to the 2026-08-12 14:38 lesson in the campaign journal: a stage that
+exits 0 in zero seconds did nothing, and a stage that exits 1 may have done all
+of its work. Count the outputs either way.

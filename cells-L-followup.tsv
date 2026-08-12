@@ -1,0 +1,28 @@
+# Load-axis follow-up, 2026-08-12, written after reading the Lrep round.
+#
+# The Lrep round (cells-L-decisive.tsv) answered two of the paper's open readings and
+# opened two more. These four cells close what it opened. Run on a quiet host.
+#
+# 1. inbatch at 100. The Lrep round showed inbatch completely clean at 80 (3/3 valid,
+#    zero drops, p99 20.9 ms), refuting the "onset 80" reading. But the original single
+#    run at 100 had p99 1,686 ms with 0.25 percent drops: elevated, yet under the
+#    validity gate, so it counts as valid and was never questioned. If inbatch saturates
+#    anywhere in the sweep it is here, and one run cannot say.
+#
+# 2. joinfetch at 60. The original single run showed p99 177 ms here, the twin of the
+#    148 ms spike at 80. The Lrep round repeated 80 (clean, 18.9 ms) but not 60, so the
+#    remaining spike in the sweep is still unrepeated on this host.
+#
+# 3+4. lazy and byid at 40. These reproduced as valid with a rock-steady p50 (CV 0.4 and
+#    2.7 percent) but a p99 that ranged 380-957 ms against an original 232 ms, and the
+#    worst repeat was the first one in each cell. Either the tail is genuinely unstable
+#    at the knee coordinate, which would be evidence for the knee being there, or the
+#    operator's own work on the host inflated it. The first repeats ran while the
+#    manuscript was being compiled on this machine. This is the same confound as the CV
+#    round, and it gets the same treatment: repeat it on a quiet host.
+#
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+b	inbatch	1500	100	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lfu
+b	joinfetch	1500	60	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lfu
+b	lazy	1500	40	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lfu
+b	byid	1500	40	9m	-	N=100,MAX_MEMBER_ID=2000,CELL_TAG=Lfu

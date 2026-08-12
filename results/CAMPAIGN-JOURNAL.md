@@ -99,3 +99,41 @@ It waits for stage 2 to drain, then gates on 1-minute load average < 4.0 (checke
 repeats. Rationale: the whole point of stage 4 is to separate an intrinsic property of the
 two dispersed coordinates from operator-introduced contention, so the runner refuses to
 start on a busy host.
+
+## 2026-08-12 14:38-18:59 · stage 3 complete, load-axis repetitions (10 cells)
+
+`cells-L-decisive.tsv`, `CELL_TAG=Lrep`, three nine-minute repeats per cell. Campaign summary:
+10 cells attempted, 6 completed, 4 failed. The four failures are `lazy` and `byid` at 50 and
+60 req/s, which saturate. **Saturation is the finding, so the stage is complete in substance
+even though it exited rc=1.** This is the mirror of the 14:38 lesson recorded above: a stage
+that exits 0 in zero seconds did nothing, and a stage that exits 1 may have done all of its
+work. Count outputs in both directions. `results/LOADAXIS_REPS_DONE` was written by hand with
+that reasoning in it rather than by the script.
+
+Findings, in the order they matter:
+
+1. The N+1 saturation boundary reproduces exactly (valid at 40, gate failure at 50 and 60 in
+   every attempt). This coordinate carries the surviving conjunct of H5 and had never been
+   repeated before today.
+2. `inbatch` at 80 req/s is clean in 3/3 (p99 20.9-21.1 ms, zero drops) against an invalid
+   original single run. Its onset of 80 and derived knee of 60 are withdrawn.
+3. `joinfetch` at 80 req/s is clean in 3/3 (p99 18.9-19.1 ms) against 148 ms originally,
+   confirming on this host what 2026-07-23 showed on another.
+4. Self-reported: at 40 req/s the N+1 p50 is steady but p99 ranged 238-957 ms, worst repeat
+   first in both cells, and the first repeats overlapped a manuscript compile on this host.
+
+Written into the manuscript (Section 4.8, the H5 summary bullet, the conclusion, the CV-gate
+threat) and into the preregistration as amendment (p).
+
+## 2026-08-12 18:59- · stage 2, supplementary round at main rigour (running)
+
+`cells-r5r6-promoted.tsv`, `r7` tag family, 42 cells x 3 repeats x 5m. Launched automatically
+by the stage-2 relauncher when stage 3 exited. This is the stage that carries the abstract's
+rescue figure.
+
+## 2026-08-12 20:02 · stage 5 armed
+
+`cells-L-followup.tsv`, 4 cells: `inbatch` at 100 and `joinfetch` at 60 (the two coordinates
+stage 3 left unrepeated), and `lazy` and `byid` at 40 (the tail this operator may have
+inflated). Waits for stage 4, then the same load-average quiet gate. Queue order is now
+stage 2 -> stage 4 -> stage 5, all unattended.
