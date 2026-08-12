@@ -77,3 +77,25 @@ reports weakness: the N+1 onset region (`lazy`, `byid` at 40/50/60 req/s), the u
 |---|---|---|
 | 2 (relaunch) | `cells-r5r6-promoted.tsv` | the abstract quotes 198 ms to 26 ms from a single 2-minute run on a different seed and VM; this is the same cell set at 5 minutes with three repeats in the main environment |
 | 4 | `cells-cv-quiet.tsv` | separate an intrinsic property of the two dispersed cells from contention the operator introduced |
+
+## 2026-08-12 16:00 · session rollover; the chain survived it
+
+The operator's interactive session was replaced at 16:00 (weekly account reset). The
+measurement chain did not notice: `chain-campaigns.sh` (reparented to PID 1), the stage-2
+relauncher, and the in-flight `run-campaign.sh cells-L-decisive.tsv` all kept running.
+Stage 3 was mid-cell (`b byid 1500 40`, repeat 2) at handover.
+
+Host-state observation for interpreting the stage-3 byid cells: a foreign MySQL container
+(`ch08-scratch-mysql`, unrelated to this study) started at 15:46 KST on the same host.
+Measured at 16:10 it sat at 0.3% CPU, as did the two other long-lived foreign containers
+(`bdi-mysql-test`, `searchlab`); a headless Chromium from another session was also present.
+Idle containers are not the contention mode that dispersed the CV re-measurement; bursty
+host processes (manuscript compiles, git) are, and none ran during stage-3 measurement
+windows after the handover.
+
+16:07: stage 4 (quiet-host repeat, `cells-cv-quiet.tsv`) was armed as a detached runner.
+It waits for stage 2 to drain, then gates on 1-minute load average < 4.0 (checked every
+5 minutes, 6-hour deadline, host snapshot recorded at start) before running 2 cells x 3
+repeats. Rationale: the whole point of stage 4 is to separate an intrinsic property of the
+two dispersed coordinates from operator-introduced contention, so the runner refuses to
+start on a busy host.
