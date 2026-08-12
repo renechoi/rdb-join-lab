@@ -39,6 +39,11 @@ cd "$(dirname "$0")/.."
 
 SCALE="${SCALE:-smoke}"
 COARSE_REPEATS="${COARSE_REPEATS:-2}"
+# REP_OFFSET: start repeat numbering at REP_OFFSET+1. Used when appending the two
+# extra runs that the preregistration prescribes for a cell whose CV(p50) exceeded
+# 10 percent, so the new files land as rep4 and rep5 beside the original rep1..rep3
+# rather than colliding with them. Default 0 leaves every existing caller unchanged.
+REP_OFFSET="${REP_OFFSET:-0}"
 # N: result-set size for Scenario B cells; forwarded to k6 via env (k6 uses it to
 # parameterise the limit= query string within the script). Default 20 (coarse sweep min).
 N="${N:-20}"
@@ -97,8 +102,8 @@ curl -sf "${APP_URL}/calibrate/loaded?n=${CAL_N}" | python3 -m json.tool 2>/dev/
 # Also write to calibration.jsonl for cell records
 CAL_N="$CAL_N" ./scripts/calibrate.sh "$RTT_US"
 
-# Step 4: Run k6 COARSE_REPEATS times
-for REP in $(seq 1 "$COARSE_REPEATS"); do
+# Step 4: Run k6 COARSE_REPEATS times (numbered from REP_OFFSET+1)
+for REP in $(seq $((REP_OFFSET + 1)) $((REP_OFFSET + COARSE_REPEATS))); do
   EPOCH=$(date +%s)
 
   # Build k6 env from scale parameters
@@ -166,7 +171,7 @@ for REP in $(seq 1 "$COARSE_REPEATS"); do
   STYLE_FNAME="${STYLE}${CELL_TAG:+-${CELL_TAG}}"
   OUTPUT_FILE="results/${SCENARIO}-${STYLE_FNAME}-rtt${RTT_US}-r${RATE}${N_TAG}-rep${REP}-${EPOCH}.json"
 
-  echo "[4/${COARSE_REPEATS}] Running k6 repeat ${REP}/${COARSE_REPEATS} (output -> ${OUTPUT_FILE})..."
+  echo "[4] Running k6 repeat ${REP} (of ${COARSE_REPEATS} this invocation) (output -> ${OUTPUT_FILE})..."
 
   # cpuset for k6 is defined on the service in docker-compose.yml ("4,5");
   # docker-compose run has no --cpuset-cpus flag.

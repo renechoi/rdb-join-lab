@@ -1,0 +1,8 @@
+# CV-gate escalation set: the four precision cells whose CV(p50) exceeded the
+# preregistered 10 percent threshold and never received the prescribed +2 runs.
+# Run with REP_OFFSET=3 COARSE_REPEATS=2 so results land as rep4 and rep5.
+# scenario	style	rtt_us	rate	duration	extra_qs	env_overrides
+b	inbatch-nodup	0	20	5m	-	N=150,MAX_MEMBER_ID=2000
+b	inbatch-nodup	0	20	5m	-	N=250,MAX_MEMBER_ID=2000
+b	inbatch	0	20	5m	-	N=150,MAX_MEMBER_ID=2000
+b	inbatch	300	20	5m	-	N=200,MAX_MEMBER_ID=2000

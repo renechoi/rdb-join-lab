@@ -53,6 +53,29 @@ case "$SCALE" in
 esac
 
 CHUNK="${CHUNK:-500000}"   # max rows per INSERT; env-overridable (OOM-killed at 500k under a 1GB-headroom container on 2026-07-17; 250000 is the safe reseed value)
+
+# SEED: make the generated dataset reproducible.
+#
+# Every RAND() below was unseeded until 2026-08-12, so each regeneration produced a
+# different dataset. That is not a cosmetic gap. The preregistration prescribes two extra
+# repetitions for any cell whose CV exceeds the gate, and those repetitions have to run
+# against the same rows as the originals. Once the dataset had been regenerated, the
+# prescribed escalation was no longer possible for the original campaign at all.
+#
+# MySQL cannot help here: RAND(N) is deterministic only for that one call, and plain
+# RAND() calls after it in the same statement are not (verified on MySQL 8.4, 2026-08-12).
+# So randomness is derived from the row number instead, by hashing SEED, a per-column
+# salt, and n. That is deterministic across runs and independent between columns.
+#
+# Leave SEED unset to reproduce the historical, non-reproducible behaviour.
+SEED="${SEED:-}"
+rnd() {   # $1 = per-column salt, so each column draws an independent stream
+  if [ -n "$SEED" ]; then
+    printf "(CONV(SUBSTR(MD5(CONCAT('%s',':%s:',$OFFSET + n)),1,8),16,10)/4294967295)" "$SEED" "$1"
+  else
+    printf "RAND()"
+  fi
+}
 MYSQL_SERVICE="mysql"   # service name in docker-compose.yml
 
 echo "=== seed.sh: SCALE=$SCALE ==="
@@ -178,14 +201,14 @@ WITH RECURSIVE seq(n) AS (
 base AS (
     SELECT
         n,
-        RAND() AS rnd,
-        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY) AS issued
+        $(rnd status) AS rnd,
+        DATE_SUB(NOW(), INTERVAL FLOOR($(rnd issued) * 365) DAY) AS issued
     FROM seq
 )
 SELECT
     $OFFSET + n,
-    GREATEST(1, FLOOR(POW(RAND(), 3) * @policy_count) + 1),
-    FLOOR(1 + RAND() * @member_count),
+    GREATEST(1, FLOOR(POW($(rnd policy), 3) * @policy_count) + 1),
+    FLOOR(1 + $(rnd member) * @member_count),
     ELT(
         CASE
             WHEN rnd < 0.70 THEN 1
@@ -196,7 +219,7 @@ SELECT
     ),
     issued,
     CASE WHEN rnd >= 0.70 AND rnd < 0.95
-         THEN DATE_ADD(issued, INTERVAL FLOOR(1 + RAND() * 6) DAY)
+         THEN DATE_ADD(issued, INTERVAL FLOOR(1 + $(rnd used) * 6) DAY)
          ELSE NULL
     END
 FROM base;
@@ -234,13 +257,13 @@ WITH RECURSIVE seq(n) AS (
 base AS (
     SELECT
         n,
-        RAND() AS rnd,
-        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY) AS issued
+        $(rnd status) AS rnd,
+        DATE_SUB(NOW(), INTERVAL FLOOR($(rnd issued) * 365) DAY) AS issued
     FROM seq
 )
 SELECT
     $ISSUE_COUNT + $OFFSET + n,
-    GREATEST(1, FLOOR(POW(RAND(), 3) * @policy_count) + 1),
+    GREATEST(1, FLOOR(POW($(rnd policy), 3) * @policy_count) + 1),
     1 + MOD(@offset + n - 1, @hot_members),
     ELT(
         CASE
@@ -252,7 +275,7 @@ SELECT
     ),
     issued,
     CASE WHEN rnd >= 0.70 AND rnd < 0.95
-         THEN DATE_ADD(issued, INTERVAL FLOOR(1 + RAND() * 6) DAY)
+         THEN DATE_ADD(issued, INTERVAL FLOOR(1 + $(rnd used) * 6) DAY)
          ELSE NULL
     END
 FROM base;
